@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 1 )
+Label/colors/font_color_shadow = Color( 0, 0, 0, 1 )
+Label/constants/shadow_offset_x = 2
+Label/constants/shadow_offset_y = 2
+
+[node name="minimized" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 1 )
+text = "Shhh, I'm minimized!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
+[ext_resource path="res://source/main.gd" type="Script" id=2]
+
+[node name="main" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="text" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 560.0
+margin_top = 354.0
+margin_right = 720.0
+margin_bottom = 366.0
+custom_fonts/font = ExtResource( 1 )
+text = "It's working!"
+__meta__ = {
+"_edit_use_anchors_": false
+}

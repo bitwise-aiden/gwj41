@@ -1,0 +1,98 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+
+vec2 texture_size(sampler2D t)
+{
+	ivec2 size = textureSize(t, 0);
+	return vec2(
+		float(size.x),
+		float(size.y)
+	);
+}
+
+
+float det(vec2 a, vec2 b)
+{
+    return a.x * b.y - a.y * b.x;
+}
+
+
+float inner_angle(vec2 a, vec2 b)
+{
+    float cosx = dot(a, b) / (length(a) * length(b));
+
+    return acos(cosx) * 180.0 / 3.1415;
+}
+
+
+float angle_between(vec2 a, vec2 b)
+{
+    float inner = inner_angle(a, b);
+
+    if (det(a, b) < 0.0)
+    {
+        return inner;
+    }
+
+    return 360.0 - inner;
+}
+
+
+vec2 rotate(vec2 a, float angle)
+{
+    float rad = radians(angle);
+
+    return vec2(
+        a.x * cos(rad) - a.y * sin(rad),
+        a.x * sin(rad) + a.y * cos(rad)
+    );
+}
+
+
+vec4 blended(vec4 a, vec4 b, float val)
+{
+    return a + (b - a) * clamp(val, 0.0, 1.0);
+}
+
+
+void fragment()
+{
+    vec4 purple = vec4(0.533, 0.482, 0.69, 1.0);
+    vec4 mint = vec4(0.522,0.824,0.816, 1.0);
+    vec4 rose = vec4(0.957, 0.725, 0.722, 1.0);
+    vec4 yellow = vec4(1, 0.957, 0.741, 1.0);
+
+    vec2 screenSize = texture_size(TEXTURE);
+    vec2 center = screenSize * 0.5;
+    vec2 right = vec2(1.0, 0.0);
+
+    vec2 position = UV * screenSize;
+    vec2 direction = position - center;
+    float dist = length(direction);
+    float angle = angle_between(right, direction);
+
+    vec2 offset = vec2(dist, sin(TIME - dist));
+    vec2 offsetRotated = rotate(offset, angle);
+    float offsetAngle = radians(angle_between(right, offsetRotated));
+
+	float m = 18.0;
+    vec4 col = blended(purple, mint, modf(offsetAngle, m));
+
+    float offsetDistance = dist + sin(offsetAngle);
+
+    if (offsetDistance < .25)
+    {
+        col = offsetDistance < 230.0 ? yellow : rose;
+    }
+	
+	if (offsetDistance > 1.0)
+	{
+		col.a = 0.0;
+	}
+
+    COLOR = col;
+}
+"

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://source/menus/components/button_change_scene.gd" type="Script" id=1]
+
+[node name="button_change_scene" type="TextureButton"]
+margin_right = 40.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

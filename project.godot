@@ -1,0 +1,121 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "BaseTask",
+"language": "GDScript",
+"path": "res://source/helpers/tasks/base_task.gd"
+}, {
+"base": "Reference",
+"class": "CommandData",
+"language": "GDScript",
+"path": "res://addons/gift/util/cmd_data.gd"
+}, {
+"base": "Reference",
+"class": "CommandInfo",
+"language": "GDScript",
+"path": "res://addons/gift/util/cmd_info.gd"
+}, {
+"base": "Reference",
+"class": "CurrentQueue",
+"language": "GDScript",
+"path": "res://source/helpers/current_queue.gd"
+}, {
+"base": "Reference",
+"class": "Gift",
+"language": "GDScript",
+"path": "res://addons/gift/gift_node.gd"
+}, {
+"base": "EditorPlugin",
+"class": "GodotReset",
+"language": "GDScript",
+"path": "res://addons/godot_reset/godot_reset.gd"
+}, {
+"base": "Node",
+"class": "ImageCache",
+"language": "GDScript",
+"path": "res://addons/gift/util/image_cache.gd"
+}, {
+"base": "Reference",
+"class": "PlayerInput",
+"language": "GDScript",
+"path": "res://source/helpers/player_input.gd"
+}, {
+"base": "Reference",
+"class": "SenderData",
+"language": "GDScript",
+"path": "res://addons/gift/util/sender_data.gd"
+}, {
+"base": "Reference",
+"class": "Task",
+"language": "GDScript",
+"path": "res://source/helpers/tasks/task.gd"
+}, {
+"base": "Reference",
+"class": "TaskQueue",
+"language": "GDScript",
+"path": "res://source/helpers/tasks/task_queue.gd"
+} ]
+_global_script_class_icons={
+"BaseTask": "",
+"CommandData": "",
+"CommandInfo": "",
+"CurrentQueue": "",
+"Gift": "",
+"GodotReset": "",
+"ImageCache": "",
+"PlayerInput": "",
+"SenderData": "",
+"Task": "",
+"TaskQueue": ""
+}
+
+[application]
+
+config/name="godot-template"
+run/main_scene="res://source/main.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+Globals="*res://source/autoloads/globals.gd"
+Event="*res://source/autoloads/event.gd"
+FileManager="*res://source/autoloads/file_manager.gd"
+SettingsManager="*res://source/autoloads/settings_manager.gd"
+Logger="*res://source/autoloads/logger.gd"
+Time="*res://source/autoloads/time.gd"
+PhysicsTime="*res://source/autoloads/physics_time.gd"
+SceneManager="*res://source/autoloads/scene_manager.tscn"
+TaskManager="*res://source/autoloads/task_manager.gd"
+AudioManager="*res://source/autoloads/audio_manager.gd"
+InputManager="*res://source/autoloads/input_manager.gd"
+DebugManager="*res://source/autoloads/debug_manager.gd"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/size/resizable=false
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/godot_reset/plugin.cfg", "res://addons/velopbot/plugin.cfg" )
+
+[rendering]
+
+2d/snapping/use_gpu_pixel_snap=true
+environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false
+quality/2d/use_pixel_snap=true
