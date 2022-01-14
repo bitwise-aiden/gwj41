@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  EXPORT_NAME: godot-template
+  EXPORT_NAME: gwj41
   GODOT_VERSION: 3.4
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: windows
-          ITCH_GAME: godot-template
+          ITCH_GAME: gwj41
           ITCH_USER: velopman
           PACKAGE: build/windows
 
@@ -81,7 +81,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: linux
-          ITCH_GAME: godot-template
+          ITCH_GAME: gwj41
           ITCH_USER: velopman
           PACKAGE: build/linux
 
@@ -117,7 +117,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: web
-          ITCH_GAME: godot-template
+          ITCH_GAME: gwj41
           ITCH_USER: velopman
           PACKAGE: build/web
 
@@ -154,7 +154,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: mac
-          ITCH_GAME: godot-template
+          ITCH_GAME: gwj41
           ITCH_USER: velopman
           PACKAGE: build/mac
           
