@@ -6,6 +6,10 @@ var player_input: Array = [
 	"down",
 	"left",
 	"right",
+	"leftTentacleGoRight",
+	"leftTentacleGoUp",
+	"rightTentacleGoLeft",
+	"rightTentacleGoUp"
 ]
 
 
