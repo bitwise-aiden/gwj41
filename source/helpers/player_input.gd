@@ -2,10 +2,15 @@ class_name PlayerInput
 
 
 var player_input: Array = [
+	"ui_cancel",
 	"up",
 	"down",
 	"left",
 	"right",
+	"leftTentacleGoRight",
+	"leftTentacleGoUp",
+	"rightTentacleGoLeft",
+	"rightTentacleGoUp"
 ]
 
 
