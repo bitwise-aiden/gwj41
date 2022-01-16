@@ -1,17 +1,11 @@
 extends Node2D
 
 var Rope = preload("res://Parts/Rope.tscn")
-<<<<<<< HEAD
 var Ship = preload("res://Parts/Ship.tscn")
-var start_pos := Vector2.ZERO
-var end_pos := Vector2.ZERO
-var ropes = []
 var ships = []
-=======
 var start_pos := Vector2.ZERO
 var end_pos := Vector2.ZERO
 var ropes = []
->>>>>>> origin/main
 var max_tentacles = 2
 var tentacle_move_speed = Globals.tentacle_player_move_speed
 var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
@@ -19,10 +13,7 @@ var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
 func _ready():
 	spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
-<<<<<<< HEAD
 	spawn_ship(Vector2(Globals.projectResolution.x,100))
-=======
->>>>>>> origin/main
 	
 func spawn_tentacle(start_pos, end_pos):
 	if len(ropes) < max_tentacles:
@@ -33,15 +24,12 @@ func spawn_tentacle(start_pos, end_pos):
 			end_pos = Vector2.ZERO
 			ropes.append(rope)
 
-<<<<<<< HEAD
 func spawn_ship(start_pos):
 	var ship = Ship.instance()
 	add_child(ship)
 	ships.append(ship)
 	ship.global_position = start_pos
 	
-=======
->>>>>>> origin/main
 func _physics_process(delta):
 	if len(ropes) > 1:
 		#Control Left Tentacle:
@@ -69,11 +57,9 @@ func _physics_process(delta):
 		else:
 			if ropes[1].getRopeEndPoint().x < Globals.initial_end_right_tentacle_position.x:
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x - tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
-<<<<<<< HEAD
 				
 				
 	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
 		spawn_ship(Vector2(Globals.projectResolution.x,100))
 	#Globals.max_number_of_ships_on_screen
-=======
->>>>>>> origin/main
+	#Globals.max_number_of_ships_on_screen

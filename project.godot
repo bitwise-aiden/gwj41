@@ -24,14 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/helpers/player_input.gd"
 }, {
-<<<<<<< HEAD
-=======
 "base": "RigidBody2D",
 "class": "RopePiece",
 "language": "GDScript",
 "path": "res://Scripts/rope_piece.gd"
 }, {
->>>>>>> origin/main
 "base": "Reference",
 "class": "Task",
 "language": "GDScript",
@@ -46,10 +43,7 @@ _global_script_class_icons={
 "BaseTask": "",
 "CurrentQueue": "",
 "PlayerInput": "",
-<<<<<<< HEAD
-=======
 "RopePiece": "",
->>>>>>> origin/main
 "Task": "",
 "TaskQueue": ""
 }

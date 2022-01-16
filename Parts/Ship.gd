@@ -1,7 +1,7 @@
 extends Node2D
 export var shipSpawnXPositionOffset = 200
-var min_wait_time = 2
-var max_wait_time = 5
+var min_wait_time = 1
+var max_wait_time = 10
 var active = false
 var movement_speed = 3
 var rng = RandomNumberGenerator.new()

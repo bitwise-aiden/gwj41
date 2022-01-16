@@ -23,7 +23,6 @@ var tentacle_width_cap = projectResolution.x
 #"Gravity"
 var tentacle_correction_move_speed = Vector2(-5, 3)
 
-<<<<<<< HEAD
 # Ships variables
 var max_number_of_ships_on_screen = 2
 
@@ -32,5 +31,3 @@ func set_tentacle_start_positions(start_left_pos:Vector2, end_left_pos:Vector2, 
 	initial_end_left_tentacle_position = end_left_pos
 	initial_start_right_tentacle_position = start_right_pos
 	initial_end_right_tentacle_position = end_right_pos
-=======
->>>>>>> origin/main
