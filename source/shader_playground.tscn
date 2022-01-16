@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://source/tentacle.tres" type="Shader" id=1]
+[ext_resource path="res://source/shader_playground.gd" type="Script" id=2]
+
+[sub_resource type="OpenSimplexNoise" id=2]
+period = 0.1
+
+[sub_resource type="NoiseTexture" id=3]
+width = 1280
+height = 720
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/vertex_count = null
+shader_param/noise = SubResource( 3 )
+
+[node name="shader_playground" type="ColorRect"]
+material = SubResource( 1 )
+margin_right = 1280.0
+margin_bottom = 720.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

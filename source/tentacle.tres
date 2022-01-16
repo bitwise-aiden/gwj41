@@ -1,0 +1,65 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise; 
+
+uniform sampler2D vertices; 
+uniform int vertex_count;
+
+
+float distance_to_line(vec2 a, vec2 b, vec2 p)
+{
+	vec2 ab = b - a;
+	vec2 ap = p - a; 
+	vec2 bp = p - b;
+	
+	float ab_ap = dot(ab, ap);
+	float ab_bp = dot(ab, bp);
+	
+	if (ab_bp > 0.0)
+	{
+		return length(bp);
+	}
+	
+	if (ab_ap < 0.0)
+	{
+		return length(ap);
+	}
+	
+	float t = length(ab);
+	return abs(ab.x * ap.y - ab.y * ap.x) / t;
+}
+
+
+void fragment() 
+{
+	float n = texture(noise, UV).x;
+	vec2 p = UV * vec2(1280.0, 720.0);
+	
+	bool add_color = false;
+	
+	if (n > 0.5)
+	{
+		for (int i = 1; i < vertex_count; ++i)
+		{
+			vec2 a = texelFetch(vertices, ivec2(i - 1, 0), 0).xy;
+			vec2 b = texelFetch(vertices, ivec2(i, 0), 0).xy;
+			
+			float d = distance_to_line(a, b, p);
+			if (d < 10.0)
+			{
+				add_color = false;
+				break;
+			}
+			
+			if (d < 15.0)
+			{
+				add_color = true;
+			}
+		}
+	}
+	
+	COLOR = add_color ? vec4(1.0) : vec4(0.0);
+}"
