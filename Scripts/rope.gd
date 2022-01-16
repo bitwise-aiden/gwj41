@@ -45,10 +45,8 @@ func getRopeEndPoint():
 
 func getInitialStartPosition():
 	return(initial_start_position)
-	print(initial_start_position)
 func getInitialEndPosition():
 	return(initial_end_position)
-	print(initial_end_position)
 
 func spawn_rope(start_pos:Vector2, end_pos:Vector2):
 	rope_start_piece.global_position = start_pos
@@ -57,8 +55,8 @@ func spawn_rope(start_pos:Vector2, end_pos:Vector2):
 	end_pos = rope_end_joint.global_position
 	
 	rope_to_left = start_pos.x < end_pos.x
-	var distance = start_pos.distance_to(end_pos)
-	var pieces_amount = 128
+	#var distance = start_pos.distance_to(end_pos)
+	var pieces_amount = 40
 	var spawn_angle = (end_pos - start_pos).angle() - PI/2
 	create_rope(pieces_amount, rope_start_piece, end_pos, spawn_angle)
 	initial_start_position = start_pos

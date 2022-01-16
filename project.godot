@@ -50,7 +50,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="godot-template"
+config/name="gwj41"
 run/main_scene="res://source/main.tscn"
 config/icon="res://icon.png"
 

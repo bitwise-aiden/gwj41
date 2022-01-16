@@ -17,6 +17,7 @@ class InputKey:
 var input: Dictionary = {
 	# key: String, name of action
 	# value: InputKey
+	"ui_cancel": InputKey.new(KEY_ESCAPE),
 	"up": InputKey.new(KEY_W),
 	"down": InputKey.new(KEY_S),
 	"left": InputKey.new(KEY_A),
