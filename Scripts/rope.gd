@@ -18,6 +18,9 @@ onready var rope_end_piece = $RopeEndPiece
 onready var rope_start_joint = $RopeStartPiece/C/J
 onready var rope_end_joint = $RopeEndPiece/C/J
 
+func _ready() -> void:
+	add_to_group("tentacle")
+
 func _process(_delta):
 	get_rope_points()
 	if rope_points.size() > 2:
@@ -104,7 +107,7 @@ func get_rope_points() -> void:
 	rope_points.append( rope_end_joint.global_position )
 
 
-func _draw():
-	if rope_points.size() > 2:
-		draw_polyline_colors(rope_points, rope_colors, 20.0, true)
-	
+#func _draw():
+#	if rope_points.size() > 2:
+#		draw_polyline_colors(rope_points, rope_colors, 20.0, true)
+
