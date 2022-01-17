@@ -12,10 +12,10 @@ var time_modifier: float = 1.0
 var projectResolution= OS.get_window_size()
 
 # Tentacle based globals (Player movement)
-var initial_start_left_tentacle_position = Vector2(500,700)
+var initial_start_left_tentacle_position = Vector2(550,700)
 var initial_end_left_tentacle_position = Vector2(300,400)
-var initial_start_right_tentacle_position = Vector2(1000,700)
-var initial_end_right_tentacle_position = Vector2(1100, 400)
+var initial_start_right_tentacle_position = Vector2(1280-550,700)
+var initial_end_right_tentacle_position = Vector2(1280-300, 400)
 var tentacle_player_move_speed = Vector2(20, -20)
 var tentacle_height_cap = 10
 var tentacle_width_cap = projectResolution.x
