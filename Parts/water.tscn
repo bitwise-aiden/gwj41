@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/water.gd" type="Script" id=1]
+[ext_resource path="res://assets/materials/water_material.tres" type="Material" id=2]
+
+[sub_resource type="ImageTexture" id=1]
+size = Vector2( 1, 1 )
+
+[node name="water" type="Area2D"]
+script = ExtResource( 1 )
+num_points = 200
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+polygon = PoolVector2Array( 0, 220, 1280, 220, 1280, 720, 0, 720 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+material = ExtResource( 2 )
+texture = SubResource( 1 )
+polygon = PoolVector2Array( 0, 220, 1280, 220, 1280, 720, 0, 720 )

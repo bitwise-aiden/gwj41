@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
 [ext_resource path="res://source/main.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/materials/material_tentacle.tres" type="Material" id=4]
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=5]
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Parts/water.tscn" type="PackedScene" id=7]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 2 )
@@ -41,3 +42,6 @@ texture = ExtResource( 5 )
 
 [node name="HugZone" parent="." instance=ExtResource( 6 )]
 position = Vector2( 640, 606 )
+
+[node name="water" parent="." instance=ExtResource( 7 )]
+show_behind_parent = true
