@@ -22,6 +22,10 @@ var tentacle_width_cap = projectResolution.x
 var ship_speed_modifier = 1
 var hug_zone = null
 var hugSpeed = Vector2(3, 3)
+var hugScore = 100.0
+var hugScoreDecayTickDelay = 0.5
+var hugScoreDecayTickAmount = 1
+onready var hugScoreTextField = get_tree().get_root().get_node("main/HugScore/Score")
 
 #"Gravity"
 var tentacle_correction_move_speed = Vector2(-5, 3)
