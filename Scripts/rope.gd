@@ -12,6 +12,7 @@ var color1 := Color.darkmagenta
 var color2 := Color.lightsalmon
 var initial_start_position = Vector2.ZERO
 var initial_end_position = Vector2.ZERO
+var shipMastAttachedTo
 
 onready var rope_start_piece = $RopeStartPiece
 onready var rope_end_piece = $RopeEndPiece
@@ -20,13 +21,24 @@ onready var rope_end_joint = $RopeEndPiece/C/J
 
 func _ready() -> void:
 	add_to_group("tentacle")
+	rope_end_piece.add_to_group("ropeEndPiece")
 
 func _process(_delta):
 	get_rope_points()
 	if rope_points.size() > 2:
 		update()
 
+func attach_to_ship_mast(mast):
+	print("Attaching rope: ", self, " to mast: ", mast)
+	shipMastAttachedTo = mast
 
+func detatch_from_ship_mast(mast):
+	if shipMastAttachedTo == mast:
+		shipMastAttachedTo = null
+
+func get_mast_attached():
+	return(shipMastAttachedTo)
+	
 func set_active_rope_id(value:int):
 	if active_rope_id != value:
 		active_rope_id = value
