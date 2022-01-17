@@ -12,7 +12,8 @@ var tentaclesAttached = []
 # have to figure out a better way to do this:
 var leftSailEnabled = true
 var rightSailEnabled = true
-export var hugMeterAmount = 10
+var hugMeterAmount = 20
+var hugHearts = 5
 var hugZone
 var hugSpeed = Globals.hugSpeed
 
