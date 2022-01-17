@@ -15,5 +15,6 @@ bias = 0.1
 softness = 0.05
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+visible = false
 color = Color( 0, 0, 0, 1 )
 polygon = PoolVector2Array( 0, 3, -3, 0, 0, -3, 3, 0 )
