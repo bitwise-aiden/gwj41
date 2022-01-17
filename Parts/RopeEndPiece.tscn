@@ -4,8 +4,7 @@
 radius = 3.0
 
 [node name="RopeEndPiece" type="RigidBody2D"]
-collision_layer = 0
-collision_mask = 0
+collision_mask = 2
 mode = 1
 
 [node name="C" type="CollisionShape2D" parent="."]
