@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/HugZone.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/heart1.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 5.2
@@ -18,5 +19,20 @@ collision_mask = 2
 position = Vector2( 0, 0.0666667 )
 shape = SubResource( 1 )
 
+[node name="LoveParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 3
+lifetime = 5.0
+one_shot = true
+randomness = 0.12
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 200, 1 )
+spread = 40.0
+gravity = Vector2( 0, -98 )
+
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

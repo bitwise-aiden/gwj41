@@ -16,12 +16,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 560.0
-margin_top = 354.0
+margin_left = 512.0
+margin_top = 360.0
 margin_right = 720.0
-margin_bottom = 366.0
+margin_bottom = 372.0
 custom_fonts/font = ExtResource( 1 )
 text = "It's working!"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -43,5 +45,37 @@ texture = ExtResource( 5 )
 [node name="HugZone" parent="." instance=ExtResource( 6 )]
 position = Vector2( 640, 606 )
 
+
 [node name="water" parent="." instance=ExtResource( 7 )]
 show_behind_parent = true
+
+[node name="HugScore" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 845.0
+margin_top = 663.0
+margin_right = 1053.0
+margin_bottom = 675.0
+custom_fonts/font = ExtResource( 1 )
+text = "Hug Score:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="HugScore"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 54.0
+margin_top = -5.0
+margin_right = 126.0
+margin_bottom = 11.0
+custom_fonts/font = ExtResource( 1 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
