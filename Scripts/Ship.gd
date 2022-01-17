@@ -28,10 +28,10 @@ func _ready():
 	reset_collision()
 
 func reset_collision():
-	$LeftSail.monitoring = leftSailEnabled
-	$LeftSail.monitorable = leftSailEnabled
-	$RightSail.monitoring = rightSailEnabled
-	$RightSail.monitorable = rightSailEnabled
+	$LeftSail.set_deferred("monitoring", true)
+	$LeftSail.set_deferred("monitorable", true)
+	$RightSail.set_deferred("monitoring", true)
+	$RightSail.set_deferred("monitorable", true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
