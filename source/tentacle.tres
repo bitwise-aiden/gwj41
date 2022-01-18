@@ -11,6 +11,9 @@ uniform vec4 color_shadow: hint_color;
 uniform vec4 color_tentacle: hint_color; 
 uniform vec4 color_suction: hint_color; 
 
+const float width_start = 30.0;
+const float width_end = 10.0;
+
 
 vec4 from_vertices(int r, int c)
 {
@@ -18,27 +21,103 @@ vec4 from_vertices(int r, int c)
 }
 
 
+int line_count(int r)
+{
+	return int(from_vertices(r, 0).x);
+}
+
+float lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
+}
+
+
+vec2 point_on_line(vec2 a, vec2 b, vec2 p)
+{
+	vec2 ab = b - a; 
+	vec2 ap = p - a;
+	
+	float ab_ap = dot(ap, ab);
+	float ab_ab = dot(ab, ab); 
+	
+	float d = ab_ap / ab_ab;
+	
+	if (d <= 0.0) return a;
+	if (d >= 1.0) return b;
+	
+	return a + d * ab;
+}
+
+
 float distance_to_line(vec2 a, vec2 b, vec2 p)
 {
-	vec2 ab = b - a;
-	vec2 ap = p - a; 
-	vec2 bp = p - b;
+	vec2 pl = point_on_line(a, b, p);
+	return length(pl - p);
+}
+
+
+float line_length(int r) 
+{
+	int count = line_count(r);
 	
-	float ab_ap = dot(ab, ap);
-	float ab_bp = dot(ab, bp);
+	float total_length = 0.0;
 	
-	if (ab_bp > 0.0)
+	for (int c = 2; c < count + 1; ++c)
 	{
-		return length(bp);
+		vec2 a = from_vertices(r, c - 1).xy;
+		vec2 b = from_vertices(r, c).xy;
+		
+		total_length += length(b - a);
 	}
 	
-	if (ab_ap < 0.0)
+	return total_length;
+}
+
+
+vec4 line_color(int r, vec2 p)
+{
+	vec4 color = vec4(0.0);
+	
+	int count = line_count(r);
+	
+	float lt = line_length(r);
+	float lc = 0.0;
+	
+	for (int c = 2; c < count + 1; ++c)
 	{
-		return length(ap);
+		vec2 a = from_vertices(r, c - 1).xy;
+		vec2 b = from_vertices(r, c).xy;
+
+		vec2 pl = point_on_line(a, b, p);
+		float dp = length(pl - p);
+		float dpl = length(pl - a);
+		
+		float t = (lc + dpl) / lt;
+		
+		float w = lerp(width_start, width_end, t);
+		
+		if (dp < w - 10.0) 
+			color = color_tentacle;
+		if (dp < w - 5.0 && color != color_tentacle) 
+			color = color_shadow;
+		if (dp < w && color == vec4(0.0)) 
+			color = color_outline;
+		
+		lc += length(b - a);
 	}
 	
-	float t = length(ab);
-	return abs(ab.x * ap.y - ab.y * ap.x) / t;
+	for (int c = 1; c < count + 1; c += 3)
+	{
+		vec2 a = from_vertices(r, c).xy;
+		float d = length(p - a);
+		
+		if (4.0 < d && d < 7.0)
+		{
+			color = color_suction;
+		} 
+	}
+	
+	return color;
 }
 
 
@@ -50,40 +129,11 @@ void fragment()
 	
 	for (int r = 0; r < array_count; ++r)
 	{
-		int vertex_count = int(from_vertices(r, 0).x);
-		
-		for (int c = 2; c < vertex_count + 1; ++c)
+		vec4 c = line_color(r, p);
+		if (c.a != 0.0)
 		{
-			vec2 a = from_vertices(r, c - 1).xy;
-			vec2 b = from_vertices(r, c).xy;
-
-			float d = distance_to_line(a, b, p);
-			
-			if (d < 10.0)
-			{
-				color = color_tentacle;
-			}
-
-			if (d < 15.0 && color != color_tentacle)
-			{
-				color = color_shadow;
-			}
-
-			if (d < 20.0 && color == vec4(0.0))
-			{
-				color = color_outline;
-			}
-		}
-		
-		for (int c = 1; c < vertex_count + 1; c += 3)
-		{
-			vec2 a = from_vertices(r, c).xy;
-			float d = length(p - a);
-			
-			if (4.0 < d && d < 7.0)
-			{
-				color = color_suction;
-			} 
+			color = c;
+			break;
 		}
 	}
 	
