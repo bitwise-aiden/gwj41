@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
 [ext_resource path="res://source/main.gd" type="Script" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Parts/water.tscn" type="PackedScene" id=7]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/bubble.png" type="Texture" id=9]
+[ext_resource path="res://source/particles.gd" type="Script" id=10]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 2 )
@@ -15,6 +17,20 @@ script = ExtResource( 2 )
 [node name="land" type="Sprite" parent="."]
 position = Vector2( 640, 567 )
 texture = ExtResource( 8 )
+
+[node name="particles" type="CPUParticles2D" parent="."]
+position = Vector2( 123, 666 )
+emitting = false
+amount = 5
+lifetime = 5.0
+one_shot = true
+lifetime_randomness = 0.2
+texture = ExtResource( 9 )
+direction = Vector2( 1, 1 )
+spread = 180.0
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+script = ExtResource( 10 )
 
 [node name="text" type="Label" parent="."]
 anchor_left = 0.5
