@@ -6,11 +6,13 @@ var ships = []
 var start_pos := Vector2.ZERO
 var end_pos := Vector2.ZERO
 var ropes = []
-var max_tentacles = 4
+var max_tentacles = 8
 var tentacle_move_speed = Globals.tentacle_player_move_speed
 var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
 var left_tentacle
 var right_tentacle
+var decorative_tentacles = []
+var decorative_tentacles_offset_multiplier = Vector2(200,-30)
 onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
@@ -21,6 +23,15 @@ func _ready():
 
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
+	
+	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 100,480)))
+	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 100,480)))
+	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 150,560)))
+	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, Vector2(Globals.initial_end_right_tentacle_position.x + 100,480)))
+	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)))
+		
+	print(len(decorative_tentacles))
+	#var left_decorative_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 	spawn_ship(Vector2(Globals.projectResolution.x,180))
 	time_start = OS.get_unix_time()
 	
