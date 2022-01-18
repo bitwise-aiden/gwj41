@@ -17,9 +17,11 @@ var time_now = 0
 
 
 func _ready():
+	randomize()
+
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
-	spawn_ship(Vector2(Globals.projectResolution.x,100))
+	spawn_ship(Vector2(Globals.projectResolution.x,180))
 	time_start = OS.get_unix_time()
 	
 func spawn_tentacle(start_pos, end_pos):
@@ -89,4 +91,4 @@ func _physics_process(delta):
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x - tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
 
 	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
-		spawn_ship(Vector2(Globals.projectResolution.x,100))
+		spawn_ship(Vector2(Globals.projectResolution.x,180))

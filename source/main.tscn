@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
 [ext_resource path="res://source/main.gd" type="Script" id=2]
@@ -7,9 +7,58 @@
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=5]
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Parts/water.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/land.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/bubble.png" type="Texture" id=9]
+[ext_resource path="res://source/particles/bubble_controller.gd" type="Script" id=10]
+[ext_resource path="res://source/particles/cloud_controller.gd" type="Script" id=11]
+[ext_resource path="res://assets/sprites/cloud_1.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/cloud_3.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/cloud_2.png" type="Texture" id=14]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="sky" type="ColorRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 250.0
+color = Color( 0.415686, 0.713726, 0.768627, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="water" parent="." instance=ExtResource( 7 )]
+show_behind_parent = true
+
+[node name="land" type="Sprite" parent="."]
+position = Vector2( 640, 567 )
+texture = ExtResource( 8 )
+
+[node name="bubbles" type="CPUParticles2D" parent="."]
+position = Vector2( 123, 666 )
+emitting = false
+amount = 5
+lifetime = 5.0
+one_shot = true
+lifetime_randomness = 0.2
+texture = ExtResource( 9 )
+direction = Vector2( 1, 1 )
+spread = 180.0
+gravity = Vector2( 0, -20 )
+initial_velocity = 10.0
+script = ExtResource( 10 )
+
+[node name="clouds" type="CPUParticles2D" parent="."]
+position = Vector2( -123, 75 )
+emitting = false
+amount = 1
+lifetime = 150.0
+one_shot = true
+texture = ExtResource( 13 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 10.0
+script = ExtResource( 11 )
+textures = [ ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ) ]
 
 [node name="text" type="Label" parent="."]
 anchor_left = 0.5
@@ -30,14 +79,7 @@ __meta__ = {
 
 [node name="kracken_head" type="Sprite" parent="."]
 position = Vector2( 640, 600 )
-z_index = -1
 texture = ExtResource( 5 )
-
-[node name="HugZone" parent="." instance=ExtResource( 6 )]
-position = Vector2( 640, 606 )
-
-[node name="water" parent="." instance=ExtResource( 7 )]
-show_behind_parent = true
 
 [node name="tentacle" type="ColorRect" parent="."]
 material = ExtResource( 4 )
@@ -47,6 +89,9 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HugZone" parent="." instance=ExtResource( 6 )]
+position = Vector2( 640, 606 )
 
 [node name="HugScore" type="Label" parent="."]
 anchor_left = 0.5
