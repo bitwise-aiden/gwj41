@@ -79,7 +79,7 @@ func _on_OffScreenTimer_timeout():
 	$waterWakeTimer.start()
 
 func _on_RightSail_body_entered(body):
-	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached)):
+	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
 		body.get_parent().attach_to_ship_mast($RightSail)
 		tentaclesAttached.append(body.get_parent())
 		rightSailEnabled = false
@@ -87,7 +87,7 @@ func _on_RightSail_body_entered(body):
 		
 
 func _on_LeftSail_body_entered(body):
-	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached)):
+	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
 		body.get_parent().attach_to_ship_mast($LeftSail)
 		tentaclesAttached.append(body.get_parent())
 		leftSailEnabled = false
