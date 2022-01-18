@@ -17,6 +17,8 @@ var time_now = 0
 
 
 func _ready():
+	randomize()
+
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 	spawn_ship(Vector2(Globals.projectResolution.x,100))
