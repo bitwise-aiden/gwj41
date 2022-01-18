@@ -41,7 +41,7 @@ func __create_surface_points() -> void:
 	for i in range(num_points + 1):
 		# Rounding on the x here to avoid triangulation errors
 		var xpos = round((top_right_point.x - top_left_point.x) / num_points * i)
-		var ypos = top_left_point.y
+		var ypos = target_height
 		var temp_dict : Dictionary
 		# Overwrite collision polygon points
 		new_polygon.push_back(Vector2(xpos, ypos))
@@ -98,7 +98,7 @@ func __update_horizontals() -> void:
 func splash(pixel_x_location : int, velocity_change : float) -> void:
 	var index = round(pixel_x_location * num_points / (top_right_point.x - top_left_point.x))
 	if index > 0 and index < num_points + 1:
-		 point_dict[str(index)]["velocity"] += velocity_change
+		 point_dict[str(index)]["velocity"].y += velocity_change
 
 func __complete_polygon(new_polygon) -> void:
 	# Add last two points to the polygon, to close the loop.

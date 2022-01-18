@@ -17,6 +17,8 @@ var hugHearts = 5
 var hugZone
 var hugSpeed = Globals.hugSpeed
 
+var water
+
 func _ready():
 	rng.randomize()
 	$OffScreenTimer.wait_time = rng.randf_range(min_wait_time, max_wait_time)
@@ -24,6 +26,8 @@ func _ready():
 	rng.randomize()
 	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * movement_speed_modifier)
 	hugZone = Globals.get_hug_zone()
+	
+	water = get_parent().get_node("water")
 	
 	reset_collision()
 
@@ -71,6 +75,8 @@ func _on_OffScreenTimer_timeout():
 	active = true
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
+	water.splash(clamp(position.x, 0, 1280), 5)
+	$waterWakeTimer.start()
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached)):
@@ -86,3 +92,7 @@ func _on_LeftSail_body_entered(body):
 		tentaclesAttached.append(body.get_parent())
 		leftSailEnabled = false
 		reset_collision()
+
+
+func _on_waterWakeTimer_timeout() -> void:
+	water.splash(clamp(position.x, 0, 1280) + 20, 3)
