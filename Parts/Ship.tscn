@@ -74,6 +74,10 @@ position = Vector2( 38, 64 )
 rotation = 1.5708
 shape = SubResource( 7 )
 
+[node name="waterWakeTimer" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="OffScreenTimer" to="." method="_on_OffScreenTimer_timeout"]
 [connection signal="body_entered" from="LeftSail" to="." method="_on_LeftSail_body_entered"]
 [connection signal="body_entered" from="RightSail" to="." method="_on_RightSail_body_entered"]
+[connection signal="timeout" from="waterWakeTimer" to="." method="_on_waterWakeTimer_timeout"]

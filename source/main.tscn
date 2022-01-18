@@ -27,7 +27,6 @@ __meta__ = {
 }
 
 [node name="water" parent="." instance=ExtResource( 7 )]
-show_behind_parent = true
 
 [node name="land" type="Sprite" parent="."]
 position = Vector2( 640, 567 )
