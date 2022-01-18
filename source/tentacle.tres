@@ -15,10 +15,20 @@ uniform vec4 color_suction: hint_color;
 const float width_start = 30.0;
 const float width_end = 10.0;
 
-
-vec2 from_vertices(float r, float c)
+vec2 from_vertices(int r, int c)
 {
-	return texture(vertices_array, vec2(c, r)).xy;
+//	return texelFetch(vertices_array, ivec2(c, r), 0).xy;
+
+//	float rs = trunc(10.0 / float(row_count)) / 10.0; 
+//	float rf = float(r) * rs;
+//
+//	float cs = trunc(10.0 / float(col_count + 1)) / 10.0;
+//	float cf = float(c) * cs;
+	
+	float rf = float(r) / float(row_count);
+	float cf = float(c) / float(col_count + 1);
+	
+	return texture(vertices_array, vec2(cf, 1.0), 0).xy;
 }
 
 
@@ -52,16 +62,14 @@ float distance_to_line(vec2 a, vec2 b, vec2 p)
 }
 
 
-float line_length(float r, vec2 pixel_size) 
+float line_length(int r) 
 {
-	
 	float total_length = 0.0;
 	
 	for (int c = 2; c < col_count + 1; ++c)
 	{
-		float cf = float(c) / float(col_count);
-		vec2 a = from_vertices(r, cf - 1.0 * pixel_size.y);
-		vec2 b = from_vertices(r, cf);
+		vec2 a = from_vertices(r, c - 1);
+		vec2 b = from_vertices(r, c);
 		
 		total_length += length(b - a);
 	}
@@ -70,18 +78,17 @@ float line_length(float r, vec2 pixel_size)
 }
 
 
-vec4 line_color(float r, vec2 point, vec2 pixel_size)
+vec4 line_color(int r, vec2 point)
 {
 	vec4 color = vec4(0.0);
 	
-	float lt = line_length(r, pixel_size);
+	float lt = line_length(r);
 	float lc = 0.0;
 	
 	for (int c = 2; c < col_count + 1; ++c)
 	{
-		float cf = float(c) / float(col_count);
-		vec2 a = from_vertices(r, cf - 1.0 * pixel_size.y);
-		vec2 b = from_vertices(r, cf);
+		vec2 a = from_vertices(r, c - 1);
+		vec2 b = from_vertices(r, c);
 
 		vec2 pl = point_on_line(a, b, point);
 		float dp = length(pl - point);
@@ -108,8 +115,7 @@ vec4 line_color(float r, vec2 point, vec2 pixel_size)
 	
 	for (int c = 2; c < col_count + 1; c += 3)
 	{
-		float cf = float(c) / float(col_count);
-		vec2 a = from_vertices(r, cf);
+		vec2 a = from_vertices(r, c);
 		float d = length(point - a);
 		
 		if (4.0 < d && d < 7.0)
@@ -131,8 +137,7 @@ void fragment()
 	// Loop over each rope
 	for (int rope = 0; rope < row_count; rope++)
 	{
-		float rf = 1.0 - float(rope) * TEXTURE_PIXEL_SIZE.y;
-		vec4 new_color = line_color(rf, point, SCREEN_PIXEL_SIZE);
+		vec4 new_color = line_color(rope, point);
 		if (new_color.a != 0.0)
 		{
 			color = new_color;
