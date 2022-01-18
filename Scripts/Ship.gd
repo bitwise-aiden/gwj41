@@ -75,7 +75,7 @@ func _on_OffScreenTimer_timeout():
 	active = true
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
-	water.splash(clamp(position.x, 0, 1280), 10)
+	water.splash(clamp(position.x, 0, 1280), 5)
 	$waterWakeTimer.start()
 
 func _on_RightSail_body_entered(body):
@@ -95,4 +95,4 @@ func _on_LeftSail_body_entered(body):
 
 
 func _on_waterWakeTimer_timeout() -> void:
-	water.splash(clamp(position.x, 0, 1280) + 20, movement_speed * 1.5)
+	water.splash(clamp(position.x, 0, 1280) + 20, movement_speed * 4.0)
