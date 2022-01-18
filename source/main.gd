@@ -6,7 +6,7 @@ var ships = []
 var start_pos := Vector2.ZERO
 var end_pos := Vector2.ZERO
 var ropes = []
-var max_tentacles = 8
+var max_tentacles = 6
 var tentacle_move_speed = Globals.tentacle_player_move_speed
 var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
 var left_tentacle
@@ -36,7 +36,7 @@ func _ready():
 	time_start = OS.get_unix_time()
 	
 func spawn_tentacle(start_pos, end_pos):
-	if len(ropes) < max_tentacles:
+	if len(ropes) <= max_tentacles:
 			var rope = Rope.instance()
 			add_child(rope)
 			rope.spawn_rope(start_pos, end_pos)
