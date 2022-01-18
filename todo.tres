@@ -1,3 +1,4 @@
-[gd_resource type="TextFile" format=2]
-
-[resource]
+todo:
+	detatch tentacles after a timer. 
+	add a sperm whale enemy
+		after 3 ships then every 5, sperm whale comes in from the side and swims by

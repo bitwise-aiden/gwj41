@@ -26,6 +26,10 @@ var hugScore = 100.0
 var hugScoreDecayTickDelay = 0.5
 var hugScoreDecayTickAmount = 1
 onready var hugScoreTextField = get_tree().get_root().get_node("main/HugScore/Score")
+onready var shipsHuggedCountTextField = get_tree().get_root().get_node("main/ShipsHuggedCount/Count")
+var shipHuggedCount = 0
+var whaleShipWaitCount = 3
+var whaleEnemy
 
 #"Gravity"
 var tentacle_correction_move_speed = Vector2(-5, 3)

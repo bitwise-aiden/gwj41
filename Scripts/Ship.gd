@@ -26,9 +26,7 @@ func _ready():
 	rng.randomize()
 	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * movement_speed_modifier)
 	hugZone = Globals.get_hug_zone()
-	
 	water = get_parent().get_node("water")
-	
 	reset_collision()
 
 func reset_collision():
@@ -69,6 +67,11 @@ func destroy_object():
 		queue_free()
 
 func get_hugged():
+	Globals.shipHuggedCount += 1
+	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
+	print("POS MOD: ", posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount))
+	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
+			Globals.whaleEnemy.set_active(true)
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
@@ -84,6 +87,8 @@ func _on_RightSail_body_entered(body):
 		tentaclesAttached.append(body.get_parent())
 		rightSailEnabled = false
 		reset_collision()
+		# After a few seconds, the tentacle will break free by itself.
+		$BreakFreeTimer.start()
 		
 
 func _on_LeftSail_body_entered(body):
@@ -92,7 +97,15 @@ func _on_LeftSail_body_entered(body):
 		tentaclesAttached.append(body.get_parent())
 		leftSailEnabled = false
 		reset_collision()
-
+		# After a few seconds, the tentacle will break free by itself.
+		$BreakFreeTimer.start()
 
 func _on_waterWakeTimer_timeout() -> void:
 	water.splash(clamp(position.x, 0, 1280) + 20, movement_speed * 4.0)
+
+func _on_BreakFreeTimer_timeout():
+	if len(tentaclesAttached) == 1:
+		tentaclesAttached[0].detatch_from_ship_mast(tentaclesAttached[0].get_mast_attached())
+		tentaclesAttached = []
+		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
+		reset_collision()

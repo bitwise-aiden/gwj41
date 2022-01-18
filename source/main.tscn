@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=1]
 [ext_resource path="res://source/main.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://assets/sprites/cloud_1.png" type="Texture" id=12]
 [ext_resource path="res://assets/sprites/cloud_3.png" type="Texture" id=13]
 [ext_resource path="res://assets/sprites/cloud_2.png" type="Texture" id=14]
+[ext_resource path="res://Parts/Whale.tscn" type="PackedScene" id=15]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 2 )
@@ -58,6 +59,9 @@ gravity = Vector2( 0, 0 )
 initial_velocity = 10.0
 script = ExtResource( 11 )
 textures = [ ExtResource( 12 ), ExtResource( 14 ), ExtResource( 13 ) ]
+
+[node name="Whale" parent="." instance=ExtResource( 15 )]
+position = Vector2( 1348, 405 )
 
 [node name="text" type="Label" parent="."]
 anchor_left = 0.5
@@ -115,6 +119,36 @@ anchor_bottom = 0.5
 margin_left = 54.0
 margin_top = -5.0
 margin_right = 126.0
+margin_bottom = 11.0
+custom_fonts/font = ExtResource( 1 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShipsHuggedCount" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 797.0
+margin_top = 641.0
+margin_right = 1005.0
+margin_bottom = 653.0
+custom_fonts/font = ExtResource( 1 )
+text = "Ships Hugged:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count" type="Label" parent="ShipsHuggedCount"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 102.0
+margin_top = -5.0
+margin_right = 174.0
 margin_bottom = 11.0
 custom_fonts/font = ExtResource( 1 )
 text = "0"
