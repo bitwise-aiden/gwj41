@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/dragged_under_splash.mp3-16b762024a3b10b91647b2d31a279e19.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/sfx/dragged_under_splash.mp3"
+dest_files=[ "res://.import/dragged_under_splash.mp3-16b762024a3b10b91647b2d31a279e19.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

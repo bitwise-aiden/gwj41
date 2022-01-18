@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dragged_under_splash.ogg-c6a77c83cbf4366cedf895fb1b207ed8.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/dragged_under_splash.ogg"
+dest_files=[ "res://.import/dragged_under_splash.ogg-c6a77c83cbf4366cedf895fb1b207ed8.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
