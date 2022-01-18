@@ -49,11 +49,12 @@ func __create_surface_points() -> void:
 		temp_dict["velocity"] = Vector2(0, 0)
 
 		point_dict[str(i)] = temp_dict
-
-	__complete_polygon(new_polygon)
+	
+	new_polygon.push_back(Vector2(1280, 720))
+	new_polygon.push_back(Vector2(0, 720))
+	$Polygon2D.set_polygon(new_polygon)
 
 func __update_verticals() -> void:
-	var new_polygon : PoolVector2Array = PoolVector2Array()
 	for i in range(num_points + 1):
 		var pos = point_dict[str(i)]["position"]
 
@@ -64,11 +65,11 @@ func __update_verticals() -> void:
 		var new_position = pos + point_dict[str(i)]["velocity"]
 
 		# Rounding on the y here to avoid triangulation errors
-		new_polygon.push_back(Vector2(new_position.x, round(new_position.y)))
+		$Polygon2D.polygon[i] = Vector2(new_position.x, round(new_position.y))
 		point_dict[str(i)]["position"] = new_position
 		point_dict[str(i)]["velocity"].y += acceleration
 
-	__complete_polygon(new_polygon)
+	__complete_polygon()
 
 func __update_horizontals() -> void:
 	# So what this does is it propogates a change in height along all the springs.
@@ -100,17 +101,15 @@ func splash(pixel_x_location : int, velocity_change : float) -> void:
 	if index > 0 and index < num_points + 1:
 		 point_dict[str(index)]["velocity"].y += velocity_change
 
-func __complete_polygon(new_polygon) -> void:
+func __complete_polygon() -> void:
 	# Add last two points to the polygon, to close the loop.
-	new_polygon.push_back(Vector2(1280, 720))
-	new_polygon.push_back(Vector2(0, 720))
+	$Polygon2D.polygon[-2] = Vector2(1280, 720)
+	$Polygon2D.polygon[-1] = Vector2(0, 720)
 
 	# Set the old polygon to the new polygon
-	if not Geometry.triangulate_polygon(new_polygon).empty():
-		collision_polygon.set_polygon(new_polygon)
-
+	if not Geometry.triangulate_polygon($Polygon2D.polygon).empty():
 		# This bullshit is to set the UV's on the polygon so the shader works properly
-		var v0 = new_polygon
+		var v0 = $Polygon2D.polygon
 		var x0 = INF
 		var y0 = INF
 		var x1 = -INF
@@ -125,5 +124,4 @@ func __complete_polygon(new_polygon) -> void:
 		var uv = PoolVector2Array([])
 		for v in v0:
 			uv.append((v + d) / s)
-		$Polygon2D.set_polygon(v0)
 		$Polygon2D.set_uv(PoolVector2Array(uv))

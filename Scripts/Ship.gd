@@ -95,4 +95,4 @@ func _on_LeftSail_body_entered(body):
 
 
 func _on_waterWakeTimer_timeout() -> void:
-	water.splash(clamp(position.x, 0, 1280) + 20, 3)
+	water.splash(clamp(position.x, 0, 1280) + 20, movement_speed * 4.0)
