@@ -57,7 +57,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("leftTentacleGoUp") and \
 		(ropes[0].getRopeEndPoint().y + tentacle_move_speed.y >= Globals.tentacle_height_cap) and \
 		ropes[0].shipMastAttachedTo == null:
-			ropes[0].setRopeEndPoint(Vector2(ropes[0].getRopeEndPoint().x, ropes[0].getRopeEndPoint().y + tentacle_move_speed.y))
+			ropes[0].setRopeEndPoint(Vector2(ropes[0].getRopeEndPoint().x - (tentacle_move_speed.x * 2), ropes[0].getRopeEndPoint().y + tentacle_move_speed.y))
 		else:
 			if ropes[0].getRopeEndPoint().y < Globals.initial_end_left_tentacle_position.y:
 				ropes[0].setRopeEndPoint(Vector2(ropes[0].getRopeEndPoint().x, ropes[0].getRopeEndPoint().y + tentacle_correction_move_speed.y))
@@ -76,7 +76,7 @@ func _physics_process(delta):
 		if Input.is_action_pressed("rightTentacleGoUp") and \
 		(ropes[1].getRopeEndPoint().y + tentacle_move_speed.y >= Globals.tentacle_height_cap) and \
 		ropes[1].shipMastAttachedTo == null:
-			ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x, ropes[1].getRopeEndPoint().y + tentacle_move_speed.y))
+			ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x + (tentacle_move_speed.x * 2), ropes[1].getRopeEndPoint().y + tentacle_move_speed.y))
 		else:
 			if ropes[1].getRopeEndPoint().y < Globals.initial_end_right_tentacle_position.y:
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x, ropes[1].getRopeEndPoint().y + tentacle_correction_move_speed.y))
@@ -89,6 +89,8 @@ func _physics_process(delta):
 		else:
 			if ropes[1].getRopeEndPoint().x < Globals.initial_end_right_tentacle_position.x:
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x - tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
-
+			if ropes[1].getRopeEndPoint().x > Globals.initial_end_right_tentacle_position.x:
+				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x + tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
+	
 	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
 		spawn_ship(Vector2(Globals.projectResolution.x,180))
