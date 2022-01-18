@@ -4,7 +4,8 @@
 code = "shader_type canvas_item;
 
 uniform sampler2D vertices_array; 
-uniform int array_count;
+uniform int row_count;
+uniform int col_count;
 
 uniform vec4 color_outline: hint_color;
 uniform vec4 color_shadow: hint_color;
@@ -15,16 +16,11 @@ const float width_start = 30.0;
 const float width_end = 10.0;
 
 
-vec4 from_vertices(int r, int c)
+vec2 from_vertices(float r, float c)
 {
-	return texelFetch(vertices_array, ivec2(c, r), 0);
+	return texture(vertices_array, vec2(c, r)).xy;
 }
 
-
-int line_count(int r)
-{
-	return int(from_vertices(r, 0).x);
-}
 
 float lerp(float a, float b, float t)
 {
@@ -56,16 +52,16 @@ float distance_to_line(vec2 a, vec2 b, vec2 p)
 }
 
 
-float line_length(int r) 
+float line_length(float r, vec2 pixel_size) 
 {
-	int count = line_count(r);
 	
 	float total_length = 0.0;
 	
-	for (int c = 2; c < count + 1; ++c)
+	for (int c = 2; c < col_count + 1; ++c)
 	{
-		vec2 a = from_vertices(r, c - 1).xy;
-		vec2 b = from_vertices(r, c).xy;
+		float cf = float(c) / float(col_count);
+		vec2 a = from_vertices(r, cf - 1.0 * pixel_size.y);
+		vec2 b = from_vertices(r, cf);
 		
 		total_length += length(b - a);
 	}
@@ -74,42 +70,47 @@ float line_length(int r)
 }
 
 
-vec4 line_color(int r, vec2 p)
+vec4 line_color(float r, vec2 point, vec2 pixel_size)
 {
 	vec4 color = vec4(0.0);
 	
-	int count = line_count(r);
-	
-	float lt = line_length(r);
+	float lt = line_length(r, pixel_size);
 	float lc = 0.0;
 	
-	for (int c = 2; c < count + 1; ++c)
+	for (int c = 2; c < col_count + 1; ++c)
 	{
-		vec2 a = from_vertices(r, c - 1).xy;
-		vec2 b = from_vertices(r, c).xy;
+		float cf = float(c) / float(col_count);
+		vec2 a = from_vertices(r, cf - 1.0 * pixel_size.y);
+		vec2 b = from_vertices(r, cf);
 
-		vec2 pl = point_on_line(a, b, p);
-		float dp = length(pl - p);
+		vec2 pl = point_on_line(a, b, point);
+		float dp = length(pl - point);
 		float dpl = length(pl - a);
 		
 		float t = (lc + dpl) / lt;
 		
 		float w = lerp(width_start, width_end, t);
-		
-		if (dp < w - 10.0) 
+		if (dp < w - 10.0 )
+		{
 			color = color_tentacle;
+		}
 		if (dp < w - 5.0 && color != color_tentacle) 
+		{
 			color = color_shadow;
+		}
 		if (dp < w && color == vec4(0.0)) 
+		{
 			color = color_outline;
+		}
 		
 		lc += length(b - a);
 	}
 	
-	for (int c = 1; c < count + 1; c += 3)
+	for (int c = 2; c < col_count + 1; c += 3)
 	{
-		vec2 a = from_vertices(r, c).xy;
-		float d = length(p - a);
+		float cf = float(c) / float(col_count);
+		vec2 a = from_vertices(r, cf);
+		float d = length(point - a);
 		
 		if (4.0 < d && d < 7.0)
 		{
@@ -123,16 +124,18 @@ vec4 line_color(int r, vec2 p)
 
 void fragment() 
 {
-	vec2 p = UV * vec2(1280.0, 720.0);
+	vec2 point = UV * vec2(1.0) / SCREEN_PIXEL_SIZE;
 	
 	vec4 color = vec4(0.0);
 	
-	for (int r = 0; r < array_count; ++r)
+	// Loop over each rope
+	for (int rope = 0; rope < row_count; rope++)
 	{
-		vec4 c = line_color(r, p);
-		if (c.a != 0.0)
+		float rf = 1.0 - float(rope) * TEXTURE_PIXEL_SIZE.y;
+		vec4 new_color = line_color(rf, point, SCREEN_PIXEL_SIZE);
+		if (new_color.a != 0.0)
 		{
-			color = c;
+			color = new_color;
 			break;
 		}
 	}

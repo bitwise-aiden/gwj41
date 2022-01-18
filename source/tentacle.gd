@@ -29,7 +29,7 @@ func set_points(vertices_array: Array) -> void:
 
 	for vertices in vertices_array:
 		col_count = max(col_count, vertices.size())
-
+	
 	__image.create(col_count + 1, row_count, false, Image.FORMAT_RGBAH)
 	__image.lock()
 
@@ -53,7 +53,7 @@ func set_points(vertices_array: Array) -> void:
 				0.0,
 				0.0
 			)
-
+#			print(packed_data)
 			__image.set_pixel(c + 1, r, packed_data)
 
 	__image.unlock()
@@ -61,5 +61,6 @@ func set_points(vertices_array: Array) -> void:
 	__texture.create_from_image(__image)
 
 	material.set_shader_param("vertices_array", __texture)
-	material.set_shader_param("array_count", row_count)
-
+	material.set_shader_param("row_count", row_count)
+	material.set_shader_param("col_count", col_count)
+ 

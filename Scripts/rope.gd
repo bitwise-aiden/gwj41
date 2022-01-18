@@ -22,6 +22,7 @@ onready var rope_end_joint = $RopeEndPiece/C/J
 func _ready() -> void:
 	add_to_group("tentacle")
 	rope_end_piece.add_to_group("ropeEndPiece")
+	get_rope_points()
 
 func _process(_delta):
 	get_rope_points()
