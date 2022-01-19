@@ -88,6 +88,7 @@ _global_script_class_icons={
 
 config/name="gwj41"
 run/main_scene="res://source/scenes/main.tscn"
+boot_splash/image="res://assets/build/loading.png"
 config/icon="res://icon.png"
 
 [autoload]
