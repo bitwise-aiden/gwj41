@@ -8,6 +8,7 @@ collision_mask = 2
 mode = 1
 
 [node name="C" type="CollisionShape2D" parent="."]
+scale = Vector2( 30, 30 )
 shape = SubResource( 1 )
 
 [node name="J" type="PinJoint2D" parent="C"]

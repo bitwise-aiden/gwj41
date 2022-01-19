@@ -63,6 +63,10 @@ func getInitialStartPosition():
 func getInitialEndPosition():
 	return(initial_end_position)
 
+func resetToInitialPositions():
+	rope_start_piece.global_position = initial_start_position
+	rope_end_piece.global_position = initial_end_position
+
 func spawn_rope(start_pos:Vector2, end_pos:Vector2):
 	rope_start_piece.global_position = start_pos
 	rope_end_piece.global_position = end_pos

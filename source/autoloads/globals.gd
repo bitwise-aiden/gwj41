@@ -23,17 +23,21 @@ var ship_speed_modifier = 1
 var hug_zone = null
 var hugSpeed = Vector2(3, 3)
 var hugScore = 100.0
-var hugScoreDecayTickDelay = 0.5
+var hugScoreDecayTickDelay = 0.8
 var hugScoreDecayTickAmount = 1
+var hugScoreDecayTickAmountInitial = 1
+onready var whaleHugText = get_tree().get_root().get_node("main/hugWhaleText")
+onready var hugMiniGamePromptText = get_tree().get_root().get_node("main/hugMiniGamePromptText")
 onready var hugScoreTextField = get_tree().get_root().get_node("main/HugScore/Score")
 onready var shipsHuggedCountTextField = get_tree().get_root().get_node("main/ShipsHuggedCount/Count")
+
+var whaleTentaclesAttached = []
 var shipHuggedCount = 0
 var whaleShipWaitCount = 3
 var whaleEnemy
 
 #"Gravity"
 var tentacle_correction_move_speed = Vector2(-5, 3)
-
 # Ships variables
 var max_number_of_ships_on_screen = 2
 
@@ -41,6 +45,10 @@ func set_hug_zone(hugZone):
 	hug_zone = hugZone
 func get_hug_zone():
 	return(hug_zone)
+
+#func set_whale_tentacle_attached(tentacles):
+	#whaleTentaclesAttached = []
+	#whaleTentaclesAttached = tentacles
 
 func set_tentacle_start_positions(start_left_pos:Vector2, end_left_pos:Vector2, start_right_pos:Vector2, end_right_pos:Vector2):
 	initial_start_left_tentacle_position = start_left_pos

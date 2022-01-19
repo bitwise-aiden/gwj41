@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=2]
@@ -15,6 +15,25 @@
 [ext_resource path="res://Parts/Whale.tscn" type="PackedScene" id=13]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=14]
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/spacebar-press-anim.png" type="Texture" id=16]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 16 )
+region = Rect2( 0, 0, 145, 125 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 16 )
+region = Rect2( 145, 0, 145, 125 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "PressSpacebar",
+"speed": 8.0
+} ]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 3 )
@@ -28,6 +47,7 @@ __meta__ = {
 }
 
 [node name="water" parent="." instance=ExtResource( 12 )]
+visible = false
 
 [node name="land" type="Sprite" parent="."]
 position = Vector2( 640, 567 )
@@ -60,8 +80,8 @@ initial_velocity = 10.0
 script = ExtResource( 7 )
 textures = [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ) ]
 
-[node name="Whale" parent="." instance=ExtResource( 13 )]
-position = Vector2( 1348, 405 )
+[node name="Whale" parent="." groups=["whale"] instance=ExtResource( 13 )]
+position = Vector2( 1350, 420 )
 
 [node name="text" type="Label" parent="."]
 anchor_left = 0.5
@@ -80,6 +100,49 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="hugWhaleText" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 357.0
+margin_top = 412.0
+margin_right = 920.0
+margin_bottom = 432.0
+custom_fonts/font = ExtResource( 2 )
+text = "PRESS SPACEBAR TO HUG WHALE!!"
+align = 1
+valign = 1
+percent_visible = 0.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hugMiniGamePromptText" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 357.0
+margin_top = 127.0
+margin_right = 920.0
+margin_bottom = 167.0
+custom_fonts/font = ExtResource( 2 )
+text = "MASH SPACEBAR TO HUG WHALE!!!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="hugMiniGamePromptText"]
+position = Vector2( 270, 101 )
+frames = SubResource( 3 )
+animation = "PressSpacebar"
+frame = 1
+playing = true
+
 [node name="kracken_head" type="Sprite" parent="."]
 position = Vector2( 640, 600 )
 texture = ExtResource( 15 )
@@ -93,8 +156,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HugZone" parent="." instance=ExtResource( 11 )]
+[node name="HugZone" parent="." groups=["hugZone"] instance=ExtResource( 11 )]
 position = Vector2( 640, 606 )
+
+[node name="WhaleHugZone" parent="." groups=["whaleHugZone"] instance=ExtResource( 11 )]
+position = Vector2( 636, 466 )
+scale = Vector2( 3, 1 )
+whaleZone = true
 
 [node name="HugScore" type="Label" parent="."]
 anchor_left = 0.5
