@@ -25,7 +25,8 @@ var input: Dictionary = {
 	"leftTentacleGoRight": InputKey.new(KEY_Q),
 	"leftTentacleGoUp": InputKey.new(KEY_W),
 	"rightTentacleGoLeft": InputKey.new(KEY_O),
-	"rightTentacleGoUp": InputKey.new(KEY_P)
+	"rightTentacleGoUp": InputKey.new(KEY_P),
+	"whaleHug": InputKey.new(KEY_SPACE)
 }
 
 var __used_keys: Dictionary  = {

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/sprites/evil whale.png" type="Texture" id=1]
-[ext_resource path="res://Whale.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Whale.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/bubble.png" type="Texture" id=3]
 [ext_resource path="res://source/particles/bubble_controller.gd" type="Script" id=4]
 
@@ -16,17 +16,18 @@ animations = [ {
 [node name="Whale" type="Node2D"]
 script = ExtResource( 2 )
 
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2( 0.4, 0.4 )
+collision_layer = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+build_mode = 1
+polygon = PoolVector2Array( -117, -9, -133, -4, -153, 63, -104, 111, 2, 108, 39, 90, 80, 52, 107, -9, 115, -63, 154, -101, 157, -114, 147, -129, 102, -93, 41, -114, 40, -92, 46, -82, 96, -61, 73, -20, 20, 5, -34, 6, -117, -9, -117, -9 )
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.4, 0.4 )
 frames = SubResource( 1 )
 animation = "peek"
-
-[node name="Area2D" type="Area2D" parent="AnimatedSprite"]
-collision_layer = 2
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite/Area2D"]
-build_mode = 1
-polygon = PoolVector2Array( -117, -9, -133, -4, -153, 63, -104, 111, 2, 108, 39, 90, 80, 52, 107, -9, 115, -63, 154, -101, 157, -114, 147, -129, 102, -93, 41, -114, 40, -92, 46, -82, 96, -61, 73, -20, 20, 5, -34, 6, -117, -9, -117, -9 )
 
 [node name="OffscreenTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -48,6 +49,28 @@ gravity = Vector2( 0, -20 )
 initial_velocity = 10.0
 script = ExtResource( 4 )
 
-[connection signal="body_entered" from="AnimatedSprite/Area2D" to="." method="_on_Area2D_body_entered"]
+[node name="AttachmentPoints" type="Node2D" parent="."]
+
+[node name="LeftAttachpoint1" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( -35, -3 )
+
+[node name="LeftAttachpoint2" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( -61, 25 )
+
+[node name="LeftAttachpoint3" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( -43, 42 )
+
+[node name="RightAttachpoint1" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( 16, -45 )
+
+[node name="RightAttachpoint2" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( 45, -13 )
+
+[node name="RightAttachpoint3" type="Position2D" parent="AttachmentPoints"]
+position = Vector2( 24, 28 )
+
+[node name="BreakFreeTimer" type="Timer" parent="."]
+
 [connection signal="timeout" from="OffscreenTimer" to="." method="_on_OffscreenTimer_timeout"]
 [connection signal="timeout" from="TeaseTimer" to="." method="_on_TeaseTimer_timeout"]
+[connection signal="timeout" from="BreakFreeTimer" to="." method="_on_BreakFreeTimer_timeout"]
