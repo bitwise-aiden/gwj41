@@ -87,7 +87,7 @@ vec2 get_point_on_tentacle(int tentacle_index, int part_count, vec2 point)
 	vec2 part_position_prev = get_tentacle_part_position(tentacle_index, 1);
 	vec2 closest_point = part_position_prev;
 	
-	for (int tentacle_part = 2; tentacle_part <= part_count; ++tentacle_part)
+	for (int tentacle_part = 2; tentacle_part <= part_count + 1; ++tentacle_part)
 	{
 		vec2 part_position_curr = get_tentacle_part_position(tentacle_index, tentacle_part + 1);
 		
@@ -105,7 +105,7 @@ vec2 get_point_on_tentacle(int tentacle_index, int part_count, vec2 point)
 
 vec4 get_color_from_suction(int tentacle_index, int part_count, int separation, vec2 point)
 {
-	for (int tentacle_part = 1; tentacle_part < part_count; tentacle_part += separation)
+	for (int tentacle_part = 1; tentacle_part < part_count + 1; tentacle_part += separation)
 	{
 		vec2 part_position = get_tentacle_part_position(tentacle_index, tentacle_part);
 		float distance_to_point = length(point - part_position);
@@ -140,7 +140,7 @@ vec4 get_color_from_tentacle(int tentacle_index, vec2 point)
 	float tentacle_length = get_tentacle_length(tentacle_index, part_count);
 	float length_traversed = 0.0;
 	
-	for (int tentacle_part = 1; tentacle_part < part_count; ++tentacle_part)
+	for (int tentacle_part = 1; tentacle_part < part_count + 1; ++tentacle_part)
 	{
 		vec2 part_position_a = get_tentacle_part_position(tentacle_index, tentacle_part);
 		vec2 part_position_b = get_tentacle_part_position(tentacle_index, tentacle_part + 1);
