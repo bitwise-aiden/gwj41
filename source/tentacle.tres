@@ -8,8 +8,8 @@ uniform int array_count;
 
 uniform vec4 color_outline: hint_color;
 uniform vec4 color_shadow: hint_color;
-uniform vec4 color_tentacle: hint_color; 
-uniform vec4 color_suction: hint_color; 
+uniform vec4 color_tentacle: hint_color;
+uniform vec4 color_suction: hint_color;
 
 const float width_start = 30.0;
 const float width_end = 10.0;
@@ -20,6 +20,7 @@ vec4 from_vertices(int r, int c)
 	return texelFetch(vertices_array, ivec2(c, r), 0);
 }
 
+
 vec2 position_from_vertices(int r, int c)
 {
 	return from_vertices(r, c).xy * vec2(1280.0, 720.0);
@@ -28,8 +29,9 @@ vec2 position_from_vertices(int r, int c)
 
 int line_count(int r)
 {
-	return int(from_vertices(r, 0).x);
+	return int(from_vertices(r, 0).x * 1000.0);
 }
+
 
 float lerp(float a, float b, float t)
 {
@@ -101,11 +103,11 @@ vec4 line_color(int r, vec2 p)
 		
 		float w = lerp(width_start, width_end, t);
 		
-		if (dp < w - 10.0) 
+		if (dp < w - 10.0)
 			color = color_tentacle;
-		if (dp < w - 5.0 && color != color_tentacle) 
+		if (dp < w - 5.0 && color != color_tentacle)
 			color = color_shadow;
-		if (dp < w && color == vec4(0.0)) 
+		if (dp < w && color == vec4(0.0))
 			color = color_outline;
 		
 		lc += length(b - a);
@@ -119,14 +121,14 @@ vec4 line_color(int r, vec2 p)
 		if (4.0 < d && d < 7.0)
 		{
 			color = color_suction;
-		} 
+		}
 	}
 	
 	return color;
 }
 
 
-void fragment() 
+void fragment()
 {
 	vec2 p = UV * vec2(1280.0, 720.0);
 	

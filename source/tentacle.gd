@@ -36,7 +36,7 @@ func set_points(vertices_array: Array) -> void:
 	for r in row_count:
 		var vertices: PoolVector2Array = vertices_array[r]
 		var meta_data: Color = Color(
-			vertices.size(),
+			vertices.size() / 1000.0,
 			0.0,
 			0.0,
 			0.0
