@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://source/helpers/player_input.gd"
 }, {
+"base": "Node2D",
+"class": "Rope",
+"language": "GDScript",
+"path": "res://Scripts/rope.gd"
+}, {
 "base": "RigidBody2D",
 "class": "RopePiece",
 "language": "GDScript",
@@ -53,6 +58,16 @@ _global_script_classes=[ {
 "class": "TaskQueue",
 "language": "GDScript",
 "path": "res://source/helpers/tasks/task_queue.gd"
+}, {
+"base": "Reference",
+"class": "TentacleData",
+"language": "GDScript",
+"path": "res://source/data/tentacle_data.gd"
+}, {
+"base": "ColorRect",
+"class": "TentacleRenderer",
+"language": "GDScript",
+"path": "res://source/components/tentacle_renderer.gd"
 } ]
 _global_script_class_icons={
 "BaseTask": "",
@@ -61,15 +76,18 @@ _global_script_class_icons={
 "CurrentQueue": "",
 "ParticleController": "",
 "PlayerInput": "",
+"Rope": "",
 "RopePiece": "",
 "Task": "",
-"TaskQueue": ""
+"TaskQueue": "",
+"TentacleData": "",
+"TentacleRenderer": ""
 }
 
 [application]
 
 config/name="gwj41"
-run/main_scene="res://source/main.tscn"
+run/main_scene="res://source/scenes/main.tscn"
 config/icon="res://icon.png"
 
 [autoload]

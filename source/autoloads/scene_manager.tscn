@@ -3,7 +3,7 @@
 [ext_resource path="res://source/autoloads/scene_manager.gd" type="Script" id=1]
 [ext_resource path="res://source/menus/menu_start.tscn" type="PackedScene" id=2]
 [ext_resource path="res://source/menus/menu_credits.tscn" type="PackedScene" id=3]
-[ext_resource path="res://source/main.tscn" type="PackedScene" id=4]
+[ext_resource path="res://source/scenes/main.tscn" type="PackedScene" id=4]
 
 
 
