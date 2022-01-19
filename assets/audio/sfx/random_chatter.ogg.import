@@ -11,5 +11,5 @@ dest_files=[ "res://.import/random_chatter.ogg-78d84c4c627ee1a8b43326ddc2eedaf0.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

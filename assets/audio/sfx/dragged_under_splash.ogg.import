@@ -11,5 +11,5 @@ dest_files=[ "res://.import/dragged_under_splash.ogg-c6a77c83cbf4366cedf895fb1b2
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

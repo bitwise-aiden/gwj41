@@ -11,5 +11,5 @@ dest_files=[ "res://.import/ship_bell.ogg-3fbf2f4566b35fffb59228d7c00bbd9c.oggst
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

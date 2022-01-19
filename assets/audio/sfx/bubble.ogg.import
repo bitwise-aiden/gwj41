@@ -11,5 +11,5 @@ dest_files=[ "res://.import/bubble.ogg-9e7703ccd11bdd5e8f926063c51e2905.oggstr" 
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
