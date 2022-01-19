@@ -35,7 +35,9 @@ func _ready():
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, decorative_tentacles_initial_positions[2]))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, decorative_tentacles_initial_positions[3]))
 
-	print(len(decorative_tentacles))
+		
+#	print(len(decorative_tentacles))
+
 	#var left_decorative_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 	spawn_ship(Vector2(Globals.projectResolution.x,180))
 	time_start = OS.get_unix_time()
@@ -52,14 +54,15 @@ func spawn_tentacle(start_pos, end_pos):
 
 func spawn_ship(start_pos):
 	var ship = Ship.instance()
-	add_child(ship)
 	ships.append(ship)
 	ship.global_position = start_pos
-
+  add_child(ship)
+  
 func reset_decorative_tentacles_positions():
 	for i in range(len(ropes)):
 		ropes[i].setRopeEndPoint(decorative_tentacles_initial_positions[i])
-
+    
+    
 func _physics_process(delta):
 	
 	# we shouldn't have to do this every frame: 
@@ -142,3 +145,4 @@ func _physics_process(delta):
 				
 	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
 		spawn_ship(Vector2(Globals.projectResolution.x,180))
+

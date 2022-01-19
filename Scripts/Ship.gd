@@ -17,7 +17,13 @@ var hugHearts = 5
 var hugZone
 var hugSpeed = Globals.hugSpeed
 
+var waterline
+var hasSunk = false
+
 var water
+
+func _enter_tree() -> void:
+	waterline = position.y
 
 func _ready():
 	rng.randomize()
@@ -57,7 +63,11 @@ func _process(delta):
 			global_position.x -= movement_speed
 	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
 		destroy_object()
-			
+	
+	if !hasSunk:
+		check_waterline()
+
+
 func destroy_object():
 	if is_instance_valid(self):
 		for tentacle in tentaclesAttached:
@@ -69,9 +79,10 @@ func destroy_object():
 func get_hugged():
 	Globals.shipHuggedCount += 1
 	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
-	print("POS MOD: ", posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount))
+#	print("POS MOD: ", posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount))
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
 			Globals.whaleEnemy.set_active(true)
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
@@ -80,6 +91,7 @@ func _on_OffScreenTimer_timeout():
 	hugZone = Globals.get_hug_zone()
 	water.splash(clamp(position.x, 0, 1280), 5)
 	$waterWakeTimer.start()
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
@@ -109,3 +121,8 @@ func _on_BreakFreeTimer_timeout():
 		tentaclesAttached = []
 		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		reset_collision()
+
+func check_waterline() -> void:
+	if position.y > waterline:
+		hasSunk = true
+		Event.emit_signal("emit_audio", {"type": "effect", "name": "sunk"})

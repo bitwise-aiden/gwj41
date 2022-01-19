@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ship_bell.ogg-3fbf2f4566b35fffb59228d7c00bbd9c.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/ship_bell.ogg"
+dest_files=[ "res://.import/ship_bell.ogg-3fbf2f4566b35fffb59228d7c00bbd9c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
