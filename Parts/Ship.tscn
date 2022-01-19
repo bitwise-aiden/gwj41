@@ -50,6 +50,7 @@ frame = 2
 centered = false
 
 [node name="OffScreenTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="LeftSail" type="Area2D" parent="."]
 position = Vector2( 11, 21 )

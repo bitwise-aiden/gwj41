@@ -1,5 +1,7 @@
 extends Node
 
+var effect_player = preload("res://source/helpers/soundEffectPlayer.tscn")
+#var music_player = preload("")
 
 var __volume_max: Dictionary = {
 	# key: bus name
@@ -10,12 +12,15 @@ var __volume_min: float = -40.0
 
 # Lifecylce methods
 func _ready() -> void:
+	randomize()
 	var levels = SettingsManager.get_setting("volume", {})
 	for key in levels.keys():
 		var index = self.__get_bus_index(key)
 		self.__volume_max[key] = AudioServer.get_bus_volume_db(index)
 		var value: float = lerp(self.__volume_min, self.__volume_max[key], levels[key])
 		AudioServer.set_bus_volume_db(index, value)
+	
+	var success = Event.connect("emit_audio", self, "play_audio")
 
 
 # Public methods
@@ -42,3 +47,36 @@ func set_volume(name: String, value: float) -> void:
 # Private methods
 func __get_bus_index(name: String) -> int:
 	return AudioServer.get_bus_index(name)
+
+
+func play_audio(incoming : Dictionary) -> void:
+	if incoming["type"] == "effect":
+		var new_player = effect_player.instance()
+		var effect = incoming["name"]
+		new_player.pitch_scale = rand_range(0.85, 1.15)
+		match effect:
+			"bubbles":
+				new_player.audio_path = "res://assets/audio/sfx/bubble.ogg"
+				
+			"ship":
+				var rand_sound = randi() % 3
+				match rand_sound:
+					0:
+						new_player.audio_path = "res://assets/audio/sfx/random_chatter.ogg"
+					1:
+						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
+					2:
+						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
+					
+			"sunk":
+				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
+				
+			"hug":
+				var rand_sound = randi() % 2
+				match rand_sound:
+					0:
+						new_player.audio_path = "res://assets/audio/sfx/hug.ogg"
+					1:
+						new_player.audio_path = "res://assets/audio/sfx/hug2.ogg"
+					
+		self.call_deferred("add_child", new_player)
