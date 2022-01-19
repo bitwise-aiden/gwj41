@@ -47,7 +47,6 @@ __meta__ = {
 }
 
 [node name="water" parent="." instance=ExtResource( 12 )]
-visible = false
 
 [node name="land" type="Sprite" parent="."]
 position = Vector2( 640, 567 )
@@ -140,7 +139,6 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
-frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]

@@ -56,13 +56,13 @@ func spawn_ship(start_pos):
 	var ship = Ship.instance()
 	ships.append(ship)
 	ship.global_position = start_pos
-  add_child(ship)
+	add_child(ship)
   
 func reset_decorative_tentacles_positions():
 	for i in range(len(ropes)):
 		ropes[i].setRopeEndPoint(decorative_tentacles_initial_positions[i])
-    
-    
+	
+	
 func _physics_process(delta):
 	
 	# we shouldn't have to do this every frame: 
