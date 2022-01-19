@@ -20,6 +20,11 @@ vec4 from_vertices(int r, int c)
 	return texelFetch(vertices_array, ivec2(c, r), 0);
 }
 
+vec2 position_from_vertices(int r, int c)
+{
+	return from_vertices(r, c).xy * vec2(1280.0, 720.0);
+}
+
 
 int line_count(int r)
 {
@@ -64,8 +69,8 @@ float line_length(int r)
 	
 	for (int c = 2; c < count + 1; ++c)
 	{
-		vec2 a = from_vertices(r, c - 1).xy;
-		vec2 b = from_vertices(r, c).xy;
+		vec2 a = position_from_vertices(r, c - 1);
+		vec2 b = position_from_vertices(r, c);
 		
 		total_length += length(b - a);
 	}
@@ -85,8 +90,8 @@ vec4 line_color(int r, vec2 p)
 	
 	for (int c = 2; c < count + 1; ++c)
 	{
-		vec2 a = from_vertices(r, c - 1).xy;
-		vec2 b = from_vertices(r, c).xy;
+		vec2 a = position_from_vertices(r, c - 1);
+		vec2 b = position_from_vertices(r, c);
 
 		vec2 pl = point_on_line(a, b, p);
 		float dp = length(pl - p);
@@ -108,7 +113,7 @@ vec4 line_color(int r, vec2 p)
 	
 	for (int c = 1; c < count + 1; c += 3)
 	{
-		vec2 a = from_vertices(r, c).xy;
+		vec2 a = position_from_vertices(r, c);
 		float d = length(p - a);
 		
 		if (4.0 < d && d < 7.0)

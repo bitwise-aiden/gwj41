@@ -23,18 +23,18 @@ func _ready():
 
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
-	
+
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 100,480)))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 100,480)))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_left_tentacle_position, Vector2(Globals.initial_end_left_tentacle_position.x - 150,560)))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, Vector2(Globals.initial_end_right_tentacle_position.x + 100,480)))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)))
-		
+
 	print(len(decorative_tentacles))
 	#var left_decorative_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 	spawn_ship(Vector2(Globals.projectResolution.x,180))
 	time_start = OS.get_unix_time()
-	
+
 func spawn_tentacle(start_pos, end_pos):
 	if len(ropes) <= max_tentacles:
 			var rope = Rope.instance()
@@ -50,19 +50,19 @@ func spawn_ship(start_pos):
 	add_child(ship)
 	ships.append(ship)
 	ship.global_position = start_pos
-	
+
 func _physics_process(delta):
 	if Globals.hugScore <= 0:
 		time_now = OS.get_unix_time()
 		var time_elapsed = time_now - time_start
 		centerText.text = str("You Lose. Total playtime: ", time_elapsed, "seconds")
 		get_tree().paused = true
-	
+
 	if left_tentacle.get_mast_attached() != null:
 		ropes[0].setRopeEndPoint(Vector2(left_tentacle.get_mast_attached().global_position.x, left_tentacle.get_mast_attached().global_position.y))
 	if right_tentacle.get_mast_attached() != null:
 		ropes[1].setRopeEndPoint(Vector2(right_tentacle.get_mast_attached().global_position.x, right_tentacle.get_mast_attached().global_position.y))
-	
+
 	if len(ropes) > 1:
 		#Control Left Tentacle:
 		if Input.is_action_pressed("leftTentacleGoUp") and \
@@ -102,6 +102,6 @@ func _physics_process(delta):
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x - tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
 			if ropes[1].getRopeEndPoint().x > Globals.initial_end_right_tentacle_position.x:
 				ropes[1].setRopeEndPoint(Vector2(ropes[1].getRopeEndPoint().x + tentacle_correction_move_speed.x, ropes[1].getRopeEndPoint().y))
-	
+
 	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
 		spawn_ship(Vector2(Globals.projectResolution.x,180))

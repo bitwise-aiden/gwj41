@@ -48,8 +48,8 @@ func set_points(vertices_array: Array) -> void:
 			var vertex: Vector2 = vertices[c]
 
 			var packed_data: Color = Color(
-				vertex.x,
-				vertex.y,
+				vertex.x / 1280.0,
+				vertex.y / 720.0,
 				0.0,
 				0.0
 			)
