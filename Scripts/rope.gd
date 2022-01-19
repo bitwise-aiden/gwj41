@@ -1,4 +1,4 @@
-extends Node2D
+class_name Rope extends Node2D
 
 var RopePiece = preload("res://Parts/RopePiece.tscn")
 var piece_length := 6

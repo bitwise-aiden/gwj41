@@ -11,9 +11,6 @@ uniform vec4 color_shadow: hint_color;
 uniform vec4 color_tentacle: hint_color;
 uniform vec4 color_suction: hint_color;
 
-const float width_start = 30.0;
-const float width_end = 10.0;
-
 
 vec4 from_vertices(int r, int c)
 {
@@ -85,7 +82,12 @@ vec4 line_color(int r, vec2 p)
 {
 	vec4 color = vec4(0.0);
 	
-	int count = line_count(r);
+	vec4 metadata = from_vertices(r, 0) * 1000.0;
+	
+	int count = int(metadata.x);
+	float width_start = metadata.y;
+	float width_end = metadata.z;
+	int separation = int(ceil(metadata.w));
 	
 	float lt = line_length(r);
 	float lc = 0.0;
@@ -104,16 +106,24 @@ vec4 line_color(int r, vec2 p)
 		float w = lerp(width_start, width_end, t);
 		
 		if (dp < w - 10.0)
+		{
 			color = color_tentacle;
+		}
+		
 		if (dp < w - 5.0 && color != color_tentacle)
+		{
 			color = color_shadow;
+		}
+		
 		if (dp < w && color == vec4(0.0))
+		{
 			color = color_outline;
+		}
 		
 		lc += length(b - a);
 	}
 	
-	for (int c = 1; c < count + 1; c += 3)
+	for (int c = 1; c < count + 1; c += separation)
 	{
 		vec2 a = position_from_vertices(r, c);
 		float d = length(p - a);
