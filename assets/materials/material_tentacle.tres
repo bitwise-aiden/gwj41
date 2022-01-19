@@ -1,10 +1,10 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[ext_resource path="res://source/tentacle.tres" type="Shader" id=1]
+[ext_resource path="res://source/components/tentacle.tres" type="Shader" id=1]
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/array_count = null
+shader_param/tentacle_count = null
 shader_param/color_outline = Color( 0.4, 0.145098, 0.388235, 1 )
 shader_param/color_shadow = Color( 0.721569, 0.380392, 0.380392, 1 )
 shader_param/color_tentacle = Color( 0.788235, 0.505882, 0.435294, 1 )

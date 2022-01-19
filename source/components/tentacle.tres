@@ -1,0 +1,201 @@
+[gd_resource type="Shader" format=2]
+
+[resource]
+code = "shader_type canvas_item;
+
+// Constants
+
+const vec2 SIZE = vec2(1280.0, 720.0);
+const float SUCTION_OUTER = 7.0;
+const float SUCTION_INNER = 4.0;
+const float TENTACLE_OUTLINE_WIDTH = 5.0;
+const float TENTACLE_SHADED_WIDTH = 10.0;
+
+
+// Variables
+
+uniform sampler2D tentacles;
+uniform int tentacle_count;
+
+uniform vec4 color_outline: hint_color;
+uniform vec4 color_shadow: hint_color;
+uniform vec4 color_tentacle: hint_color;
+uniform vec4 color_suction: hint_color;
+
+
+// Helper methods
+
+
+float lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
+}
+
+
+vec2 point_on_line(vec2 a, vec2 b, vec2 p)
+{
+	vec2 ab = b - a; 
+	vec2 ap = p - a;
+	
+	float ab_ap = dot(ap, ab);
+	float ab_ab = dot(ab, ab); 
+	
+	float d = ab_ap / ab_ab;
+	
+	if (d <= 0.0) return a;
+	if (d >= 1.0) return b;
+	
+	return a + d * ab;
+}
+
+
+// Methods
+
+vec4 get_tentacle_part(int tentacle_index, int tentacle_part)
+{
+	return texelFetch(tentacles, ivec2(tentacle_part, tentacle_index), 0);
+}
+
+
+vec2 get_tentacle_part_position(int tentacle_index, int tentacle_part)
+{
+	return get_tentacle_part(tentacle_index, tentacle_part).xy * SIZE;
+}
+
+
+float get_tentacle_length(int tentacle_index, int part_count)
+{
+	float total_length = 0.0;
+	
+	vec2 part_position_prev = get_tentacle_part_position(tentacle_index, 1);
+	
+	for (int tentacle_part = 2; tentacle_part <= part_count; ++tentacle_part)
+	{
+		vec2 part_position_curr = get_tentacle_part_position(tentacle_index, tentacle_part);
+		
+		total_length += length(part_position_curr - part_position_prev);
+		
+		part_position_prev = part_position_curr;
+	}
+	
+	return total_length;
+}
+
+
+vec2 get_point_on_tentacle(int tentacle_index, int part_count, vec2 point)
+{
+	vec2 part_position_prev = get_tentacle_part_position(tentacle_index, 1);
+	vec2 closest_point = part_position_prev;
+	
+	for (int tentacle_part = 2; tentacle_part <= part_count + 1; ++tentacle_part)
+	{
+		vec2 part_position_curr = get_tentacle_part_position(tentacle_index, tentacle_part + 1);
+		
+		vec2 part_point = point_on_line(part_position_prev, part_position_curr, point);
+		
+		if (length(part_point - point) < length(closest_point - point))
+		{
+			closest_point = part_point;
+		}
+	}
+	
+	return closest_point;
+}
+
+
+vec4 get_color_from_suction(int tentacle_index, int part_count, int separation, vec2 point)
+{
+	for (int tentacle_part = 1; tentacle_part < part_count + 1; tentacle_part += separation)
+	{
+		vec2 part_position = get_tentacle_part_position(tentacle_index, tentacle_part);
+		float distance_to_point = length(point - part_position);
+		
+		if (SUCTION_INNER < distance_to_point && distance_to_point < SUCTION_OUTER)
+		{
+			return color_suction;
+		}
+	}
+	
+	return vec4(0.0);
+}
+
+
+vec4 get_color_from_tentacle(int tentacle_index, vec2 point)
+{
+	vec4 tentacle_metadata = get_tentacle_part(tentacle_index, 0) * 1000.0;
+	
+	int part_count = int(tentacle_metadata.x);
+	
+	float width_start = tentacle_metadata.y;
+	float width_end = tentacle_metadata.z;
+	
+	int separation = int(tentacle_metadata.w);
+	
+	vec4 color = get_color_from_suction(tentacle_index, part_count, separation, point);
+	if (color.a != 0.0)
+	{
+		return color;
+	}
+	
+	float tentacle_length = get_tentacle_length(tentacle_index, part_count);
+	float length_traversed = 0.0;
+	
+	for (int tentacle_part = 1; tentacle_part < part_count + 1; ++tentacle_part)
+	{
+		vec2 part_position_a = get_tentacle_part_position(tentacle_index, tentacle_part);
+		vec2 part_position_b = get_tentacle_part_position(tentacle_index, tentacle_part + 1);
+		
+		vec2 part_position = point_on_line(part_position_a, part_position_b, point);
+		
+		float distance_to_point = length(part_position - point);
+		float distance_to_start_of_part = length(part_position - part_position_a);
+		
+		float delta = (length_traversed + distance_to_start_of_part) / tentacle_length;
+		
+		float width = lerp(width_start, width_end, delta);
+		
+		if (distance_to_point < width - TENTACLE_SHADED_WIDTH)
+		{
+			color = color_tentacle;
+		}
+		
+		if (distance_to_point < width - TENTACLE_OUTLINE_WIDTH && color != color_tentacle)
+		{
+			color = color_shadow;
+		}
+		
+		if (distance_to_point < width && color == vec4(0.0))
+		{
+			color = color_outline;
+		}
+		
+		length_traversed += length(part_position_a - part_position_b);
+	}
+	
+	return color;
+}
+
+
+vec4 get_color_at_point(vec2 point)
+{
+	for (int tentacle_index = 0; tentacle_index < tentacle_count; ++tentacle_index)
+	{
+		vec4 color = get_color_from_tentacle(tentacle_index, point);
+		if (color.a != 0.0)
+		{
+			return color;
+		}
+	}
+	
+	return vec4(0.0);
+}
+
+
+// Lifecycle method
+
+void fragment()
+{
+	vec2 point = UV * SIZE;
+	
+	COLOR = get_color_at_point(point);
+}"

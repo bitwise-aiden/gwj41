@@ -36,9 +36,6 @@ var __used_keys: Dictionary  = {
 
 # Lifecycle methods
 func _ready() -> void:
-	for action_name in InputMap.get_actions():
-		InputMap.erase_action(action_name)
-
 	for action_name in self.input:
 		self.input[action_name].valid = self.__update_used_keys(
 			action_name,
