@@ -31,7 +31,7 @@ func _ready() -> void:
 	# Create the points along the surface
 	__create_surface_points()
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	__update_horizontals()
 	__update_verticals()
 
