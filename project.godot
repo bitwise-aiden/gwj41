@@ -107,6 +107,10 @@ InputManager="*res://source/autoloads/input_manager.gd"
 DebugManager="*res://source/autoloads/debug_manager.gd"
 Transition="*res://source/autoloads/transition.tscn"
 
+[debug]
+
+settings/stdout/print_fps=true
+
 [display]
 
 window/size/width=1280
@@ -114,6 +118,7 @@ window/size/height=720
 window/size/resizable=false
 window/size/test_width=1280
 window/size/test_height=720
+window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 

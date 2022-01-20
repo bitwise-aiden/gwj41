@@ -32,6 +32,7 @@ spread = 40.0
 gravity = Vector2( 0, -98 )
 
 [node name="Timer" type="Timer" parent="."]
+autostart = true
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]

@@ -51,6 +51,7 @@ func attach_tentacle(tentacle):
 	tentaclesAttached.append(tentacle)
 
 func get_hugged():
+	print("something is calling get hugged on: ", self)
 	set_being_hugged(true)
 	Globals.hugMiniGamePromptText.visible = true
 	Globals.whaleHugText.visible = true
@@ -68,16 +69,17 @@ func _physics_process(delta):
 	if teasing and not beingHugged:
 		tease()
 	if swimming and not beingHugged:
-		if (self.global_position.x > (0 - ($AnimatedSprite.get_sprite_frames().get_frame("peek",0).get_size().x))/2):
-			self.global_position.x -= swimming_speeed.x
+		if (global_position.x > (0 - ($AnimatedSprite.get_sprite_frames().get_frame("peek",0).get_size().x))/2):
+			global_position.x -= swimming_speeed.x
 		else:
+			#reset_state()
 			_ready()
 
 func tease():
-	if self.global_position.x < Globals.projectResolution.x: 
-		self.global_position.x += tease_movement_speed.x
-	elif self.global_position.x > Globals.projectResolution.x:
-		self.global_position.x -= tease_movement_speed.x
+	if global_position.x < Globals.projectResolution.x: 
+		global_position.x += tease_movement_speed.x
+	elif global_position.x > Globals.projectResolution.x:
+		global_position.x -= tease_movement_speed.x
 	
 	if self.global_position.x == Globals.projectResolution.x:
 		if teasing:
@@ -93,6 +95,18 @@ func _on_TeaseTimer_timeout():
 	if active:
 		if not swimming:
 			swimming = true
+			
+func destroy_object():
+	if is_instance_valid(self):
+		brokeFree = true
+		beingHugged = false
+		Globals.hugMiniGamePromptText.visible = false
+		Globals.whaleHugText.visible = false
+		Globals.hug_zone.start_hug_decay_timer()
+		
+		for child in self.get_children():
+			child.queue_free()
+		queue_free()
 
 func _on_BreakFreeTimer_timeout():
 	#print("BreakFreeTimer timed out")
@@ -109,6 +123,6 @@ func _on_BreakFreeTimer_timeout():
 		Globals.hugMiniGamePromptText.visible = false
 		Globals.whaleHugText.visible = false
 		Globals.hug_zone.start_hug_decay_timer()
-
+		#reset_state()
 		#_ready()
 		#global_position = initPosition

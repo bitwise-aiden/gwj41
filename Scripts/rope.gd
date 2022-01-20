@@ -29,7 +29,6 @@ func _process(_delta):
 		update()
 
 func attach_to_ship_mast(mast):
-#	print("Attaching rope: ", self, " to mast: ", mast)
 	shipMastAttachedTo = mast
 
 func detatch_from_ship_mast(mast):
@@ -75,7 +74,7 @@ func spawn_rope(start_pos:Vector2, end_pos:Vector2):
 	
 	rope_to_left = start_pos.x < end_pos.x
 	#var distance = start_pos.distance_to(end_pos)
-	var pieces_amount = 40
+	var pieces_amount = 60
 	var spawn_angle = (end_pos - start_pos).angle() - PI/2
 	create_rope(pieces_amount, rope_start_piece, end_pos, spawn_angle)
 	initial_start_position = start_pos

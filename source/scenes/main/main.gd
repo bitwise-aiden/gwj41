@@ -2,6 +2,7 @@ extends Node2D
 
 var Rope = preload("res://Parts/Rope.tscn")
 var Ship = preload("res://Parts/Ship.tscn")
+
 var ships = []
 var start_pos := Vector2.ZERO
 var end_pos := Vector2.ZERO
@@ -18,15 +19,33 @@ Vector2(Globals.initial_end_left_tentacle_position.x - 150,560), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 100,480), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)]
 
+
+
+
+
+
+
 onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
-var huggingWhale = false
+#var huggingWhale = false
 
+func set_global_variables_for_map():
+	print( \
+	$text, \
+	$hugWhaleText, \
+	$hugMiniGamePromptText, \
+	$HugScore, \
+	$ShipsHuggedCount)
+	
 
 func _ready():
 	randomize()
-
+	Globals.whaleHugText = $hugWhaleText
+	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
+	Globals.hugScoreTextField = $HugScore/Score
+	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
+	
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 
@@ -35,10 +54,6 @@ func _ready():
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, decorative_tentacles_initial_positions[2]))
 	decorative_tentacles.append(spawn_tentacle(Globals.initial_start_right_tentacle_position, decorative_tentacles_initial_positions[3]))
 
-
-#	print(len(decorative_tentacles))
-
-	#var left_decorative_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 	spawn_ship(Vector2(Globals.projectResolution.x,180))
 	time_start = OS.get_unix_time()
 
@@ -68,7 +83,7 @@ func reset_decorative_tentacles_positions():
 func _physics_process(delta):
 
 	# we shouldn't have to do this every frame:
-	Globals.hugScoreTextField.text = str(Globals.hugScore)
+	$HugScore/Score.text = str(Globals.hugScore)
 	if Globals.hugScore <= 0:
 		print("Game Over. Score: ", Globals.shipHuggedCount)
 
@@ -84,21 +99,13 @@ func _physics_process(delta):
 		ropes[1].setRopeEndPoint(Vector2(right_tentacle.get_mast_attached().global_position.x, right_tentacle.get_mast_attached().global_position.y))
 
 	if len(ropes) > 1:
-		#Control Left Tentacle:
-		#if Input.is_action_pressed("whaleHug") and Globals.whaleEnemy.get_being_hugged():
-			#print("HUGGING COMMENCE")
 
 		if Input.is_action_pressed("whaleHug") and not Globals.whaleEnemy.beingHugged and Globals.whaleEnemy.inHugZone and not Globals.whaleEnemy.brokeFree:
 			Globals.whaleEnemy.get_hugged()
-			huggingWhale = true
 			for i in range(len(ropes)):
 				if (Globals.whaleEnemy.tentacleAttachPoints[i]):
 					ropes[i].setRopeEndPoint(Globals.whaleEnemy.tentacleAttachPoints[i].global_position)
 					Globals.whaleEnemy.attach_tentacle(ropes[i])
-			Globals.whaleEnemy.get_hugged()
-
-		#if not huggingWhale:
-		#print(len(Globals.whaleEnemy.tentaclesAttached))
 
 		if len(Globals.whaleEnemy.tentaclesAttached) < 1:
 			if Input.is_action_pressed("leftTentacleGoUp") and \
