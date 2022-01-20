@@ -4,9 +4,9 @@ var min_wait_time = 1
 var max_wait_time = 10
 var active = false
 var movement_speed = 3
-var min_movement_speed = 0.1
-var max_movement_speed = 3
-var movement_speed_modifier = Globals.ship_speed_modifier
+var min_movement_speed = 1.5
+var max_movement_speed = 2.5
+#var movement_speed_modifier = Globals.ship_speed_modifier
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
 # have to figure out a better way to do this:
@@ -15,7 +15,7 @@ var rightSailEnabled = true
 var hugMeterAmount = 20
 var hugHearts = 5
 var hugZone
-var hugSpeed = Globals.hugSpeed
+var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
 
 var waterline
 var hasSunk = false
@@ -30,7 +30,7 @@ func _ready():
 	$OffScreenTimer.wait_time = rng.randf_range(min_wait_time, max_wait_time)
 	$OffScreenTimer.start()
 	rng.randomize()
-	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * movement_speed_modifier)
+	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * Globals.ship_speed_modifier)
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
@@ -45,8 +45,6 @@ func reset_collision():
 func _process(delta):
 	if active:
 		if len(tentaclesAttached) > 1:
-			#print("Start pulling ship into hugzone")
-			# If we are to the left of hugzone, go right
 			if (global_position.x < hugZone.global_position.x):
 				global_position.x += hugSpeed.x
 			elif (global_position.x > hugZone.global_position.x):
@@ -55,10 +53,6 @@ func _process(delta):
 				global_position.y += hugSpeed.y
 			if (global_position.y > hugZone.global_position.y):
 				global_position.y -= hugSpeed.y
-			# If we are to the right of hugzone, go left
-			# If we are above hugzone, go down
-			
-			#global_position.y += movement_speed
 		else:
 			global_position.x -= movement_speed
 	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
@@ -79,10 +73,12 @@ func destroy_object():
 func get_hugged():
 	Globals.shipHuggedCount += 1
 	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
-#	print("POS MOD: ", posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount))
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
-			Globals.whaleEnemy.set_active(true)
+		Globals.whaleEnemy.set_active(true)
+	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
+		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
+	
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():

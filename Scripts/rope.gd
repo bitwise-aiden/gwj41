@@ -29,7 +29,6 @@ func _process(_delta):
 		update()
 
 func attach_to_ship_mast(mast):
-#	print("Attaching rope: ", self, " to mast: ", mast)
 	shipMastAttachedTo = mast
 
 func detatch_from_ship_mast(mast):

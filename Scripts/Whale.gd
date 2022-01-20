@@ -51,6 +51,7 @@ func attach_tentacle(tentacle):
 	tentaclesAttached.append(tentacle)
 
 func get_hugged():
+	print("something is calling get hugged on: ", self)
 	set_being_hugged(true)
 	Globals.hugMiniGamePromptText.visible = true
 	Globals.whaleHugText.visible = true
