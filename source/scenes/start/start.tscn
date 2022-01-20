@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
+[ext_resource path="res://source/scenes/start/start.gd" type="Script" id=2]
 [ext_resource path="res://assets/materials/material_tentacle.tres" type="Material" id=3]
 [ext_resource path="res://assets/fonts/velopfont.tres" type="DynamicFont" id=4]
 [ext_resource path="res://source/components/button.gd" type="Script" id=5]
@@ -27,6 +28,7 @@ Button/styles/pressed = SubResource( 11 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = SubResource( 6 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

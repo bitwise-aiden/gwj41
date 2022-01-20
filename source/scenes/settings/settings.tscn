@@ -1,0 +1,44 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://source/scenes/settings/settings.gd" type="Script" id=1]
+[ext_resource path="res://assets/fonts/velopfont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://source/components/button.gd" type="Script" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="Theme" id=6]
+default_font = ExtResource( 4 )
+Button/styles/disabled = SubResource( 7 )
+Button/styles/focus = SubResource( 8 )
+Button/styles/hover = SubResource( 9 )
+Button/styles/normal = SubResource( 10 )
+Button/styles/pressed = SubResource( 11 )
+
+[node name="settings" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 6 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button_back" type="Button" parent="."]
+margin_left = 540.0
+margin_top = 400.0
+margin_right = 740.0
+margin_bottom = 440.0
+rect_min_size = Vector2( 200, 40 )
+text = "back"
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
