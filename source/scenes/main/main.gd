@@ -28,7 +28,7 @@ onready var shipsHuggedCountTextField = $main/ShipsHuggedCount/Count
 onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
-var huggingWhale = false
+#var huggingWhale = false
 
 func set_global_variables_for_map():
 	print( \
@@ -98,12 +98,10 @@ func _physics_process(delta):
 
 		if Input.is_action_pressed("whaleHug") and not Globals.whaleEnemy.beingHugged and Globals.whaleEnemy.inHugZone and not Globals.whaleEnemy.brokeFree:
 			Globals.whaleEnemy.get_hugged()
-			huggingWhale = true
 			for i in range(len(ropes)):
 				if (Globals.whaleEnemy.tentacleAttachPoints[i]):
 					ropes[i].setRopeEndPoint(Globals.whaleEnemy.tentacleAttachPoints[i].global_position)
 					Globals.whaleEnemy.attach_tentacle(ropes[i])
-			Globals.whaleEnemy.get_hugged()
 
 		if len(Globals.whaleEnemy.tentaclesAttached) < 1:
 			if Input.is_action_pressed("leftTentacleGoUp") and \
