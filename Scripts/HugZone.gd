@@ -3,17 +3,6 @@ export var whaleZone = false
 var whaleInHugZone = false
 
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	self.start_hug_decay_timer()
-	#print("Entered ready in the hug zone")
-	#Globals.set_hug_zone(self)
-	#$Timer.wait_time = Globals.hugScoreDecayTickDelay
-	#start_hug_decay_timer()
-	#Globals.set_hugScoreTextField()
-	#if get_tree().get_root().get_node("main/HugScore/Score"):
-		#Globals.hugScoreTextField.text = str(Globals.hugScore)
-	#Globals.set_hug_zone(self)
-
 func set_hugScoreTextField(value):
 	print("setting hugScoreTextField:", value)
 
@@ -21,19 +10,12 @@ func _enter_tree():
 	print("Entered tree in the hug zone")
 	Globals.set_hug_zone(self)
 	$Timer.wait_time = Globals.hugScoreDecayTickDelay
-	#print($Timer.wait_time)
-	self.start_hug_decay_timer()
-	#_ready()
-	#get_tree().get_root().get_node("main/hugWhaleText").text = str(Globals.hugScore)
-	#Globals.hugScoreTextField.text = str(Globals.hugScore)
-	#Globals.set_hug_zone(self)
 
 func start_hug_decay_timer():
 	print("Start timer: ", $Timer)
 	$Timer.start()
 
 func stop_hug_decay_timer():
-	#print("Stopping timer: ", $Timer)
 	$Timer.stop()
 	
 func _on_Area2D_area_entered(area):

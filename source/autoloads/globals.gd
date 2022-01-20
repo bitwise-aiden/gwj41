@@ -28,9 +28,10 @@ var ship_speed_modifier = 1 * difficultyLevel
 var hugScoreDecayTickDelay = 0.8
 var hugScoreDecayTickAmount = 1
 var hugScoreDecayTickAmountInitial = 1
-onready var whaleHugText = get_tree().get_root().get_node("main/hugWhaleText")
-onready var hugMiniGamePromptText = get_tree().get_root().get_node("main/hugMiniGamePromptText")
-onready var shipsHuggedCountTextField = get_tree().get_root().get_node("main/ShipsHuggedCount/Count")
+var whaleHugText
+var hugMiniGamePromptText
+var shipsHuggedCountTextField
+var hugScoreTextField
 
 var whaleTentaclesAttached = []
 var shipHuggedCount = 0

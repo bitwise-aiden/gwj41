@@ -19,10 +19,10 @@ Vector2(Globals.initial_end_left_tentacle_position.x - 150,560), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 100,480), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)]
 
-onready var whaleHugText = $hugWhaleText
-onready var hugMiniGamePromptText = $hugMiniGamePromptText
-onready var hugScoreTextField = $HugScore/Score
-onready var shipsHuggedCountTextField = $main/ShipsHuggedCount/Count
+
+
+
+
 
 
 onready var centerText = get_tree().get_root().get_node("main/text")
@@ -41,7 +41,11 @@ func set_global_variables_for_map():
 
 func _ready():
 	randomize()
-
+	Globals.whaleHugText = $hugWhaleText
+	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
+	Globals.hugScoreTextField = $HugScore/Score
+	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
+	
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
 

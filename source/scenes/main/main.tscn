@@ -80,7 +80,7 @@ script = ExtResource( 8 )
 textures = [ ExtResource( 9 ), ExtResource( 11 ), ExtResource( 10 ) ]
 
 [node name="Whale" parent="." groups=["whale"] instance=ExtResource( 15 )]
-position = Vector2( 1350, 420 )
+position = Vector2( 1376, 438 )
 
 [node name="text" type="Label" parent="."]
 anchor_left = 0.5
