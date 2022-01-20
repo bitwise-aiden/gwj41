@@ -56,7 +56,14 @@ func play_audio(incoming : Dictionary) -> void:
 		new_player.pitch_scale = rand_range(0.85, 1.15)
 		match effect:
 			"bubbles":
-				new_player.audio_path = "res://assets/audio/sfx/bubble.ogg"
+				var rand_sound = randi() % 3
+				match rand_sound:
+					1: 
+						new_player.audio_path = "res://assets/audio/sfx/bubble.ogg"
+					2:
+						new_player.audio_path = "res://assets/audio/sfx/bubble2.ogg"
+					3:
+						new_player.audio_path = "res://assets/audio/sfx/bubble_old.ogg"
 				
 			"ship":
 				var rand_sound = randi() % 3
@@ -79,4 +86,7 @@ func play_audio(incoming : Dictionary) -> void:
 					1:
 						new_player.audio_path = "res://assets/audio/sfx/hug2.ogg"
 					
-		self.call_deferred("add_child", new_player)
+			"transition":
+				new_player.audio_path = "res://assets/audio/sfx/bubble_transition.ogg"
+				
+		self.add_child(new_player)

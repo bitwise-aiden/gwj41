@@ -87,7 +87,9 @@ func _on_OffScreenTimer_timeout():
 	hugZone = Globals.get_hug_zone()
 	water.splash(clamp(position.x, 0, 1280), 5)
 	$waterWakeTimer.start()
-	Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
+	if randf() < 0.5:
+		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
+	
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
