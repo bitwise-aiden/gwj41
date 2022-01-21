@@ -22,8 +22,8 @@ var input: Dictionary = {
 	"down": InputKey.new(KEY_S),
 	"left": InputKey.new(KEY_A),
 	"right": InputKey.new(KEY_D),
-	"leftTentacleGoRight": InputKey.new(KEY_Q),
-	"leftTentacleGoUp": InputKey.new(KEY_W),
+	"leftTentacleGoRight": InputKey.new(KEY_W),
+	"leftTentacleGoUp": InputKey.new(KEY_Q),
 	"rightTentacleGoLeft": InputKey.new(KEY_O),
 	"rightTentacleGoUp": InputKey.new(KEY_P),
 	"whaleHug": InputKey.new(KEY_SPACE)

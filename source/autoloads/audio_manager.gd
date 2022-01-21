@@ -58,11 +58,11 @@ func play_audio(incoming : Dictionary) -> void:
 			"bubbles":
 				var rand_sound = randi() % 3
 				match rand_sound:
-					1: 
+					0: 
 						new_player.audio_path = "res://assets/audio/sfx/bubble.ogg"
-					2:
+					1:
 						new_player.audio_path = "res://assets/audio/sfx/bubble2.ogg"
-					3:
+					2:
 						new_player.audio_path = "res://assets/audio/sfx/bubble_old.ogg"
 				
 			"ship":
