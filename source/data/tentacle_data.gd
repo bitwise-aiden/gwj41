@@ -4,12 +4,14 @@ class_name TentacleData
 
 var __packed_data: PoolColorArray
 var __metadata: Color
+var __dirty: bool
 
 
 # Lifecycle methods
 
 func _init(
-	points: PoolVector2Array,
+	dirty: bool = true,
+	points: PoolVector2Array = [],
 	width_start: float = 15.0,
 	width_end: float = 15.0,
 	separation: int = 1
@@ -33,8 +35,13 @@ func _init(
 		separation / 1000.0
 	)
 
+	__dirty = dirty
+
 
 # Public methods
+
+func is_dirty() -> bool:
+	return __dirty
 
 func metadata() -> Color:
 	return __metadata

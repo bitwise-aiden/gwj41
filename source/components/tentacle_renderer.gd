@@ -11,14 +11,18 @@ var __vertices: Array = [Vector2(640.0, 360.0), Vector2.ZERO]
 
 # Lifecycle methods
 
+func _ready() -> void:
+	__image.create(100, 10, false, Image.FORMAT_RGBAH)
+
 func _process(delta: float) -> void:
 	var tentacles_raw: Array = get_tree().get_nodes_in_group("tentacle")
 	var tentacles: Array = []
-	
+
 	for tentacle in tentacles_raw:
 		if tentacle is Path2D:
 			tentacles.append(
 				TentacleData.new(
+					true,
 					tentacle.curve.get_baked_points(),
 					20.0,
 					20.0,
@@ -26,14 +30,20 @@ func _process(delta: float) -> void:
 				)
 			)
 		elif tentacle is Rope:
-			tentacles.append(
-				TentacleData.new(
-					tentacle.rope_points,
-					30.0,
-					10.0,
-					4
+			if tentacle.dirty:
+				tentacles.append(
+					TentacleData.new(
+						true,
+						tentacle.rope_points,
+						30.0,
+						10.0,
+						4
+					)
 				)
-			)
+
+				tentacle.dirty = false
+			else:
+				tentacles.append(TentacleData.new(false))
 
 	set_points(tentacles)
 
@@ -44,20 +54,27 @@ func set_points(tentacles: Array) -> void:
 	var row_count: int = tentacles.size()
 	var col_count: int = 0
 
+	var dirty: bool = false
+
 	for tentacle in tentacles:
 		col_count = max(col_count, tentacle.size())
+		dirty = dirty || tentacle.is_dirty()
 
-	__image.create(col_count + 1, row_count, false, Image.FORMAT_RGBAH)
+	if !dirty:
+		print("This happens!")
+		return
+
 	__image.lock()
 
 	for r in row_count:
 		var tentacle: TentacleData = tentacles[r]
 
-		__image.set_pixel(0, r, tentacle.metadata())
+		if tentacle.is_dirty():
+			__image.set_pixel(0, r, tentacle.metadata())
 
-		var packed_data: PoolColorArray = tentacle.packed_data()
-		for c in tentacle.size():
-			__image.set_pixel(c + 1, r, packed_data[c])
+			var packed_data: PoolColorArray = tentacle.packed_data()
+			for c in tentacle.size():
+				__image.set_pixel(c + 1, r, packed_data[c])
 
 	__image.unlock()
 

@@ -13,6 +13,7 @@ var color2 := Color.lightsalmon
 var initial_start_position = Vector2.ZERO
 var initial_end_position = Vector2.ZERO
 var shipMastAttachedTo
+var dirty: bool = true
 
 onready var rope_start_piece = $RopeStartPiece
 onready var rope_end_piece = $RopeEndPiece
@@ -25,8 +26,8 @@ func _ready() -> void:
 
 func _process(_delta):
 	get_rope_points()
-	if rope_points.size() > 2:
-		update()
+#	if rope_points.size() > 2:
+#		update()
 
 func attach_to_ship_mast(mast):
 	shipMastAttachedTo = mast
@@ -115,11 +116,17 @@ func add_piece(parent:Object, id:int, spawn_angle:float) -> RopePiece:
 	return piece
 
 func get_rope_points() -> void:
-	rope_points = []
-	rope_points.append( rope_start_joint.global_position )
+	var new_rope_points = PoolVector2Array()
+	new_rope_points.append( rope_start_joint.global_position )
 	for r in rope_parts:
-		rope_points.append( r.global_position )
-	rope_points.append( rope_end_joint.global_position )
+		new_rope_points.append( r.global_position )
+	new_rope_points.append( rope_end_joint.global_position )
+
+	if new_rope_points != rope_points:
+		rope_points = new_rope_points
+		dirty = true
+
+
 
 
 #func _draw():
