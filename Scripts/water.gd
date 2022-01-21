@@ -1,4 +1,4 @@
-extends Area2D
+extends TextureRect
 
 # Helper variables
 var collision_polygon : CollisionPolygon2D
@@ -18,15 +18,15 @@ export(float, 0, 10.0, 0.1) var mass : float = 1.0
 export(float, 0, 1, 0.01) var dampening : float = 0.05
 onready var k_on_m : float = hookes / mass
 
-export(int, 0, 720) var target_height : int = 220
+export(float, 0.0, 720.0) var target_height : float = 220.0
 
 func _ready() -> void:
-	collision_polygon = $CollisionPolygon2D
-	$Polygon2D.self_modulate.a = 1.0
-
+	Transition.fade_in()
+	
 	# Get our bounds, only along the top edge because water be like that
-	top_left_point = collision_polygon.polygon[0]
-	top_right_point = collision_polygon.polygon[1]
+	top_left_point = Vector2(0, target_height)
+	top_right_point = Vector2(1280, target_height)
+	
 
 	# Create the points along the surface
 	__create_surface_points()
@@ -34,25 +34,22 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	__update_horizontals()
 	__update_verticals()
+	__pass_to_shader(point_dict)
 
 func __create_surface_points() -> void:
-	var new_polygon : PoolVector2Array = PoolVector2Array()
 	# Create a dictionary of points, actually modify collision shape to reflect points
 	for i in range(num_points + 1):
 		# Rounding on the x here to avoid triangulation errors
 		var xpos = round((top_right_point.x - top_left_point.x) / num_points * i)
 		var ypos = target_height
 		var temp_dict : Dictionary
+		
 		# Overwrite collision polygon points
-		new_polygon.push_back(Vector2(xpos, ypos))
 		temp_dict["position"] = Vector2(xpos, ypos)
 		temp_dict["velocity"] = Vector2(0, 0)
-
 		point_dict[str(i)] = temp_dict
 	
-	new_polygon.push_back(Vector2(1280, 720))
-	new_polygon.push_back(Vector2(0, 720))
-	$Polygon2D.set_polygon(new_polygon)
+
 
 func __update_verticals() -> void:
 	for i in range(num_points + 1):
@@ -65,11 +62,10 @@ func __update_verticals() -> void:
 		var new_position = pos + point_dict[str(i)]["velocity"]
 
 		# Rounding on the y here to avoid triangulation errors
-		$Polygon2D.polygon[i] = Vector2(new_position.x, round(new_position.y))
 		point_dict[str(i)]["position"] = new_position
 		point_dict[str(i)]["velocity"].y += acceleration
+	
 
-	__complete_polygon()
 
 func __update_horizontals() -> void:
 	# So what this does is it propogates a change in height along all the springs.
@@ -101,27 +97,44 @@ func splash(pixel_x_location : int, velocity_change : float) -> void:
 	if index > 0 and index < num_points + 1:
 		 point_dict[str(index)]["velocity"].y += velocity_change
 
-func __complete_polygon() -> void:
-	# Add last two points to the polygon, to close the loop.
-	$Polygon2D.polygon[-2] = Vector2(1280, 720)
-	$Polygon2D.polygon[-1] = Vector2(0, 720)
-
-	# Set the old polygon to the new polygon
-	if not Geometry.triangulate_polygon($Polygon2D.polygon).empty():
-		# This bullshit is to set the UV's on the polygon so the shader works properly
-		var v0 = $Polygon2D.polygon
-		var x0 = INF
-		var y0 = INF
-		var x1 = -INF
-		var y1 = -INF
-		for v in v0:
-			x0 = min(x0, v.x)
-			x1 = max(x1, v.x)
-			y0 = min(y0, v.y)
-			y1 = max(y1, v.y)
-		var s = max(x1 - x0, y1 - y0)
-		var d = Vector2(s / 2, s / 2);
-		var uv = PoolVector2Array([])
-		for v in v0:
-			uv.append((v + d) / s)
-		$Polygon2D.set_uv(PoolVector2Array(uv))
+func __pass_to_shader(points : Dictionary) -> void:
+	var position_array : PoolVector2Array = PoolVector2Array()
+	var y_max = 0
+	for i in range(points.size()):
+		position_array.push_back(points[str(i)]["position"])
+		if y_max < position_array[i].y:
+			y_max = position_array[i].y
+	
+	var width = 1280
+	var height = 1
+	var position_image = Image.new()
+	position_image.create(width, height, false, Image.FORMAT_RGBAF)
+	
+	# Put position data into image. For luls, x(r)->x, y(g)->y
+	position_image.lock()
+	var pre_a = Vector2(-1000, target_height)
+	var post_b = Vector2(2280, target_height)
+	var j = -1
+	var steps : int = floor((width-1) / num_points)
+	
+	# I would comment this right now, but FML I need to get to work
+	for i in range(width):
+		var ypos2
+		if i % steps == 0 :
+			j = j + 1
+		if j >= num_points:
+			j = num_points
+			ypos2 = top_right_point
+		else:
+			ypos2 = position_array[j+1]
+		
+		var ypos = position_array[j]
+		var value = float(i % steps) / float(steps - 1)
+		var y_cerp = ypos.cubic_interpolate(ypos2, pre_a, post_b, value)
+		
+		position_image.set_pixel(i, 0, Color(0.0,  y_cerp.y / 720.0 , 0.0, 0.0))
+	position_image.unlock()
+	
+	var position_texture = ImageTexture.new()
+	position_texture.create_from_image(position_image)
+	material.set_shader_param("y_positions", position_texture)

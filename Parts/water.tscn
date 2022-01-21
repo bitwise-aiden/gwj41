@@ -1,22 +1,43 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/water.gd" type="Script" id=1]
-[ext_resource path="res://assets/materials/water_material.tres" type="Material" id=2]
 
-[sub_resource type="ImageTexture" id=1]
-size = Vector2( 1, 1 )
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
 
-[node name="water" type="Area2D"]
+uniform sampler2D y_positions;
+uniform vec4 sky_color : hint_color;
+uniform vec4 water_color : hint_color;
+
+void fragment(){
+	
+	float y_position = texture(y_positions, SCREEN_UV).y;
+	
+	if (UV.y < y_position){
+		COLOR = sky_color;
+	} else if (UV.y > y_position) {
+		COLOR.rgb = water_color.rgb;
+		COLOR.a = 1.0 - UV.y;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/sky_color = Color( 0.215686, 0.678431, 0.74902, 1 )
+shader_param/water_color = Color( 0.137255, 0.137255, 0.521569, 1 )
+
+[sub_resource type="ImageTexture" id=3]
+flags = 0
+flags = 0
+size = Vector2( 1280, 720 )
+
+[node name="water" type="TextureRect"]
+material = SubResource( 2 )
+rect_min_size = Vector2( 1280, 720 )
+texture = SubResource( 3 )
+expand = true
 script = ExtResource( 1 )
-num_points = 80
-wave_iterations = 8
-wave_spread = 0.01
-target_height = 250
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 0, 300, 1280, 300, 1280, 720, 0, 720 )
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-material = ExtResource( 2 )
-texture = SubResource( 1 )
-polygon = PoolVector2Array( 0, 300, 1280, 300, 1280, 720, 0, 720 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+num_points = 20
