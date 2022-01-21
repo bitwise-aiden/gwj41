@@ -112,14 +112,27 @@ func __pass_to_shader(points : Dictionary) -> void:
 	
 	# Put position data into image. For luls, x(r)->x, y(g)->y
 	position_image.lock()
-	var j = 0
+	var pre_a = Vector2(-1000, target_height)
+	var post_b = Vector2(2280, target_height)
+	var j = -1
 	var steps : int = floor((width-1) / num_points)
+	
+	# I would comment this right now, but FML I need to get to work
 	for i in range(width):
-		if i % steps == 0:
+		var ypos2
+		if i % steps == 0 :
 			j = j + 1
-			if j > num_points:
-				j = num_points
-		position_image.set_pixel(i, 0, Color(0.0, position_array[j].y / 720.0 , 0.0, 0.0))
+		if j >= num_points:
+			j = num_points
+			ypos2 = top_right_point
+		else:
+			ypos2 = position_array[j+1]
+		
+		var ypos = position_array[j]
+		var value = float(i % steps) / float(steps - 1)
+		var y_cerp = ypos.cubic_interpolate(ypos2, pre_a, post_b, value)
+		
+		position_image.set_pixel(i, 0, Color(0.0,  y_cerp.y / 720.0 , 0.0, 0.0))
 	position_image.unlock()
 	
 	var position_texture = ImageTexture.new()

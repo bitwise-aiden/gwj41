@@ -38,16 +38,9 @@ animations = [ {
 [node name="main" type="Node2D"]
 script = ExtResource( 5 )
 
-[node name="sky" type="ColorRect" parent="."]
-visible = false
-margin_right = 1280.0
-margin_bottom = 250.0
-color = Color( 0.415686, 0.713726, 0.768627, 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="water" parent="." instance=ExtResource( 16 )]
+num_points = 50
+target_height = 235.0
 
 [node name="land" type="Sprite" parent="."]
 position = Vector2( 640, 567 )
