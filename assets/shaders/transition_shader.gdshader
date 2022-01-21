@@ -55,6 +55,11 @@ float angle_between(vec2 a, vec2 b)
 
 vec4 get_bubble_color(vec2 position) 
 {
+	if (bubble_time == 0.0)
+	{
+		return vec4(0.0);
+	}
+	
 	for (int bubble_index; bubble_index < bubble_count; ++bubble_index)
 	{
 		vec4 bubble_data = texelFetch(bubbles, ivec2(bubble_index, 0), 0) * 1000.0;

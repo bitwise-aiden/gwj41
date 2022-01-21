@@ -61,7 +61,6 @@ func set_points(tentacles: Array) -> void:
 		dirty = dirty || tentacle.is_dirty()
 
 	if !dirty:
-		print("This happens!")
 		return
 
 	__image.lock()

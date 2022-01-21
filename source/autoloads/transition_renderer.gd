@@ -65,16 +65,15 @@ func fade_in() -> void:
 		Tween.EASE_IN
 	)
 	__tween.start()
-	print("Hello")
-	
-	
+
+
 	yield(__tween, "tween_completed")
 
 
 func fade_out() -> void:
 	# BUBBLE SOUNDS!
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "transition"})
-	
+
 	__tween.interpolate_method(
 		self,
 		"__set_time",
