@@ -48,8 +48,10 @@ func _ready():
 	
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
-
-	spawn_ship(Vector2(Globals.projectResolution.x,180))
+	
+	Event.emit_signal("emit_audio", {"type": "music", "name": "background"})
+	
+	spawn_ship(Vector2(Globals.projectResolution.x, 180))
 	time_start = OS.get_unix_time()
 
 	Transition.fade_in()

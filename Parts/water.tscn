@@ -10,21 +10,20 @@ uniform vec4 sky_color : hint_color;
 uniform vec4 water_color : hint_color;
 
 void fragment(){
-	
 	float y_position = texture(y_positions, SCREEN_UV).y;
+	vec4 color = water_color;
+	color.rgb -= vec3((UV.y - 0.5) / 0.5) * 0.2;
 	
 	if (UV.y < y_position){
-		COLOR = sky_color;
-	} else if (UV.y > y_position) {
-		COLOR.rgb = water_color.rgb;
-		COLOR.a = 1.0 - UV.y;
-	}
+		color = sky_color;
+	} 
+	COLOR = color;
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
 shader_param/sky_color = Color( 0.215686, 0.678431, 0.74902, 1 )
-shader_param/water_color = Color( 0.137255, 0.137255, 0.521569, 1 )
+shader_param/water_color = Color( 0.05, 0.25, 0.65, 1 )
 
 [sub_resource type="ImageTexture" id=3]
 flags = 0

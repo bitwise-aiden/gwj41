@@ -1,7 +1,9 @@
 extends Node
 
 var effect_player = preload("res://source/helpers/soundEffectPlayer.tscn")
-#var music_player = preload("")
+var music_player = preload("res://source/helpers/musicPlayer.tscn")
+
+var active_music_players : Array = []
 
 var __volume_max: Dictionary = {
 	# key: bus name
@@ -74,6 +76,7 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
 					2:
 						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
+						new_player.volume_db = -20
 					
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
@@ -89,4 +92,12 @@ func play_audio(incoming : Dictionary) -> void:
 			"transition":
 				new_player.audio_path = "res://assets/audio/sfx/bubble_transition.ogg"
 				
+		self.add_child(new_player)
+	if incoming["type"] == "music":
+		var new_player = music_player.instance()
+		var music = incoming["name"]
+		match music:
+			"background":
+				new_player.audio_path = "res://assets/audio/music/drunken_sailor.ogg"
+		active_music_players.push_back(new_player)
 		self.add_child(new_player)
