@@ -3,9 +3,9 @@ export var shipSpawnXPositionOffset = 200
 var min_wait_time = 1
 var max_wait_time = 10
 var active = false
-var movement_speed = 3
-var min_movement_speed = 1.5
-var max_movement_speed = 2.5
+var movement_speed
+var min_movement_speed = 50
+var max_movement_speed = 300
 #var movement_speed_modifier = Globals.ship_speed_modifier
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
@@ -42,7 +42,7 @@ func reset_collision():
 	$RightSail.set_deferred("monitorable", true)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	if active:
 		if len(tentaclesAttached) > 1:
 			if (global_position.x < hugZone.global_position.x):
@@ -54,10 +54,12 @@ func _process(delta):
 			if (global_position.y > hugZone.global_position.y):
 				global_position.y -= hugSpeed.y
 		else:
-			global_position.x -= movement_speed
+			global_position.x -= movement_speed * delta
 	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
 		destroy_object()
 	
+	# Set the splash!
+	water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
 	if !hasSunk:
 		check_waterline()
 
@@ -86,8 +88,7 @@ func _on_OffScreenTimer_timeout():
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
 	water.splash(clamp(position.x, 0, 1280), 5)
-	$waterWakeTimer.start()
-	if randf() < 0.5:
+	if randf() < 0.75:
 		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
 	
 
@@ -110,8 +111,6 @@ func _on_LeftSail_body_entered(body):
 		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
 
-func _on_waterWakeTimer_timeout() -> void:
-	water.splash(clamp(position.x, 0, 1280) + 20, movement_speed * 4.0)
 
 func _on_BreakFreeTimer_timeout():
 	if len(tentaclesAttached) == 1:

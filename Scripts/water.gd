@@ -95,7 +95,7 @@ func __update_horizontals() -> void:
 func splash(pixel_x_location : int, velocity_change : float) -> void:
 	var index = round(pixel_x_location * num_points / (top_right_point.x - top_left_point.x))
 	if index > 0 and index < num_points + 1:
-		 point_dict[str(index)]["velocity"].y += velocity_change
+		 point_dict[str(index)]["velocity"].y = velocity_change
 
 func __pass_to_shader(points : Dictionary) -> void:
 	var position_array : PoolVector2Array = PoolVector2Array()
