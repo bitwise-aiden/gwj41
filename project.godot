@@ -87,7 +87,7 @@ _global_script_class_icons={
 [application]
 
 config/name="gwj41"
-run/main_scene="res://source/scenes/main/main.tscn"
+run/main_scene="res://source/scenes/start/start.tscn"
 boot_splash/image="res://assets/build/loading.png"
 config/icon="res://icon.png"
 
