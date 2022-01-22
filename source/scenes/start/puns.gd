@@ -32,7 +32,7 @@ var __timer: Timer = Timer.new()
 # Lifecycle methods
 
 func _ready() -> void:
-	text = "The Huggening:\nHugs so good they Kraken your back"# __PUNS[randi() % __PUNS.size()]
+	text = __PUNS[randi() % __PUNS.size()]
 
 	add_child(__timer)
 	__timer.wait_time = 0.2
