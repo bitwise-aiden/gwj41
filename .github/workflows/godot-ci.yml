@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  EXPORT_NAME: gwj41
+  EXPORT_NAME: the-huggen
   GODOT_VERSION: 3.4
 
 jobs:
@@ -45,7 +45,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: windows
-          ITCH_GAME: gwj41
+          ITCH_GAME: the-huggen
           ITCH_USER: velopman
           PACKAGE: build/windows
 
@@ -81,7 +81,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: linux
-          ITCH_GAME: gwj41
+          ITCH_GAME: the-huggen
           ITCH_USER: velopman
           PACKAGE: build/linux
 
@@ -117,7 +117,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: web
-          ITCH_GAME: gwj41
+          ITCH_GAME: the-huggen
           ITCH_USER: velopman
           PACKAGE: build/web
 
@@ -154,7 +154,7 @@ jobs:
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
           CHANNEL: mac
-          ITCH_GAME: gwj41
+          ITCH_GAME: the-huggen
           ITCH_USER: velopman
           PACKAGE: build/mac
           
