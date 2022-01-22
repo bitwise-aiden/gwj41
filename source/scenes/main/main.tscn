@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=2]
@@ -12,9 +12,13 @@
 [ext_resource path="res://assets/sprites/cloud_3.png" type="Texture" id=10]
 [ext_resource path="res://assets/sprites/cloud_2.png" type="Texture" id=11]
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/hud.png" type="Texture" id=13]
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Parts/Whale.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Parts/water.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/sprites/hud_arm.png" type="Texture" id=17]
+[ext_resource path="res://source/scenes/main/hud.gd" type="Script" id=18]
+[ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=19]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 145, 125 )
@@ -34,6 +38,8 @@ animations = [ {
 script = ExtResource( 5 )
 
 [node name="water" parent="." instance=ExtResource( 16 )]
+margin_right = 1280.0
+margin_bottom = 720.0
 num_points = 50
 target_height = 235.0
 
@@ -111,11 +117,45 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
+frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]
 position = Vector2( 640, 600 )
 texture = ExtResource( 12 )
+
+[node name="hud" type="Sprite" parent="."]
+position = Vector2( 1130, 125 )
+texture = ExtResource( 13 )
+script = ExtResource( 18 )
+
+[node name="indicator" type="TextureRect" parent="hud"]
+margin_left = 22.0
+margin_top = -101.0
+margin_right = 105.0
+margin_bottom = -35.0
+rect_rotation = -55.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 72, 12 )
+texture = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="Label" parent="hud"]
+margin_left = -102.0
+margin_top = -113.0
+margin_right = -56.0
+margin_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource( 19 )
+text = "000"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="tentacle" type="ColorRect" parent="."]
 material = ExtResource( 3 )

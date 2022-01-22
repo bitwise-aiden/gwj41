@@ -17,7 +17,7 @@ func start_hug_decay_timer():
 
 func stop_hug_decay_timer():
 	$Timer.stop()
-	
+
 func _on_Area2D_area_entered(area):
 	if whaleZone:
 		print("whaleHugZone: ", area)
@@ -35,7 +35,7 @@ func _on_Area2D_area_entered(area):
 			$LoveParticles.amount = area.get_parent().hugHearts
 			Globals.hugScore += area.get_parent().hugMeterAmount
 			#print("Current Hug Score: ", Globals.hugScore)
-		
+
 
 func _on_Area2D_area_exited(area):
 	if whaleZone:
@@ -48,6 +48,6 @@ func _on_Timer_timeout():
 	#print("Hug score: ", Globals.hugScore, " Decay tick amount: ", Globals.hugScoreDecayTickAmount)
 	Globals.hugScore -= Globals.hugScoreDecayTickAmount
 	#print("Hug score decay! New Hug Score: ", Globals.hugScore)
-	
+
 
 

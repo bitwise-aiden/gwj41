@@ -35,9 +35,34 @@ _global_script_classes=[ {
 "path": "res://source/particles/cloud_controller.gd"
 }, {
 "base": "Reference",
+"class": "CommandData",
+"language": "GDScript",
+"path": "res://addons/gift/util/cmd_data.gd"
+}, {
+"base": "Reference",
+"class": "CommandInfo",
+"language": "GDScript",
+"path": "res://addons/gift/util/cmd_info.gd"
+}, {
+"base": "Reference",
 "class": "CurrentQueue",
 "language": "GDScript",
 "path": "res://source/helpers/current_queue.gd"
+}, {
+"base": "Reference",
+"class": "Gift",
+"language": "GDScript",
+"path": "res://addons/gift/gift_node.gd"
+}, {
+"base": "EditorPlugin",
+"class": "GodotReset",
+"language": "GDScript",
+"path": "res://addons/godot_reset/godot_reset.gd"
+}, {
+"base": "Node",
+"class": "ImageCache",
+"language": "GDScript",
+"path": "res://addons/gift/util/image_cache.gd"
 }, {
 "base": "CPUParticles2D",
 "class": "ParticleController",
@@ -58,6 +83,11 @@ _global_script_classes=[ {
 "class": "RopePiece",
 "language": "GDScript",
 "path": "res://Scripts/rope_piece.gd"
+}, {
+"base": "Reference",
+"class": "SenderData",
+"language": "GDScript",
+"path": "res://addons/gift/util/sender_data.gd"
 }, {
 "base": "Reference",
 "class": "Task",
@@ -90,11 +120,17 @@ _global_script_class_icons={
 "BubbleController": "",
 "ChangeButton": "",
 "CloudController": "",
+"CommandData": "",
+"CommandInfo": "",
 "CurrentQueue": "",
+"Gift": "",
+"GodotReset": "",
+"ImageCache": "",
 "ParticleController": "",
 "PlayerInput": "",
 "Rope": "",
 "RopePiece": "",
+"SenderData": "",
 "Task": "",
 "TaskQueue": "",
 "TentacleData": "",
@@ -125,10 +161,6 @@ InputManager="*res://source/autoloads/input_manager.gd"
 DebugManager="*res://source/autoloads/debug_manager.gd"
 Transition="*res://source/autoloads/transition.tscn"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/width=1280
@@ -136,13 +168,16 @@ window/size/height=720
 window/size/resizable=false
 window/size/test_width=1280
 window/size/test_height=720
-window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
 [editor_plugins]
 
-enabled=PoolStringArray(  )
+enabled=PoolStringArray( "res://addons/godot_reset/plugin.cfg", "res://addons/velopbot/plugin.cfg" )
+
+[global]
+
+frame=false
 
 [layer_names]
 

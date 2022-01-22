@@ -34,7 +34,7 @@ func set_global_variables_for_map():
 	$HugScore, \
 	$ShipsHuggedCount)
 
-var success = Event.connect("emit_audio", self, "play_audio")
+#var success = Event.connect("emit_audio", self, "play_audio")
 
 func kill_ship(ship):
 	ships.remove(ships.find(ship))
@@ -75,7 +75,7 @@ func spawn_ship(start_pos):
 	ships.append(ship)
 	ship.global_position = start_pos
 	add_child(ship)
-	
+
 func spawn_parrot(start_pos):
 	var parrot = Parrot.instance()
 	parrots.append(parrot)
