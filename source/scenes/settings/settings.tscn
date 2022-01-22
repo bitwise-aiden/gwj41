@@ -159,7 +159,6 @@ texture = ExtResource( 9 )
 [node name="arrow_left_out" type="Sprite" parent="arrows_left"]
 position = Vector2( 234, 344 )
 rotation = -2.31523
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
 
 [node name="arrows_right" type="Node2D" parent="."]
@@ -173,5 +172,4 @@ texture = ExtResource( 9 )
 [node name="arrow_right_out" type="Sprite" parent="arrows_right"]
 position = Vector2( 234, 344 )
 rotation = -2.31523
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
