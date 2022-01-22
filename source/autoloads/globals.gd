@@ -32,7 +32,7 @@ var whaleHugText
 var hugMiniGamePromptText
 var shipsHuggedCountTextField
 var hugScoreTextField
-
+var max_number_of_parrots_on_screen = 1
 var whaleTentaclesAttached = []
 var shipHuggedCount = 0
 var whaleShipWaitCount = 3

@@ -1,29 +1,18 @@
 extends Node2D
-export var shipSpawnXPositionOffset = 200
 var min_wait_time = 1
 var max_wait_time = 10
 var active = false
 var movement_speed
 var min_movement_speed = 50
 var max_movement_speed = 300
-#var movement_speed_modifier = Globals.ship_speed_modifier
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
-# have to figure out a better way to do this:
 var leftSailEnabled = true
 var rightSailEnabled = true
-var hugMeterAmount = 20
-var hugHearts = 5
+var hugMeterAmount = 100
+var hugHearts = 10
 var hugZone
 var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
-
-var waterline
-var hasSunk = false
-
-var water
-
-func _enter_tree() -> void:
-	waterline = position.y
 
 func _ready():
 	rng.randomize()
@@ -32,7 +21,6 @@ func _ready():
 	rng.randomize()
 	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * Globals.ship_speed_modifier)
 	hugZone = Globals.get_hug_zone()
-	water = get_parent().get_node("water")
 	reset_collision()
 
 func reset_collision():
@@ -54,19 +42,14 @@ func _physics_process(delta):
 			if (global_position.y > hugZone.global_position.y):
 				global_position.y -= hugSpeed.y
 		else:
-			global_position.x -= movement_speed * delta
-	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
-		destroy_object()
+			global_position.x += movement_speed * delta
 	
-	# Set the splash!
-	water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
-	if !hasSunk:
-		check_waterline()
-
+	if active and global_position.x > (Globals.projectResolution.x + ($AnimatedSprite.get_sprite_frames().get_frame("fly",0).get_size().x)*$AnimatedSprite.scale.x):
+		destroy_object()
 
 func destroy_object():
 	if is_instance_valid(self):
-		Event.emit_signal("emit_ship_death", self)
+		Event.emit_signal("emit_parrot_death", self)
 		for tentacle in tentaclesAttached:
 			tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		for child in self.get_children():
@@ -88,7 +71,7 @@ func _on_OffScreenTimer_timeout():
 	active = true
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
-	water.splash(clamp(position.x, 0, 1280), 5)
+	#water.splash(clamp(position.x, 0, 1280), 5)
 	if randf() < 0.75:
 		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
 	
@@ -120,7 +103,7 @@ func _on_BreakFreeTimer_timeout():
 		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		reset_collision()
 
-func check_waterline() -> void:
-	if position.y > waterline:
-		hasSunk = true
-		Event.emit_signal("emit_audio", {"type": "effect", "name": "sunk"})
+#func check_waterline() -> void:
+	#if position.y > waterline:
+		#hasSunk = true
+		#Event.emit_signal("emit_audio", {"type": "effect", "name": "sunk"})
