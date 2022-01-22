@@ -79,6 +79,7 @@ func get_hugged():
 		Globals.whaleEnemy.set_active(true)
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
 	
 	destroy_object()
