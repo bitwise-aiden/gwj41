@@ -2,7 +2,9 @@ extends Node2D
 
 var Rope = preload("res://Parts/Rope.tscn")
 var Ship = preload("res://Parts/Ship.tscn")
+var Parrot = preload("res://Parts/Parrot.tscn")
 
+var parrots = []
 var ships = []
 var start_pos := Vector2.ZERO
 var end_pos := Vector2.ZERO
@@ -32,6 +34,12 @@ func set_global_variables_for_map():
 	$HugScore, \
 	$ShipsHuggedCount)
 
+var success = Event.connect("emit_audio", self, "play_audio")
+
+func kill_ship(ship):
+	ships.remove(ships.find(ship))
+func kill_parrot(parrot):
+	parrots.remove(parrot.find(parrot))
 
 func _ready():
 	randomize()
@@ -39,6 +47,8 @@ func _ready():
 	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
 	Globals.hugScoreTextField = $HugScore/Score
 	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
+	Event.connect("emit_ship_death", self, "kill_ship")
+	Event.connect("emit_parrot_death", self, "kill_parrot")
 
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
@@ -65,6 +75,12 @@ func spawn_ship(start_pos):
 	ships.append(ship)
 	ship.global_position = start_pos
 	add_child(ship)
+	
+func spawn_parrot(start_pos):
+	var parrot = Parrot.instance()
+	parrots.append(parrot)
+	parrot.global_position = start_pos
+	add_child(parrot)
 
 func reset_decorative_tentacles_positions():
 	for i in range(len(ropes)):
@@ -141,8 +157,8 @@ func _physics_process(delta):
 		else:
 			if Input.is_action_just_pressed("whaleHug"):
 				Globals.whaleEnemy.add_to_hug_count(1)
-			#if Globals.whaleEnemy.tentaclesAttached > 0:
-
-	if (len(get_tree().get_nodes_in_group("ships")) < Globals.max_number_of_ships_on_screen):
+	if len(ships) < Globals.max_number_of_ships_on_screen:
 		spawn_ship(Vector2(Globals.projectResolution.x,180))
+	if len(parrots) < Globals.max_number_of_parrots_on_screen:
+		spawn_parrot(Vector2(-100,100))
 

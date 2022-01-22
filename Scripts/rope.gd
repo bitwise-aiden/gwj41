@@ -42,6 +42,16 @@ func attach_to_ship_mast(mast):
 func detatch_from_ship_mast(mast):
 	if shipMastAttachedTo == mast:
 		shipMastAttachedTo = null
+		#disable collision for a short period to make sure we don't accidentally attach to another ship straight away.
+		print(rope_start_piece)
+		for child in rope_end_piece.get_children():
+			child.set_deferred("disabled", true)
+		#rope_start_piece.CollisionShape2D.disabled = true
+		#rope_end_piece.CollisionShape2D.disabled = true
+			#get_node("CollisionShape2D").disabled = true    # disable
+			#rope.get_node("CollisionShape2D").disabled = false   # enable
+		$TempCollisionDisable.start()
+		
 
 func get_mast_attached():
 	return(shipMastAttachedTo)
@@ -140,3 +150,8 @@ func get_rope_points() -> void:
 #	if rope_points.size() > 2:
 #		draw_polyline_colors(rope_points, rope_colors, 20.0, true)
 
+
+
+func _on_TempCollisionDisable_timeout():
+	for child in rope_end_piece.get_children():
+		child.set_deferred("disabled", false)
