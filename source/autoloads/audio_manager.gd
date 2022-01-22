@@ -80,7 +80,7 @@ func play_audio(incoming : Dictionary) -> void:
 
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
-			
+
 			"wood_break":
 				new_player.audio_path = "res://assets/audio/sfx/wood_break.ogg"
 

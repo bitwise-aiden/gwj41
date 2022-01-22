@@ -31,8 +31,6 @@ var hugScoreDecayTickAmount = 1
 var hugScoreDecayTickAmountInitial = 1
 var whaleHugText
 var hugMiniGamePromptText
-var shipsHuggedCountTextField
-var hugScoreTextField
 var max_number_of_parrots_on_screen = 1
 var whaleTentaclesAttached = []
 var shipHuggedCount: int = 0 setget __ship_hugged_count_set, __ship_hugged_count_get

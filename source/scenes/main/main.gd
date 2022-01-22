@@ -45,8 +45,6 @@ func _ready():
 	randomize()
 	Globals.whaleHugText = $hugWhaleText
 	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
-	Globals.hugScoreTextField = $HugScore/Score
-	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
 	Event.connect("emit_ship_death", self, "kill_ship")
 	Event.connect("emit_parrot_death", self, "kill_parrot")
 
@@ -88,9 +86,6 @@ func reset_decorative_tentacles_positions():
 
 
 func _physics_process(delta):
-
-	# we shouldn't have to do this every frame:
-	$HugScore/Score.text = str(Globals.hugScore)
 	if Globals.hugScore <= 0:
 		print("Game Over. Score: ", Globals.shipHuggedCount)
 
@@ -100,7 +95,7 @@ func _physics_process(delta):
 		centerText.text = str("You Lose. Total playtime: ", time_elapsed, "seconds")
 		get_tree().paused = true
 
-	if left_tentacle.get_mast_attached() != null:
+	if left_tentacle.get_mast_attached() != null: # "Hug score, hug score, tentacle, rope..." What are you talking about Velop? - Lil'Oni
 		ropes[0].setRopeEndPoint(Vector2(left_tentacle.get_mast_attached().global_position.x, left_tentacle.get_mast_attached().global_position.y))
 	if right_tentacle.get_mast_attached() != null:
 		ropes[1].setRopeEndPoint(Vector2(right_tentacle.get_mast_attached().global_position.x, right_tentacle.get_mast_attached().global_position.y))

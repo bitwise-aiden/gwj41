@@ -2,10 +2,6 @@ extends Node2D
 export var whaleZone = false
 var whaleInHugZone = false
 
-# Called when the node enters the scene tree for the first time.
-func set_hugScoreTextField(value):
-	print("setting hugScoreTextField:", value)
-
 func _enter_tree():
 	print("Entered tree in the hug zone")
 	Globals.set_hug_zone(self)
@@ -35,6 +31,8 @@ func _on_Area2D_area_entered(area):
 			$LoveParticles.amount = area.get_parent().hugHearts
 			Globals.hugScore += area.get_parent().hugMeterAmount
 			#print("Current Hug Score: ", Globals.hugScore)
+
+			Event.emit_signal("hugging_update", false)
 
 
 func _on_Area2D_area_exited(area):

@@ -49,7 +49,6 @@ func _ready() -> void:
 # Public methods
 
 func fade_in() -> void:
-
 	__tween.interpolate_method(
 		self,
 		"__set_time",

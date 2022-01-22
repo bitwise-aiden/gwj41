@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=2]
@@ -19,6 +19,11 @@
 [ext_resource path="res://assets/sprites/hud_arm.png" type="Texture" id=17]
 [ext_resource path="res://source/scenes/main/hud.gd" type="Script" id=18]
 [ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=19]
+[ext_resource path="res://assets/sprites/add_heart.png" type="Texture" id=20]
+[ext_resource path="res://source/scenes/main/kracken_head.gd" type="Script" id=21]
+[ext_resource path="res://assets/sprites/kraken_head_unamused.png" type="Texture" id=22]
+[ext_resource path="res://assets/sprites/kraken_head_sad.png" type="Texture" id=23]
+[ext_resource path="res://assets/sprites/kraken_head_concentrate.png" type="Texture" id=24]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 145, 125 )
@@ -33,6 +38,9 @@ animations = [ {
 "name": "PressSpacebar",
 "speed": 8.0
 } ]
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.194631, 0.574152 ), 3.15678, 3.15678, 0, 0, Vector2( 0.993289, 1 ), 0.0, 0.0, 0, 0 ]
 
 [node name="main" type="Node2D"]
 script = ExtResource( 5 )
@@ -117,12 +125,16 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
-frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]
 position = Vector2( 640, 600 )
 texture = ExtResource( 12 )
+script = ExtResource( 21 )
+happy = ExtResource( 12 )
+unamused = ExtResource( 22 )
+sad = ExtResource( 23 )
+concentrate = ExtResource( 24 )
 
 [node name="hud" type="Sprite" parent="."]
 position = Vector2( 1130, 125 )
@@ -143,10 +155,10 @@ __meta__ = {
 }
 
 [node name="text" type="Label" parent="hud"]
-margin_left = -102.0
-margin_top = -113.0
-margin_right = -56.0
-margin_bottom = -86.0
+margin_left = -109.0
+margin_top = -48.0
+margin_right = -55.0
+margin_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource( 19 )
@@ -156,6 +168,18 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="addition" type="CPUParticles2D" parent="hud"]
+position = Vector2( -84, -29 )
+emitting = false
+amount = 1
+one_shot = true
+texture = ExtResource( 20 )
+direction = Vector2( 0, -1 )
+spread = 10.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+scale_amount_curve = SubResource( 4 )
 
 [node name="tentacle" type="ColorRect" parent="."]
 material = ExtResource( 3 )
@@ -173,63 +197,3 @@ position = Vector2( 640, 606 )
 position = Vector2( 636, 466 )
 scale = Vector2( 3, 1 )
 whaleZone = true
-
-[node name="HugScore" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 845.0
-margin_top = 663.0
-margin_right = 1053.0
-margin_bottom = 675.0
-custom_fonts/font = ExtResource( 4 )
-text = "Hug Score:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Score" type="Label" parent="HugScore"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 54.0
-margin_top = -5.0
-margin_right = 126.0
-margin_bottom = 11.0
-custom_fonts/font = ExtResource( 4 )
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ShipsHuggedCount" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 797.0
-margin_top = 641.0
-margin_right = 1005.0
-margin_bottom = 653.0
-custom_fonts/font = ExtResource( 4 )
-text = "Ships Hugged:"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Count" type="Label" parent="ShipsHuggedCount"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 102.0
-margin_top = -5.0
-margin_right = 174.0
-margin_bottom = 11.0
-custom_fonts/font = ExtResource( 4 )
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
