@@ -1,2 +1,2 @@
-# godot-template
-Template project to be used as a base for creating a new project in Godot
+# Godot Wild Jam 41
+Game made for the Godot Wild Jam 41. Theme: Ocean
