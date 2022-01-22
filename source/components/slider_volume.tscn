@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://source/menus/components/slider_volume.gd" type="Script" id=1]
+[ext_resource path="res://source/components/slider_volume.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/dogica.tres" type="DynamicFont" id=2]
+
 
 [node name="slider_volume" type="HSlider"]
 margin_left = 0.25
