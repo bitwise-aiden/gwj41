@@ -15,6 +15,9 @@ func _ready() -> void:
 	__button_menu.connect("pressed", self, "__change_scene", ["start"])
 	__button_restart.connect("pressed", self, "__change_scene", ["main"])
 
+	Event.connect("game_over", __button_pause, "set_disabled", [true])
+	Event.connect("game_over", __pause_menu, "set_visible", [false])
+
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -27,7 +30,9 @@ func __pressed() -> void:
 
 	get_tree().paused = __pause_menu.visible
 
+
 func __change_scene(name: String) -> void:
 	yield(Transition.fade_out(), "completed")
 
 	SceneManager.load_scene(name)
+	get_tree().paused = false

@@ -8,3 +8,5 @@ signal hug_update(amount, max_amount)
 signal ship_update(amount)
 
 signal hugging_update(is_hugging)
+
+signal game_over()

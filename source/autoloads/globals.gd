@@ -22,6 +22,7 @@ var hug_zone = null
 var hugSpeed = Vector2(3, 3)
 var hugScore = 200.0 setget __hug_score_set, __hug_score_get
 var hugScoreMax = 250.0
+var hugScoreInitial = 200.0
 var difficultyLevel = 1 # This is used on the ships speed modifier
 var difficultyLevelIncrement = 0.1
 var difficultyScoreCount = 5 # Every 5 ships, the difficulty goes up

@@ -34,8 +34,6 @@ func _ready() -> void:
 		connect("mouse_entered", self, "__moused", [true])
 		connect("mouse_exited", self, "__moused", [false])
 
-	connect("pressed", self, "__pressed")
-
 
 # Private methods
 

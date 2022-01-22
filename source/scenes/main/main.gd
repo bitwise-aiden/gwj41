@@ -58,6 +58,10 @@ func _ready():
 
 	Transition.fade_in()
 
+	Globals.hugScore = Globals.hugScoreInitial
+
+
+
 func spawn_tentacle(start_pos, end_pos):
 	if len(ropes) <= max_tentacles:
 			var rope = Rope.instance()
@@ -92,8 +96,7 @@ func _physics_process(delta):
 	if Globals.hugScore <= 0:
 		time_now = OS.get_unix_time()
 		var time_elapsed = time_now - time_start
-		centerText.text = str("You Lose. Total playtime: ", time_elapsed, "seconds")
-		get_tree().paused = true
+		Event.emit_signal("game_over")
 
 	if left_tentacle.get_mast_attached() != null: # "Hug score, hug score, tentacle, rope..." What are you talking about Velop? - Lil'Oni
 		ropes[0].setRopeEndPoint(Vector2(left_tentacle.get_mast_attached().global_position.x, left_tentacle.get_mast_attached().global_position.y))
