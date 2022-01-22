@@ -8,22 +8,29 @@ code = "shader_type canvas_item;
 uniform sampler2D y_positions;
 uniform vec4 sky_color : hint_color;
 uniform vec4 water_color : hint_color;
+uniform vec4 separation_color : hint_color;
 
 void fragment(){
 	float y_position = texture(y_positions, SCREEN_UV).y;
 	vec4 color = water_color;
 	color.rgb -= vec3((UV.y - 0.5) / 0.5) * 0.2;
 	
+	
 	if (UV.y < y_position){
 		color = sky_color;
 	} 
+	else if (UV.y < y_position + 0.001)
+	{
+		color = separation_color;
+	}
 	COLOR = color;
 }"
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = SubResource( 1 )
-shader_param/sky_color = Color( 0.215686, 0.678431, 0.74902, 1 )
-shader_param/water_color = Color( 0.05, 0.25, 0.65, 1 )
+shader_param/sky_color = Color( 0.415686, 0.713726, 0.768627, 1 )
+shader_param/water_color = Color( 0.235294, 0.372549, 0.588235, 1 )
+shader_param/separation_color = Color( 0.592157, 0.901961, 0.792157, 1 )
 
 [sub_resource type="ImageTexture" id=3]
 flags = 0

@@ -1,54 +1,45 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
+[ext_resource path="res://source/components/tentacle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/scenes/start/start.gd" type="Script" id=2]
-[ext_resource path="res://assets/materials/material_tentacle.tres" type="Material" id=3]
-[ext_resource path="res://assets/fonts/velopfont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=4]
 [ext_resource path="res://source/components/button.gd" type="Script" id=5]
+[ext_resource path="res://source/scenes/start/text.gd" type="Script" id=6]
+[ext_resource path="res://Parts/water.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/land_without_shadow.png" type="Texture" id=8]
 
-[sub_resource type="StyleBoxEmpty" id=7]
-
-[sub_resource type="StyleBoxEmpty" id=8]
-
-[sub_resource type="StyleBoxEmpty" id=9]
-
-[sub_resource type="StyleBoxEmpty" id=10]
-
-[sub_resource type="StyleBoxEmpty" id=11]
-
-[sub_resource type="Theme" id=6]
-default_font = ExtResource( 4 )
-Button/styles/disabled = SubResource( 7 )
-Button/styles/focus = SubResource( 8 )
-Button/styles/hover = SubResource( 9 )
-Button/styles/normal = SubResource( 10 )
-Button/styles/pressed = SubResource( 11 )
+[sub_resource type="Curve2D" id=1]
+bake_interval = 20.0
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 191, 308, 20.2043, 57.2456, -20.2043, -57.2456, 287, 106, -14.592, -32.5514, 14.592, 32.5514, 232, 179, -24.6942, 7.85723, 24.6942, -7.85723, 324, 210, 20.0304, -69.7074, -20.0304, 69.7074, 352, 113, -53.7401, -17.6777, 53.7401, 17.6777, 296, 294, 0, 0, 0, 0, 400, 227, -31.8198, -8.48528, 31.8198, 8.48528, 403, 287, 0, 0, 0, 0, 465, 220, 0, 0, 0, 0, 470, 295, -38.5373, 9.19239, 38.5373, -9.19239, 575, 215, -28.0352, -39.6244, 28.0352, 39.6244, 513, 287, 0, 0, 0, 0, 583, 226, 68.6833, 26.3932, -68.6833, -26.3932, 460, 367, 0, 0, 0, 0, 569, 289, 0, 0, 0, 0, 674, 216, -32.4797, -21.2348, 32.4797, 21.2348, 625, 285, 0, 0, 0, 0, 680, 221, 82.1379, 26.4994, -82.1379, -26.4994, 608, 362, 0, 0, 0, 0, 640.798, 300.594, 0, 0, 0, 0, 759, 255, 38.6123, 14.1837, -38.6123, -14.1837, 768, 224, -25, -14, 25, 14, 745, 283, 0, 0, 0, 0, 817, 222, 12.5, -7.5, -12.5, 7.5, 822, 282, -16.5, 11, 16.5, -11, 845, 224, -9, -8, 9, 8, 872, 281, -5, 12, 5, -12, 915, 262 )
+}
 
 [node name="start" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-theme = SubResource( 6 )
+theme = ExtResource( 4 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="tentacle" type="ColorRect" parent="." groups=["tentacle"]]
-material = ExtResource( 3 )
+[node name="water" parent="." instance=ExtResource( 7 )]
 margin_right = 1280.0
 margin_bottom = 720.0
-color = Color( 1, 1, 1, 0 )
-script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="LandWithoutShadow" type="Sprite" parent="."]
+position = Vector2( 640, 570 )
+texture = ExtResource( 8 )
+
+[node name="tentacle" parent="." instance=ExtResource( 1 )]
 
 [node name="button_play" type="Button" parent="."]
 margin_left = 540.0
-margin_top = 400.0
+margin_top = 490.0
 margin_right = 740.0
-margin_bottom = 440.0
+margin_bottom = 530.0
 rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
 text = "play"
 script = ExtResource( 5 )
 __meta__ = {
@@ -57,20 +48,43 @@ __meta__ = {
 
 [node name="button_settings" type="Button" parent="."]
 margin_left = 540.0
-margin_top = 450.0
+margin_top = 540.0
 margin_right = 740.0
-margin_bottom = 490.0
+margin_bottom = 580.0
 rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
 text = "settings"
 script = ExtResource( 5 )
 
 [node name="button_exit" type="Button" parent="."]
 margin_left = 540.0
-margin_top = 500.0
+margin_top = 590.0
 margin_right = 740.0
-margin_bottom = 540.0
+margin_bottom = 630.0
 rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
 text = "exit"
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="Path2D" parent="."]
+position = Vector2( 7, 2 )
+curve = SubResource( 1 )
+script = ExtResource( 6 )
+
+[node name="title" type="Button" parent="."]
+margin_left = 236.0
+margin_top = 89.0
+margin_right = 436.0
+margin_bottom = 129.0
+rect_min_size = Vector2( 200, 40 )
+rect_rotation = -36.0431
+rect_pivot_offset = Vector2( 100, 20 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+disabled = true
+text = "The"
 script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false

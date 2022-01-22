@@ -2,8 +2,11 @@ extends Control
 
 # Private variables
 
+onready var __button_exit: Button = $button_exit
 onready var __button_play: Button = $button_play
 onready var __button_settings: Button = $button_settings
+onready var __text: Text = $text
+onready var __title: Button = $title
 
 onready var __timer: Timer = Timer.new()
 
@@ -16,8 +19,34 @@ func _ready() -> void:
 
 	__button_play.connect("pressed", self, "__change_scene", ["main"])
 	__button_settings.connect("pressed", self, "__change_scene", ["settings"])
+	__button_exit.connect("pressed", self, "__exit")
 
-	Transition.fade_in()
+	var original_position: Vector2 = __title.rect_position
+	__title.rect_position.y -= 500
+
+	yield(Transition.fade_in(), "completed")
+	__text.show()
+
+	var tween: Tween = Tween.new()
+	add_child(tween)
+
+	tween.interpolate_property(
+		__title,
+		"rect_position",
+		__title.rect_position,
+		original_position,
+		0.5,
+		Tween.TRANS_BOUNCE,
+		Tween.EASE_OUT,
+		1.0
+	)
+	tween.start()
+
+	yield(tween, "tween_completed")
+
+	remove_child(tween)
+
+	__button_play.grab_focus()
 
 
 # Private methods
@@ -29,3 +58,12 @@ func __change_scene(name: String) -> void:
 	yield(__timer, "timeout")
 
 	SceneManager.load_scene(name)
+
+
+func __exit() -> void:
+	yield(Transition.fade_out(), "completed")
+
+	__timer.start(0.5)
+	yield(__timer, "timeout")
+
+	get_tree().quit()

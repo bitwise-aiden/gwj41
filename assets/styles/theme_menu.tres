@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=8 format=2]
+
+[ext_resource path="res://assets/styles/style_button.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/fonts/velopfont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/styles/style_grabber_area.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/sprites/slider_grabber.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/slider_grabber_inactive.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[resource]
+default_font = ExtResource( 2 )
+Button/styles/disabled = ExtResource( 1 )
+Button/styles/focus = ExtResource( 1 )
+Button/styles/hover = ExtResource( 1 )
+Button/styles/normal = ExtResource( 1 )
+Button/styles/pressed = ExtResource( 1 )
+HSlider/icons/grabber = ExtResource( 5 )
+HSlider/icons/grabber_disabled = ExtResource( 5 )
+HSlider/icons/grabber_highlight = ExtResource( 4 )
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = SubResource( 1 )
+HSlider/styles/grabber_area_highlight = SubResource( 2 )
+HSlider/styles/slider = ExtResource( 3 )

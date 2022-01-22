@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/cloud_3.png-9dc0e929c7407a05fee01934c2e491c8.stex"
+path="res://.import/slider_grabber.png-3f71d31f2abfa7f13b5fa23129d5a0c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/cloud_3.png"
-dest_files=[ "res://.import/cloud_3.png-9dc0e929c7407a05fee01934c2e491c8.stex" ]
+source_file="res://assets/sprites/slider_grabber.png"
+dest_files=[ "res://.import/slider_grabber.png-3f71d31f2abfa7f13b5fa23129d5a0c5.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

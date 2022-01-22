@@ -14,14 +14,15 @@ func _init(
 	points: PoolVector2Array = [],
 	width_start: float = 15.0,
 	width_end: float = 15.0,
-	separation: int = 1
+	separation: int = 1,
+	offset: Vector2 = Vector2.ZERO
 ) -> void:
 	__packed_data = PoolColorArray()
 
 	for point in points:
 		var data: Color = Color(
-				point.x / 1280.0,
-				point.y / 720.0,
+				(offset.x + point.x) / 1280.0,
+				(offset.y + point.y) / 720.0,
 				0.0,
 				0.0
 			)
