@@ -19,12 +19,6 @@ Vector2(Globals.initial_end_left_tentacle_position.x - 150,560), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 100,480), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)]
 
-
-
-
-
-
-
 onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0

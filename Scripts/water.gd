@@ -21,6 +21,8 @@ onready var k_on_m : float = hookes / mass
 export(float, 0.0, 720.0) var target_height : float = 220.0
 
 func _ready() -> void:
+	Event.connect("water_splash", self, "splash")
+	Globals.water_height = target_height
 	Transition.fade_in()
 	
 	# Get our bounds, only along the top edge because water be like that
@@ -92,10 +94,12 @@ func __update_horizontals() -> void:
 			if i <= num_points - 1:
 				point_dict[str(i + 1)]["position"].y += right_deltas[i]
 
+
 func splash(pixel_x_location : int, velocity_change : float) -> void:
-	var index = round(pixel_x_location * num_points / (top_right_point.x - top_left_point.x))
-	if index > 0 and index < num_points + 1:
+	var index = floor(pixel_x_location / (num_points + 1) * 2)
+	if index > 0 and index <= num_points + 1:
 		 point_dict[str(index)]["velocity"].y = velocity_change
+
 
 func __pass_to_shader(points : Dictionary) -> void:
 	var position_array : PoolVector2Array = PoolVector2Array()
@@ -124,7 +128,7 @@ func __pass_to_shader(points : Dictionary) -> void:
 			j = j + 1
 		if j >= num_points:
 			j = num_points
-			ypos2 = top_right_point
+			ypos2 = position_array[-1]
 		else:
 			ypos2 = position_array[j+1]
 		
