@@ -44,6 +44,8 @@ func reset_collision():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if active:
+		# Set the splash!
+		water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
 		if len(tentaclesAttached) > 1:
 			if (global_position.x < hugZone.global_position.x):
 				global_position.x += hugSpeed.x
@@ -58,8 +60,6 @@ func _physics_process(delta):
 	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
 		destroy_object()
 	
-	# Set the splash!
-	water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
 	if !hasSunk:
 		check_waterline()
 
