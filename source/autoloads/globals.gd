@@ -38,6 +38,8 @@ var shipHuggedCount = 0
 var whaleShipWaitCount = 3
 var whaleEnemy
 
+var water_height : float
+
 #"Gravity"
 var tentacle_correction_move_speed = Vector2(-5, 3)
 # Ships variables
