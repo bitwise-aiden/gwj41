@@ -1,0 +1,12 @@
+[gd_resource type="Theme" load_steps=3 format=2]
+
+[ext_resource path="res://assets/styles/style_button.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/fonts/velopfont.tres" type="DynamicFont" id=2]
+
+[resource]
+default_font = ExtResource( 2 )
+Button/styles/disabled = ExtResource( 1 )
+Button/styles/focus = ExtResource( 1 )
+Button/styles/hover = ExtResource( 1 )
+Button/styles/normal = ExtResource( 1 )
+Button/styles/pressed = ExtResource( 1 )

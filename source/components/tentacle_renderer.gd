@@ -12,21 +12,22 @@ var __vertices: Array = [Vector2(640.0, 360.0), Vector2.ZERO]
 # Lifecycle methods
 
 func _ready() -> void:
-	__image.create(100, 10, false, Image.FORMAT_RGBAH)
+	__image.create(400, 10, false, Image.FORMAT_RGBAH)
 
 func _process(delta: float) -> void:
 	var tentacles_raw: Array = get_tree().get_nodes_in_group("tentacle")
 	var tentacles: Array = []
 
 	for tentacle in tentacles_raw:
-		if tentacle is Path2D:
+		if tentacle is Text:
 			tentacles.append(
 				TentacleData.new(
 					true,
-					tentacle.curve.get_baked_points(),
+					tentacle.points(),
 					20.0,
 					20.0,
-					1
+					3,
+					Vector2(90.0, -10.0)
 				)
 			)
 		elif tentacle is Rope:
@@ -65,7 +66,7 @@ func set_points(tentacles: Array) -> void:
 
 	__image.lock()
 
-	for r in row_count:
+	for r in min(row_count, 400):
 		var tentacle: TentacleData = tentacles[r]
 
 		if tentacle.is_dirty():

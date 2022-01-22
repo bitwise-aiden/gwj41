@@ -13,6 +13,7 @@ func _ready() -> void:
 	__timer.one_shot = false
 	add_child(__timer)
 
+	__button_back.grab_focus()
 	__button_back.connect("pressed", self, "__change_scene", ["start"])
 
 	Transition.fade_in()
