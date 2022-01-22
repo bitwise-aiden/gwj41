@@ -5,6 +5,7 @@ extends Control
 onready var __button_exit: Button = $button_exit
 onready var __button_play: Button = $button_play
 onready var __button_settings: Button = $button_settings
+onready var __puns: Label = $puns
 onready var __text: Text = $text
 onready var __title: Button = $title
 
@@ -14,6 +15,8 @@ onready var __timer: Timer = Timer.new()
 # Lifecycle methods
 
 func _ready() -> void:
+	randomize()
+
 	__timer.one_shot = false
 	add_child(__timer)
 
@@ -41,12 +44,24 @@ func _ready() -> void:
 		1.0
 	)
 	tween.start()
+	yield(tween, "tween_completed")
 
+
+	__button_play.grab_focus()
+
+	tween.interpolate_property(
+		__puns,
+		"modulate",
+		Color.transparent,
+		Color.white,
+		0.5
+	)
+	tween.start()
 	yield(tween, "tween_completed")
 
 	remove_child(tween)
 
-	__button_play.grab_focus()
+
 
 
 # Private methods

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://source/components/tentacle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://source/scenes/start/start.gd" type="Script" id=2]
+[ext_resource path="res://source/scenes/start/puns.gd" type="Script" id=3]
 [ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=4]
 [ext_resource path="res://source/components/button.gd" type="Script" id=5]
 [ext_resource path="res://source/scenes/start/text.gd" type="Script" id=6]
@@ -89,3 +90,16 @@ script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="puns" type="Label" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 946.0
+margin_top = 120.0
+margin_right = 986.0
+margin_bottom = 147.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_rotation = 14.1
+align = 1
+valign = 1
+script = ExtResource( 3 )

@@ -42,7 +42,6 @@ func kill_parrot(parrot):
 	parrots.remove(parrot.find(parrot))
 
 func _ready():
-	randomize()
 	Globals.whaleHugText = $hugWhaleText
 	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
 	Event.connect("emit_ship_death", self, "kill_ship")
