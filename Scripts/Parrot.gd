@@ -57,24 +57,15 @@ func destroy_object():
 		queue_free()
 
 func get_hugged():
-	Globals.shipHuggedCount += 1
-	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
-	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
-		Globals.whaleEnemy.set_active(true)
-	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
-		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-	
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
 	active = true
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
-	#water.splash(clamp(position.x, 0, 1280), 5)
 	if randf() < 0.75:
 		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
-	
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
@@ -84,7 +75,6 @@ func _on_RightSail_body_entered(body):
 		reset_collision()
 		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
-		
 
 func _on_LeftSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
@@ -92,18 +82,10 @@ func _on_LeftSail_body_entered(body):
 		tentaclesAttached.append(body.get_parent())
 		leftSailEnabled = false
 		reset_collision()
-		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
-
 
 func _on_BreakFreeTimer_timeout():
 	if len(tentaclesAttached) == 1:
 		tentaclesAttached[0].detatch_from_ship_mast(tentaclesAttached[0].get_mast_attached())
 		tentaclesAttached = []
-		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		reset_collision()
-
-#func check_waterline() -> void:
-	#if position.y > waterline:
-		#hasSunk = true
-		#Event.emit_signal("emit_audio", {"type": "effect", "name": "sunk"})

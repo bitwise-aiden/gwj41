@@ -28,15 +28,17 @@ var ship_speed_modifier = 1 * difficultyLevel
 var hugScoreDecayTickDelay = 0.8
 var hugScoreDecayTickAmount = 1
 var hugScoreDecayTickAmountInitial = 1
-var whaleHugText
+#var whaleHugText
 var hugMiniGamePromptText
 var shipsHuggedCountTextField
 var hugScoreTextField
 var max_number_of_parrots_on_screen = 1
-var whaleTentaclesAttached = []
+#var whaleTentaclesAttached = []
 var shipHuggedCount = 0
-var whaleShipWaitCount = 3
-var whaleEnemy
+#var whaleShipWaitCount = 3
+# Every 5 ships that are hugged, triggers a parrot. 
+var parrotShipWaitCount = 5
+#var whaleEnemy
 
 var water_height : float
 

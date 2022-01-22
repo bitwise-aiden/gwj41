@@ -34,7 +34,7 @@ func _ready():
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
-
+	
 func reset_collision():
 	$LeftSail.set_deferred("monitoring", true)
 	$LeftSail.set_deferred("monitorable", true)
@@ -76,8 +76,11 @@ func destroy_object():
 func get_hugged():
 	Globals.shipHuggedCount += 1
 	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
-	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
-		Globals.whaleEnemy.set_active(true)
+	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.parrotShipWaitCount) == 0):
+		# Emit a spawn parrot signal
+		# This shouldn't be done here. The ship should just emit a signal that it was hugged and be done with it.
+		Event.emit_signal("spawn_parrot")
+		pass
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
