@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://source/scenes/start/start.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=4]
 [ext_resource path="res://source/components/button.gd" type="Script" id=5]
 [ext_resource path="res://source/scenes/start/text.gd" type="Script" id=6]
+[ext_resource path="res://Parts/water.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/land_without_shadow.png" type="Texture" id=8]
 
 [sub_resource type="Curve2D" id=1]
 bake_interval = 20.0
@@ -21,6 +23,14 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="water" parent="." instance=ExtResource( 7 )]
+margin_right = 1280.0
+margin_bottom = 720.0
+
+[node name="LandWithoutShadow" type="Sprite" parent="."]
+position = Vector2( 640, 567 )
+texture = ExtResource( 8 )
 
 [node name="tentacle" type="ColorRect" parent="." groups=["tentacle"]]
 material = ExtResource( 3 )
