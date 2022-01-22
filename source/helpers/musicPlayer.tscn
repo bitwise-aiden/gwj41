@@ -3,4 +3,5 @@
 [ext_resource path="res://Scripts/soundEffectPlayer.gd" type="Script" id=1]
 
 [node name="musicPlayer" type="AudioStreamPlayer"]
+bus = "Music"
 script = ExtResource( 1 )

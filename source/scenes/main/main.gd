@@ -37,7 +37,7 @@ func set_global_variables_for_map():
 	$hugMiniGamePromptText, \
 	$HugScore, \
 	$ShipsHuggedCount)
-	
+
 
 func _ready():
 	randomize()
@@ -45,12 +45,12 @@ func _ready():
 	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
 	Globals.hugScoreTextField = $HugScore/Score
 	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
-	
+
 	left_tentacle = spawn_tentacle(Globals.initial_start_left_tentacle_position, Globals.initial_end_left_tentacle_position)
 	right_tentacle = spawn_tentacle(Globals.initial_start_right_tentacle_position, Globals.initial_end_right_tentacle_position)
-	
+
 	Event.emit_signal("emit_audio", {"type": "music", "name": "background"})
-	
+
 	spawn_ship(Vector2(Globals.projectResolution.x, 180))
 	time_start = OS.get_unix_time()
 

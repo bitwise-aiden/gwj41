@@ -1,4 +1,4 @@
-extends Button
+class_name BoardButton extends Button
 
 
 # Public variables

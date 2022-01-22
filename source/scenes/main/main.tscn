@@ -38,7 +38,7 @@ num_points = 50
 target_height = 235.0
 
 [node name="land" type="Sprite" parent="."]
-position = Vector2( 640, 567 )
+position = Vector2( 640, 570 )
 texture = ExtResource( 2 )
 
 [node name="bubbles" type="CPUParticles2D" parent="."]
@@ -111,6 +111,7 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
+frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]

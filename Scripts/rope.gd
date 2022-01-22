@@ -38,7 +38,7 @@ func detatch_from_ship_mast(mast):
 
 func get_mast_attached():
 	return(shipMastAttachedTo)
-	
+
 func set_active_rope_id(value:int):
 	if active_rope_id != value:
 		active_rope_id = value
@@ -72,7 +72,7 @@ func spawn_rope(start_pos:Vector2, end_pos:Vector2):
 	rope_end_piece.global_position = end_pos
 	start_pos = rope_start_joint.global_position
 	end_pos = rope_end_joint.global_position
-	
+
 	rope_to_left = start_pos.x < end_pos.x
 	#var distance = start_pos.distance_to(end_pos)
 	var pieces_amount = 60
@@ -87,21 +87,21 @@ func create_rope(pieces_amount:int, parent:Object, end_pos:Vector2, spawn_angle:
 	for i in pieces_amount:
 		last_color = color2 if i % 2 == 0 else color1
 		rope_colors.append(last_color)
-		
+
 		parent = add_piece(parent, i, spawn_angle)
 		parent.set_name("rope_piece_"+str(i))
 		rope_parts.append(parent)
-		
+
 		var joint_pos = parent.get_node("C/J").global_position
 		if joint_pos.distance_to(end_pos) < rope_close_tolerance:
 			break
-	
+
 	last_color = color1 if last_color == color2 else color2
 	rope_colors.append(last_color)
-	
+
 	rope_end_joint.node_a = rope_end_piece.get_path()
 	rope_end_joint.node_b = rope_parts[-1].get_path()
-	
+
 
 func add_piece(parent:Object, id:int, spawn_angle:float) -> RopePiece:
 	var joint : PinJoint2D = parent.get_node("C/J") as PinJoint2D

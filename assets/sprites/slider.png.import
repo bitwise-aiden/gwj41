@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/land_without_shadow.png-46f530f150e9ea63c69c29f8b76819b6.stex"
+path="res://.import/slider.png-8dc6a4048c4e6bc7aa7717641db85957.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/land_without_shadow.png"
-dest_files=[ "res://.import/land_without_shadow.png-46f530f150e9ea63c69c29f8b76819b6.stex" ]
+source_file="res://assets/sprites/slider.png"
+dest_files=[ "res://.import/slider.png-8dc6a4048c4e6bc7aa7717641db85957.stex" ]
 
 [params]
 

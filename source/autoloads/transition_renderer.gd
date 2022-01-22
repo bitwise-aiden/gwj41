@@ -1,10 +1,5 @@
 extends Node
 
-# Public variables
-
-export(float, 0.0, 1.0) var time = 0.0
-
-
 # Private variables
 
 var __tween: Tween = Tween.new()
@@ -48,13 +43,13 @@ func _ready() -> void:
 
 	__output.material.set_shader_param("bubbles", texture)
 	__output.material.set_shader_param("bubble_count", bubbles.size())
-	__output.material.set_shader_param("bubble_time", time)
+	__output.material.set_shader_param("bubble_time", 1.0)
 
 
 # Public methods
 
 func fade_in() -> void:
-	
+
 	__tween.interpolate_method(
 		self,
 		"__set_time",
