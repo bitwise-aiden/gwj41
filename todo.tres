@@ -3,5 +3,6 @@ todo:
 	- [x] sprites for: 
 		- [x] broken ship
 		- [x] cloud ship
-	- [ ] fix transition on web build 
+	- [x] fix transition on web build
+	- [ ] disable exit button on web 
 	- [ ] itch.io page

@@ -1,5 +1,10 @@
 class_name Text extends Path2D
 
+# Publiv variable
+
+var dirty: bool = true
+
+
 # Private variables
 
 var __point_count: int = 0
@@ -14,6 +19,7 @@ func _ready() -> void:
 
 func points() -> PoolVector2Array:
 	return PoolVector2Array(Array(curve.get_baked_points()).slice(0, __point_count))
+
 
 func show() -> void:
 	var tween: Tween = Tween.new()
@@ -30,3 +36,5 @@ func show() -> void:
 
 	yield(tween, "tween_completed")
 	remove_child(tween)
+
+	dirty = false

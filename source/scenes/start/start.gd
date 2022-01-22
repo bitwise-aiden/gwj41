@@ -24,6 +24,9 @@ func _ready() -> void:
 	__button_settings.connect("pressed", self, "__change_scene", ["settings"])
 	__button_exit.connect("pressed", self, "__exit")
 
+	if OS.has_feature("JavaScript"):
+		remove_child(__button_exit)
+
 	var original_position: Vector2 = __title.rect_position
 	__title.rect_position.y -= 500
 

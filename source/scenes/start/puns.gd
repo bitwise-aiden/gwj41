@@ -16,10 +16,12 @@ const __PUNS: Array = [
 	"Is that Ryan Sea Crest?",
 	"It's a hug emergensea!",
 	"Hugs from the deep, a Kraken good tale",
-	"The Huggening: Hugs so good they Kraken your back",
+	"The Huggening:\nHugs so good they Kraken your back",
 	"Don't go kraken my heart",
 	"Please stop, you're krilling me!",
-	"Phil McKraken",
+	"Phil McKraken", # Thanks jotson!
+	"This pun is a chore to squeeze a laugh", # Thanks hittaus!
+	"This tentacles a real sucker for hugs",
 ]
 
 
