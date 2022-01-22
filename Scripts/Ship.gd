@@ -22,6 +22,9 @@ var hasSunk = false
 
 var water
 
+onready var __bubbles: CPUParticles2D = $bubbles
+var __timer: Timer = Timer.new()
+
 func _enter_tree() -> void:
 	waterline = position.y
 
@@ -34,6 +37,9 @@ func _ready():
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
+
+	__timer.one_shot = true
+	add_child(__timer)
 
 func reset_collision():
 	$LeftSail.set_deferred("monitoring", true)
@@ -104,6 +110,9 @@ func _on_RightSail_body_entered(body):
 
 		if tentaclesAttached.size() > 1:
 			Event.emit_signal("hugging_update", true)
+			__timer.start(0.1)
+			yield(__timer, "timeout")
+			__bubbles.restart()
 
 
 func _on_LeftSail_body_entered(body):
@@ -117,6 +126,9 @@ func _on_LeftSail_body_entered(body):
 
 		if tentaclesAttached.size() > 1:
 			Event.emit_signal("hugging_update", true)
+			__timer.start(0.1)
+			yield(__timer, "timeout")
+			__bubbles.restart()
 
 
 func _on_BreakFreeTimer_timeout():

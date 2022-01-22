@@ -128,6 +128,7 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
+frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]
