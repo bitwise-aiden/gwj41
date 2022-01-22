@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 					tentacle.points(),
 					20.0,
 					20.0,
-					3,
+					4,
 					Vector2(90.0, -10.0)
 				)
 			)

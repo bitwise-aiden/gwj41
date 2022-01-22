@@ -1,4 +1,4 @@
-extends Node2D
+extends Node2D # Will this break things? \n\r\l """ - TheoremMetal
 
 var Rope = preload("res://Parts/Rope.tscn")
 var Ship = preload("res://Parts/Ship.tscn")
