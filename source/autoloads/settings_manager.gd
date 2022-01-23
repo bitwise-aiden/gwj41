@@ -9,8 +9,8 @@ var __settings: Dictionary = {}
 var __settings_default: Dictionary = {
 	"volume": {
 		"Master": 1.0,
-		"Music": 0.8,
-		"Sound Effects": 0.6
+		"Music": 0.7,
+		"Sound Effects": 0.5
 	},
 	"input": {}
 }

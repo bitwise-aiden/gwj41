@@ -121,8 +121,10 @@ func play_audio(incoming : Dictionary) -> void:
 
 			"transition":
 				new_player.audio_path = "res://assets/audio/sfx/bubble_transition.ogg"
-
+			
 		self.add_child(new_player)
+		new_player.playing = true
+
 	if incoming["type"] == "music":
 		var new_player = music_player.instance()
 		new_player.pause_mode = Node.PAUSE_MODE_PROCESS
