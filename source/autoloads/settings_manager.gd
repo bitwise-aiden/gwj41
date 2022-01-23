@@ -12,7 +12,13 @@ var __settings_default: Dictionary = {
 		"Music": 1.0,
 		"Sound Effects": 1.0
 	},
-	"input": {}
+	"input":{
+		"leftTentacleGoRight": KEY_W,
+		"leftTentacleGoUp": KEY_Q,
+		"rightTentacleGoLeft": KEY_O,
+		"rightTentacleGoUp": KEY_P,
+	},
+	"highscore": 0
 }
 
 
