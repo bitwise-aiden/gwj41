@@ -20,14 +20,15 @@ var tentacle_height_cap = 10
 var tentacle_width_cap = projectResolution.x
 var hug_zone = null
 var hugSpeed = Vector2(3, 3)
-var hugScore = 200.0 setget __hug_score_set, __hug_score_get
+var hugScore = 150.0 setget __hug_score_set, __hug_score_get
 var hugScoreMax = 250.0
 var hugScoreInitial = 200.0
+
 var difficultyLevel = 1 # This is used on the ships speed modifier
-var difficultyLevelIncrement = 0.1
+var difficultyLevelIncrement = 0.3
 var difficultyScoreCount = 5 # Every 5 ships, the difficulty goes up
-var ship_speed_modifier = 1 * difficultyLevel
-var hugScoreDecayTickDelay = 0.8
+var ship_speed_modifier = 2 * difficultyLevel
+var hugScoreDecayTickDelay = 0.3
 var hugScoreDecayTickAmount = 1
 var hugScoreDecayTickAmountInitial = 1
 var hugMiniGamePromptText
@@ -48,8 +49,8 @@ func set_hug_zone(hugZone):
 func get_hug_zone():
 	return(hug_zone)
 
-func increase_difficulty_level(new_level):
-	difficultyLevel = new_level # This is used on the ships speed modifier
+func increase_difficulty_level():
+	difficultyLevel += difficultyLevelIncrement # This is used on the ships speed modifier
 	ship_speed_modifier = 1 * difficultyLevel
 
 func set_tentacle_start_positions(start_left_pos:Vector2, end_left_pos:Vector2, start_right_pos:Vector2, end_right_pos:Vector2):

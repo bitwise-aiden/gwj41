@@ -57,9 +57,10 @@ func destroy_object():
 		queue_free()
 
 func get_hugged():
-	Globals.shipHuggedCount += 1
+	#Globals.shipHuggedCount += 1
+	#Globals.__hug_score_set
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
-		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+		Globals.increase_difficulty_level()
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "parrot_hug"})
 	destroy_object()
 

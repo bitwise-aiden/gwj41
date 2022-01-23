@@ -19,6 +19,7 @@ var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
 var waterline
 var hasSunk = false
 var water
+var difficultySpeedModifier
 
 onready var __bubbles: CPUParticles2D = $bubbles
 var __timer: Timer = Timer.new()
@@ -31,7 +32,8 @@ func _ready():
 	$OffScreenTimer.wait_time = rng.randf_range(min_wait_time, max_wait_time)
 	$OffScreenTimer.start()
 	rng.randomize()
-	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * Globals.ship_speed_modifier)
+	difficultySpeedModifier = Globals.ship_speed_modifier
+	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * difficultySpeedModifier)
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
@@ -47,6 +49,7 @@ func reset_collision():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if active:
+		difficultySpeedModifier = Globals.ship_speed_modifier
 		# Set the splash!
 		Event.emit_signal("water_splash", clamp(position.x, 0, 1280) + 30, (movement_speed) / (100), "ship")
 		if len(tentaclesAttached) > 1:
@@ -73,7 +76,7 @@ func destroy_object():
 			tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		for child in self.get_children():
 			child.queue_free()
-		queue_free()
+		call_deferred("queue_free")
 
 func get_hugged():
 	Globals.shipHuggedCount += 1
@@ -83,10 +86,10 @@ func get_hugged():
 		# This shouldn't be done here. The ship should just emit a signal that it was hugged and be done with it.
 		Event.emit_signal("spawn_parrot")
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
-		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+		Globals.increase_difficulty_level()
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-	Event.emit_signal("spawn_new_broken_ship", self)
+	Event.emit_signal("spawn_new_broken_ship")
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
