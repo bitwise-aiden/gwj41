@@ -99,6 +99,7 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/pun-04.ogg"
 					5:
 						new_player.audio_path = "res://assets/audio/sfx/pun-05.ogg"
+				new_player.volume_db = 6
 
 
 			"sunk":
@@ -142,8 +143,10 @@ func play_audio(incoming : Dictionary) -> void:
 			"main_menu":
 				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
 			"end_game":
-				active_music_players[0].queue_free()
-				active_music_players.remove(0)
+				if active_music_players.size() > 0:
+					active_music_players[0].queue_free()
+					active_music_players.remove(0)
+				new_player.endGame = true
 				new_player.audio_path = "res://assets/audio/music/end_screen.ogg"
 
 		active_music_players.push_back(new_player)

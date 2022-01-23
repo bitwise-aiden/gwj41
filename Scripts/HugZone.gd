@@ -49,4 +49,4 @@ func _on_Timer_timeout():
 
 
 func _on_difficultyTimer_timeout() -> void:
-	$Timer.wait_time *= 0.8
+	$Timer.wait_time *= 0.95

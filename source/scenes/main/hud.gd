@@ -4,7 +4,7 @@ extends Sprite
 # Private constants
 
 const __angle_max: float = 43.0
-const __angle_min: float = -55.0
+const __angle_min: float = -65.0
 
 # Private variables
 
