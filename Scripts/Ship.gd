@@ -76,7 +76,7 @@ func destroy_object():
 			tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		for child in self.get_children():
 			child.queue_free()
-		queue_free()
+		call_deferred("queue_free")
 
 func get_hugged():
 	Globals.shipHuggedCount += 1
@@ -86,10 +86,10 @@ func get_hugged():
 		# This shouldn't be done here. The ship should just emit a signal that it was hugged and be done with it.
 		Event.emit_signal("spawn_parrot")
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
-		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+		Globals.increase_difficulty_level()
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-	Event.emit_signal("spawn_new_broken_ship", self)
+	Event.emit_signal("spawn_new_broken_ship")
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():

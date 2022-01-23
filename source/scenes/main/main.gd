@@ -15,12 +15,6 @@ var tentacle_move_speed = Globals.tentacle_player_move_speed
 var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
 var left_tentacle
 var right_tentacle
-var decorative_tentacles = []
-var decorative_tentacles_offset_multiplier = Vector2(200,-30)
-var decorative_tentacles_initial_positions = [Vector2(Globals.initial_end_left_tentacle_position.x - 100,480), \
-Vector2(Globals.initial_end_left_tentacle_position.x - 150,560), \
-Vector2(Globals.initial_end_right_tentacle_position.x + 100,480), \
-Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)]
 
 var time_start = 0
 var time_now = 0
@@ -45,13 +39,17 @@ func _ready():
 	Globals.hugScore = Globals.hugScoreInitial
 
 func kill_ship(ship):
-	ships.remove(ships.find(ship))
+	if ships.find(ship) != -1:
+		ships.remove(ships.find(ship))
 
-func make_broken_ship(ship):
+func make_broken_ship():
 	var BS = Broken_Ship.instance()
-	add_child(BS)
-	BS.leftHalf.global_position = ropes[0].getRopeEndPoint()
-	BS.rightHalf.global_position = ropes[1].getRopeEndPoint()
+	self.call_deferred("spawn_broken_ship_and_set_position", BS)
+
+func spawn_broken_ship_and_set_position(brs):
+	add_child(brs)
+	brs.leftHalf.global_position = ropes[0].getRopeEndPoint()
+	brs.rightHalf.global_position = ropes[1].getRopeEndPoint()
 
 func spawn_tentacle(start_pos, end_pos):
 	if len(ropes) <= max_tentacles:
@@ -75,10 +73,6 @@ func spawn_parrot():
 	parrot.global_position = parrotSpawnPos
 	add_child(parrot)
 
-func reset_decorative_tentacles_positions():
-	for i in range(len(ropes)):
-		ropes[i].setRopeEndPoint(decorative_tentacles_initial_positions[i])
-
 func _physics_process(delta):
 	if Globals.hugScore <= 0:
 		print("Game Over. Score: ", Globals.shipHuggedCount)
@@ -89,6 +83,7 @@ func _physics_process(delta):
 		Event.emit_signal("game_over")
 
 	if left_tentacle.get_mast_attached() != null: # "Hug score, hug score, tentacle, rope..." What are you talking about Velop? - Lil'Oni
+												  # "If tentacle in tentacles... If tentacle is attached to mast then hug... decorative tentacles attached to whale and break free timer finished, then remove them one by one... WTF ARE YOU TALKING ABOUT?" - Orbit's housemate
 		ropes[0].setRopeEndPoint(Vector2(left_tentacle.get_mast_attached().global_position.x, left_tentacle.get_mast_attached().global_position.y))
 	if right_tentacle.get_mast_attached() != null:
 		ropes[1].setRopeEndPoint(Vector2(right_tentacle.get_mast_attached().global_position.x, right_tentacle.get_mast_attached().global_position.y))
