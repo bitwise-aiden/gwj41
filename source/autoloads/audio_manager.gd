@@ -73,7 +73,7 @@ func play_audio(incoming : Dictionary) -> void:
 					1:
 						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
 					2:
-						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg
+						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
 						new_player.volume_db = -10
 
 			"parrot":
