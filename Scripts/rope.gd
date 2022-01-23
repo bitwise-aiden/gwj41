@@ -43,7 +43,7 @@ func detatch_from_ship_mast(mast):
 	if shipMastAttachedTo == mast:
 		shipMastAttachedTo = null
 		#disable collision for a short period to make sure we don't accidentally attach to another ship straight away.
-		print(rope_start_piece)
+		#print(rope_start_piece)
 		for child in rope_end_piece.get_children():
 			child.set_deferred("disabled", true)
 		#rope_start_piece.CollisionShape2D.disabled = true

@@ -19,6 +19,7 @@ var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
 var waterline
 var hasSunk = false
 var water
+var difficultySpeedModifier
 
 onready var __bubbles: CPUParticles2D = $bubbles
 var __timer: Timer = Timer.new()
@@ -31,7 +32,8 @@ func _ready():
 	$OffScreenTimer.wait_time = rng.randf_range(min_wait_time, max_wait_time)
 	$OffScreenTimer.start()
 	rng.randomize()
-	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * Globals.ship_speed_modifier)
+	difficultySpeedModifier = Globals.ship_speed_modifier
+	movement_speed = (rng.randf_range(min_movement_speed, max_movement_speed) * difficultySpeedModifier)
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
@@ -47,6 +49,7 @@ func reset_collision():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if active:
+		difficultySpeedModifier = Globals.ship_speed_modifier
 		# Set the splash!
 		water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
 		if len(tentaclesAttached) > 1:

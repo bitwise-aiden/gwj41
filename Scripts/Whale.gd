@@ -42,16 +42,17 @@ func set_active(value):
 func add_to_hug_count(number_of_hugs_to_add):
 	hugPressCount += number_of_hugs_to_add
 	if hugPressCount >= maxNumberOfPressesBeforeGettingHugged:
-		print("MAX BUTTON PRESSES MASHED!!")
-		print("CONSUME, I mean HUG THE WHALE!")
-	print("Whale hugged: ", hugPressCount, " times!")
+		pass
+		#print("MAX BUTTON PRESSES MASHED!!")
+		#print("CONSUME, I mean HUG THE WHALE!")
+	#print("Whale hugged: ", hugPressCount, " times!")
 	
 
 func attach_tentacle(tentacle):
 	tentaclesAttached.append(tentacle)
 
 func get_hugged():
-	print("something is calling get hugged on: ", self)
+	#print("something is calling get hugged on: ", self)
 	set_being_hugged(true)
 	#Globals.hugMiniGamePromptText.visible = true
 	#Globals.whaleHugText.visible = true
@@ -111,7 +112,7 @@ func destroy_object():
 func _on_BreakFreeTimer_timeout():
 	#print("BreakFreeTimer timed out")
 	if len(tentaclesAttached) > 0:
-		print("Detaching tentacle: ", tentaclesAttached[len(tentaclesAttached)-1], " from: ", tentacleAttachPoints[len(tentaclesAttached)-1])
+		#print("Detaching tentacle: ", tentaclesAttached[len(tentaclesAttached)-1], " from: ", tentacleAttachPoints[len(tentaclesAttached)-1])
 		var tentacleToRemove = int(len(tentaclesAttached)-1)
 		tentaclesAttached[tentacleToRemove].resetToInitialPositions()
 		tentaclesAttached.remove(tentacleToRemove)
