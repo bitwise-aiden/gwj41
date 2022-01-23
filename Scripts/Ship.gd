@@ -48,7 +48,7 @@ func reset_collision():
 func _physics_process(delta):
 	if active:
 		# Set the splash!
-		Event.emit_signal("water_splash", clamp(position.x, 0, 1280) + 30, (movement_speed) / (100), "ship")
+		Event.emit_signal("water_splash", clamp(position.x, 0, 1280) + 30, (movement_speed) / (200), "ship")
 		if len(tentaclesAttached) > 1:
 			if (global_position.x < hugZone.global_position.x):
 				global_position.x += hugSpeed.x

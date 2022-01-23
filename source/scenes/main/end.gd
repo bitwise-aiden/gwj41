@@ -22,6 +22,8 @@ func __pressed() -> void:
 	__end_menu.visible = !__end_menu.visible
 
 	get_tree().paused = __end_menu.visible
+	
+	Event.emit_signal("emit_audio", {"type":"music", "name":"end_game"})
 
 
 func __change_scene(name: String) -> void:
