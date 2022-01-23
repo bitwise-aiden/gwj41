@@ -33,6 +33,7 @@ func __pressed() -> void:
 
 func __change_scene(name: String) -> void:
 	yield(Transition.fade_out(), "completed")
-
 	SceneManager.load_scene(name)
+	if name == "main":
+		Globals.reset_difficulty_level()
 	get_tree().paused = false
