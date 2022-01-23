@@ -21,7 +21,7 @@ const __PUNS: Array = [
 	"Please stop, you're krilling me!",
 	"Phil McKraken", # Thanks jotson!
 	"This pun is a chore to squeeze a laugh", # Thanks hittaus!
-	"This tentacles a real sucker for hugs",
+	"These tentacles are real suckers for hugs",
 ]
 
 

@@ -74,7 +74,7 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
 					2:
 						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
-						new_player.volume_db = -10
+						new_player.volume_db = -9
 
 			"parrot":
 				var rand_sound = randi() % 2
@@ -109,8 +109,9 @@ func play_audio(incoming : Dictionary) -> void:
 
 			"hug":
 				var eat = randf()
-				if eat > 0.01:
+				if eat > 0.99:
 					new_player.audio_path = "res://assets/audio/sfx/nomnomnom.ogg"
+					new_player.volume_db = 6
 				else:
 					var rand_sound = randi() % 2
 					match rand_sound:
