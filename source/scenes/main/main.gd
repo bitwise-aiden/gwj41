@@ -22,7 +22,7 @@ Vector2(Globals.initial_end_left_tentacle_position.x - 150,560), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 100,480), \
 Vector2(Globals.initial_end_right_tentacle_position.x + 150,560)]
 
-onready var centerText = get_tree().get_root().get_node("main/text")
+#onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
 	# Spawn two broken halves of the ship
@@ -75,7 +75,7 @@ func spawn_parrot():
 	var parrot = Parrot.instance()
 	parrots.append(parrot)
 	parrot.global_position = parrotSpawnPos
-	add_child(parrot)
+	self.call_deferred("add_child", parrot)
 
 func reset_decorative_tentacles_positions():
 	for i in range(len(ropes)):

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/drunken_sailor.ogg-b008fc508bf133235c6ad68dd4c4cc93.
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
