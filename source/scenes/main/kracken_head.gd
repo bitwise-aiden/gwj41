@@ -7,6 +7,7 @@ export(Texture) var happy: Texture
 export(Texture) var unamused: Texture
 export(Texture) var sad: Texture
 export(Texture) var concentrate: Texture
+export(Texture) var dead: Texture
 
 
 # Private variables
@@ -36,6 +37,10 @@ func __hug_update(amount: float, max_amount: float) -> void:
 
 	if !__hugging:
 		texture = __default
+
+	if ratio == 0.0:
+		texture = dead
+
 
 func __hugging_update(value: bool) -> void:
 	__hugging = value

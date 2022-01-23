@@ -83,7 +83,7 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/parrot_whistle_1.ogg"
 					1:
 						new_player.audio_path = "res://assets/audio/sfx/parrot_squawk_1.ogg"
-			
+
 			"parrot_hug":
 				var rand_sound = randi() % 6
 				match rand_sound:
@@ -99,8 +99,8 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/pun-04.ogg"
 					5:
 						new_player.audio_path = "res://assets/audio/sfx/pun-05.ogg"
-				
-				
+
+
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
 
@@ -122,7 +122,7 @@ func play_audio(incoming : Dictionary) -> void:
 
 			"transition":
 				new_player.audio_path = "res://assets/audio/sfx/bubble_transition.ogg"
-			
+
 		self.add_child(new_player)
 		new_player.playing = true
 
@@ -145,7 +145,7 @@ func play_audio(incoming : Dictionary) -> void:
 				active_music_players[0].queue_free()
 				active_music_players.remove(0)
 				new_player.audio_path = "res://assets/audio/music/end_screen.ogg"
-				
+
 		active_music_players.push_back(new_player)
 		self.add_child(new_player)
 		new_player.playing = true

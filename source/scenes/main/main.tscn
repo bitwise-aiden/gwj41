@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://source/components/button.gd" type="Script" id=25]
 [ext_resource path="res://source/scenes/main/pause.gd" type="Script" id=26]
 [ext_resource path="res://source/scenes/main/end.gd" type="Script" id=27]
+[ext_resource path="res://assets/sprites/kraken_head_dead.png" type="Texture" id=28]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 145, 125 )
@@ -136,6 +137,7 @@ happy = ExtResource( 12 )
 unamused = ExtResource( 22 )
 sad = ExtResource( 23 )
 concentrate = ExtResource( 24 )
+dead = ExtResource( 28 )
 
 [node name="hud" type="Sprite" parent="."]
 position = Vector2( 1130, 125 )
@@ -308,6 +310,35 @@ theme = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="new" type="Label" parent="end/end_menu"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -120.0
+margin_top = -163.5
+margin_right = 120.0
+margin_bottom = -136.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "New highscore!"
+align = 1
+
+[node name="high_score" type="Label" parent="end/end_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -113.5
+margin_right = 20.0
+margin_bottom = -86.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: 0"
+align = 1
 
 [node name="text" type="Label" parent="end/end_menu"]
 anchor_left = 0.5
