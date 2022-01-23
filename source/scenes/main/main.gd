@@ -1,4 +1,4 @@
-extends Node2D
+extends Node2D # Will this break things? \n\r\l """ - TheoremMetal
 
 var Rope = preload("res://Parts/Rope.tscn")
 var Ship = preload("res://Parts/Ship.tscn")
@@ -26,18 +26,16 @@ onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
 
-var success = Event.connect("emit_audio", self, "play_audio")
+#var success = Event.connect("emit_audio", self, "play_audio")
 
 func kill_ship(ship):
 	ships.remove(ships.find(ship))
 func kill_parrot(parrot):
-	parrots.remove(parrot.find(parrot))
+	parrots.remove(parrots.find(parrot))
 
 func _ready():
 	randomize()
 	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
-	Globals.hugScoreTextField = $HugScore/Score
-	Globals.shipsHuggedCountTextField = $ShipsHuggedCount/Count
 	Event.connect("emit_ship_death", self, "kill_ship")
 	Event.connect("emit_parrot_death", self, "kill_parrot")
 	Event.connect("spawn_parrot", self, "spawn_parrot")
@@ -50,6 +48,10 @@ func _ready():
 	time_start = OS.get_unix_time()
 
 	Transition.fade_in()
+
+	Globals.hugScore = Globals.hugScoreInitial
+
+
 
 func spawn_tentacle(start_pos, end_pos):
 	if len(ropes) <= max_tentacles:
@@ -79,19 +81,15 @@ func reset_decorative_tentacles_positions():
 
 
 func _physics_process(delta):
-
-	# we shouldn't have to do this every frame:
-	$HugScore/Score.text = str(Globals.hugScore)
 	if Globals.hugScore <= 0:
 		print("Game Over. Score: ", Globals.shipHuggedCount)
 
 	if Globals.hugScore <= 0:
 		time_now = OS.get_unix_time()
 		var time_elapsed = time_now - time_start
-		centerText.text = str("You Lose. Total playtime: ", time_elapsed, "seconds")
-		get_tree().paused = true
+		Event.emit_signal("game_over")
 
-	if left_tentacle.get_mast_attached() != null:
+	if left_tentacle.get_mast_attached() != null: # "Hug score, hug score, tentacle, rope..." What are you talking about Velop? - Lil'Oni
 		ropes[0].setRopeEndPoint(Vector2(left_tentacle.get_mast_attached().global_position.x, left_tentacle.get_mast_attached().global_position.y))
 	if right_tentacle.get_mast_attached() != null:
 		ropes[1].setRopeEndPoint(Vector2(right_tentacle.get_mast_attached().global_position.x, right_tentacle.get_mast_attached().global_position.y))
@@ -140,6 +138,4 @@ func _physics_process(delta):
 
 	if len(ships) < Globals.max_number_of_ships_on_screen:
 		spawn_ship(Vector2(Globals.projectResolution.x,180))
-	#if len(parrots) < Globals.max_number_of_parrots_on_screen:
-		#spawn_parrot()
 

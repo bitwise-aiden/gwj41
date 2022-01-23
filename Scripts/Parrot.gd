@@ -43,7 +43,7 @@ func _physics_process(delta):
 				global_position.y -= hugSpeed.y
 		else:
 			global_position.x += movement_speed * delta
-	
+
 	if active and global_position.x > (Globals.projectResolution.x + ($AnimatedSprite.get_sprite_frames().get_frame("fly",0).get_size().x)*$AnimatedSprite.scale.x):
 		destroy_object()
 
@@ -58,6 +58,11 @@ func destroy_object():
 
 func get_hugged():
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
+	Globals.shipHuggedCount += 1
+	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
+		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
+
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
@@ -76,6 +81,9 @@ func _on_RightSail_body_entered(body):
 		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
 
+		if tentaclesAttached.size() > 1:
+			Event.emit_signal("hugging_update", true)
+
 func _on_LeftSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
 		body.get_parent().attach_to_ship_mast($LeftSail)
@@ -83,6 +91,8 @@ func _on_LeftSail_body_entered(body):
 		leftSailEnabled = false
 		reset_collision()
 		$BreakFreeTimer.start()
+		if tentaclesAttached.size() > 1:
+			Event.emit_signal("hugging_update", true)
 
 func _on_BreakFreeTimer_timeout():
 	if len(tentaclesAttached) == 1:

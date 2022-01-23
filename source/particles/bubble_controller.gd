@@ -10,6 +10,5 @@ func _init().(2.0, 10) -> void:
 # Protected methods
 
 func _time_out() -> void:
-	print("Emit signal")
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "bubbles"})
 	restart()

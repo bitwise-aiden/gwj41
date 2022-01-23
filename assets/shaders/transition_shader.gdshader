@@ -62,7 +62,7 @@ vec4 get_bubble_color(vec2 position)
 	
 	for (int bubble_index; bubble_index < bubble_count; ++bubble_index)
 	{
-		vec4 bubble_data = texelFetch(bubbles, ivec2(bubble_index, 0), 0) * 1000.0;
+		vec4 bubble_data = texelFetch(bubbles, ivec2(bubble_index, 0), 0) * SIZE.x;
 		
 		float dist = distance(position, bubble_data.xy);	
 		float bubble_ratio = (bubble_time - bubble_data.w) / (1.0 - bubble_data.w);

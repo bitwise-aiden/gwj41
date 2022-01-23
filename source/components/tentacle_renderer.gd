@@ -14,6 +14,7 @@ var __vertices: Array = [Vector2(640.0, 360.0), Vector2.ZERO]
 func _ready() -> void:
 	__image.create(400, 10, false, Image.FORMAT_RGBAH)
 
+
 func _process(delta: float) -> void:
 	var tentacles_raw: Array = get_tree().get_nodes_in_group("tentacle")
 	var tentacles: Array = []
@@ -22,11 +23,11 @@ func _process(delta: float) -> void:
 		if tentacle is Text:
 			tentacles.append(
 				TentacleData.new(
-					true,
+					tentacle.dirty,
 					tentacle.points(),
 					20.0,
 					20.0,
-					3,
+					4,
 					Vector2(90.0, -10.0)
 				)
 			)

@@ -44,6 +44,7 @@ func _init(
 func is_dirty() -> bool:
 	return __dirty
 
+
 func metadata() -> Color:
 	return __metadata
 

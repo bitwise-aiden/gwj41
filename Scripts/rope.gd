@@ -51,7 +51,7 @@ func detatch_from_ship_mast(mast):
 			#get_node("CollisionShape2D").disabled = true    # disable
 			#rope.get_node("CollisionShape2D").disabled = false   # enable
 		$TempCollisionDisable.start()
-		
+
 
 func get_mast_attached():
 	return(shipMastAttachedTo)

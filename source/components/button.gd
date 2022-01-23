@@ -6,6 +6,11 @@ class_name BoardButton extends Button
 var points: PoolVector2Array = PoolVector2Array()
 
 
+# Public variables
+
+export(bool) var animating: bool = false
+
+
 # Private variables
 
 var __focus: bool = false
@@ -21,10 +26,13 @@ func _ready() -> void:
 	__timer.wait_time = 0.2
 	__timer.connect("timeout", self, "__toggle_text")
 
-	connect("focus_entered", self, "__focused", [true])
-	connect("focus_exited", self, "__focused", [false])
-	connect("mouse_entered", self, "__moused", [true])
-	connect("mouse_exited", self, "__moused", [false])
+	if animating:
+		__timer.start()
+	else:
+		connect("focus_entered", self, "__focused", [true])
+		connect("focus_exited", self, "__focused", [false])
+		connect("mouse_entered", self, "__moused", [true])
+		connect("mouse_exited", self, "__moused", [false])
 
 
 # Private methods

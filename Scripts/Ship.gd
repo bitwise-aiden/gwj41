@@ -6,7 +6,6 @@ var active = false
 var movement_speed
 var min_movement_speed = 50
 var max_movement_speed = 300
-#var movement_speed_modifier = Globals.ship_speed_modifier
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
 # have to figure out a better way to do this:
@@ -16,11 +15,12 @@ var hugMeterAmount = 20
 var hugHearts = 5
 var hugZone
 var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
-
 var waterline
 var hasSunk = false
-
 var water
+
+onready var __bubbles: CPUParticles2D = $bubbles
+var __timer: Timer = Timer.new()
 
 func _enter_tree() -> void:
 	waterline = position.y
@@ -34,7 +34,9 @@ func _ready():
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
-	
+	__timer.one_shot = true
+	add_child(__timer)
+
 func reset_collision():
 	$LeftSail.set_deferred("monitoring", true)
 	$LeftSail.set_deferred("monitorable", true)
@@ -59,7 +61,7 @@ func _physics_process(delta):
 			global_position.x -= movement_speed * delta
 	if active and global_position.x < (0 - ($AnimatedSprite.get_sprite_frames().get_frame("sail",0).get_size().x)*$AnimatedSprite.scale.x):
 		destroy_object()
-	
+
 	if !hasSunk:
 		check_waterline()
 
@@ -75,16 +77,16 @@ func destroy_object():
 
 func get_hugged():
 	Globals.shipHuggedCount += 1
-	Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
+	#Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.parrotShipWaitCount) == 0):
 		# Emit a spawn parrot signal
 		# This shouldn't be done here. The ship should just emit a signal that it was hugged and be done with it.
 		Event.emit_signal("spawn_parrot")
-		pass
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-	
+
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
@@ -94,7 +96,7 @@ func _on_OffScreenTimer_timeout():
 	water.splash(clamp(position.x, 0, 1280), 5)
 	if randf() < 0.75:
 		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
-	
+
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
@@ -104,7 +106,13 @@ func _on_RightSail_body_entered(body):
 		reset_collision()
 		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
-		
+
+		if tentaclesAttached.size() > 1:
+			Event.emit_signal("hugging_update", true)
+			__timer.start(0.1)
+			yield(__timer, "timeout")
+			__bubbles.restart()
+
 
 func _on_LeftSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):
@@ -115,12 +123,16 @@ func _on_LeftSail_body_entered(body):
 		# After a few seconds, the tentacle will break free by itself.
 		$BreakFreeTimer.start()
 
+		if tentaclesAttached.size() > 1:
+			Event.emit_signal("hugging_update", true)
+			__timer.start(0.1)
+			yield(__timer, "timeout")
+			__bubbles.restart()
 
 func _on_BreakFreeTimer_timeout():
 	if len(tentaclesAttached) == 1:
 		tentaclesAttached[0].detatch_from_ship_mast(tentaclesAttached[0].get_mast_attached())
 		tentaclesAttached = []
-		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		reset_collision()
 
 func check_waterline() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=2]
@@ -12,9 +12,21 @@
 [ext_resource path="res://assets/sprites/cloud_3.png" type="Texture" id=10]
 [ext_resource path="res://assets/sprites/cloud_2.png" type="Texture" id=11]
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/hud.png" type="Texture" id=13]
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Parts/Whale.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Parts/water.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/sprites/hud_arm.png" type="Texture" id=17]
+[ext_resource path="res://source/scenes/main/hud.gd" type="Script" id=18]
+[ext_resource path="res://assets/styles/theme_menu.tres" type="Theme" id=19]
+[ext_resource path="res://assets/sprites/add_heart.png" type="Texture" id=20]
+[ext_resource path="res://source/scenes/main/kracken_head.gd" type="Script" id=21]
+[ext_resource path="res://assets/sprites/kraken_head_unamused.png" type="Texture" id=22]
+[ext_resource path="res://assets/sprites/kraken_head_sad.png" type="Texture" id=23]
+[ext_resource path="res://assets/sprites/kraken_head_concentrate.png" type="Texture" id=24]
+[ext_resource path="res://source/components/button.gd" type="Script" id=25]
+[ext_resource path="res://source/scenes/main/pause.gd" type="Script" id=26]
+[ext_resource path="res://source/scenes/main/end.gd" type="Script" id=27]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 145, 125 )
@@ -30,10 +42,15 @@ animations = [ {
 "speed": 8.0
 } ]
 
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.194631, 0.574152 ), 3.15678, 3.15678, 0, 0, Vector2( 0.993289, 1 ), 0.0, 0.0, 0, 0 ]
+
 [node name="main" type="Node2D"]
 script = ExtResource( 5 )
 
 [node name="water" parent="." instance=ExtResource( 16 )]
+margin_right = 1280.0
+margin_bottom = 720.0
 num_points = 50
 target_height = 235.0
 
@@ -117,6 +134,56 @@ playing = true
 [node name="kracken_head" type="Sprite" parent="."]
 position = Vector2( 640, 600 )
 texture = ExtResource( 12 )
+script = ExtResource( 21 )
+happy = ExtResource( 12 )
+unamused = ExtResource( 22 )
+sad = ExtResource( 23 )
+concentrate = ExtResource( 24 )
+
+[node name="hud" type="Sprite" parent="."]
+position = Vector2( 1130, 125 )
+texture = ExtResource( 13 )
+script = ExtResource( 18 )
+
+[node name="indicator" type="TextureRect" parent="hud"]
+margin_left = 22.0
+margin_top = -101.0
+margin_right = 105.0
+margin_bottom = -35.0
+rect_rotation = -55.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 72, 12 )
+texture = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="Label" parent="hud"]
+margin_left = -109.0
+margin_top = -48.0
+margin_right = -55.0
+margin_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource( 19 )
+text = "000"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="addition" type="CPUParticles2D" parent="hud"]
+position = Vector2( -84, -29 )
+emitting = false
+amount = 1
+one_shot = true
+texture = ExtResource( 20 )
+direction = Vector2( 0, -1 )
+spread = 10.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+scale_amount_curve = SubResource( 4 )
 
 [node name="tentacle" type="ColorRect" parent="."]
 material = ExtResource( 3 )
@@ -135,62 +202,138 @@ position = Vector2( 636, 466 )
 scale = Vector2( 3, 1 )
 whaleZone = true
 
-[node name="HugScore" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 845.0
-margin_top = 663.0
-margin_right = 1053.0
-margin_bottom = 675.0
-custom_fonts/font = ExtResource( 4 )
-text = "Hug Score:"
+[node name="pause" type="Node2D" parent="."]
+pause_mode = 2
+z_index = 10
+script = ExtResource( 26 )
+
+[node name="pause_menu" type="Control" parent="pause"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 1
+theme = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Score" type="Label" parent="HugScore"]
+[node name="text" type="Label" parent="pause/pause_menu"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 54.0
-margin_top = -5.0
-margin_right = 126.0
-margin_bottom = 11.0
-custom_fonts/font = ExtResource( 4 )
-text = "0"
+margin_left = -53.5
+margin_top = -63.5
+margin_right = 53.5
+margin_bottom = -36.5
+text = "Paused"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ShipsHuggedCount" type="Label" parent="."]
+[node name="button_restart" type="Button" parent="pause/pause_menu"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 797.0
-margin_top = 641.0
-margin_right = 1005.0
-margin_bottom = 653.0
-custom_fonts/font = ExtResource( 4 )
-text = "Ships Hugged:"
+margin_left = -100.0
+margin_top = -20.0
+margin_right = 100.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
+text = "Restart"
+script = ExtResource( 25 )
+
+[node name="button_menu" type="Button" parent="pause/pause_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = 30.0
+margin_right = 100.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
+text = "Menu"
+script = ExtResource( 25 )
+
+[node name="pause_button" type="Button" parent="pause"]
+margin_left = 30.0
+margin_top = 30.0
+margin_right = 70.0
+margin_bottom = 70.0
+rect_pivot_offset = Vector2( 20, 20 )
+theme = ExtResource( 19 )
+text = "II"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Count" type="Label" parent="ShipsHuggedCount"]
+[node name="end" type="Node2D" parent="."]
+pause_mode = 2
+z_index = 10
+script = ExtResource( 27 )
+
+[node name="end_menu" type="Control" parent="end"]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 1
+theme = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text" type="Label" parent="end/end_menu"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 102.0
-margin_top = -5.0
-margin_right = 174.0
-margin_bottom = 11.0
-custom_fonts/font = ExtResource( 4 )
-text = "0"
+margin_left = -82.5
+margin_top = -64.0
+margin_right = 82.5
+margin_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game over"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="button_restart" type="Button" parent="end/end_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = -20.0
+margin_right = 100.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
+text = "Restart"
+script = ExtResource( 25 )
+
+[node name="button_menu" type="Button" parent="end/end_menu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -100.0
+margin_top = 30.0
+margin_right = 100.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 200, 40 )
+rect_pivot_offset = Vector2( 100, 20 )
+text = "Menu"
+script = ExtResource( 25 )

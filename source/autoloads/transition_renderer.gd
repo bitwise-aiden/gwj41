@@ -1,5 +1,11 @@
 extends Node
 
+
+# Private constants
+
+const __SIZE: Vector2 = Vector2(1280.0, 720.0)
+
+
 # Private variables
 
 var __tween: Tween = Tween.new()
@@ -15,7 +21,7 @@ func _ready() -> void:
 	var bubbles: Array = []
 
 	for i in 100:
-		bubbles.append(Color(randf() * 1280.0, randf() * 720.0, randf() * 100.0 + 25.0, randf() * 0.3))
+		bubbles.append(Color(randf() * __SIZE.x, randf() * __SIZE.y, randf() * 100.0 + 25.0, randf() * 0.3))
 
 	var background_bubbles: Array = []
 
@@ -34,7 +40,7 @@ func _ready() -> void:
 	image.lock()
 
 	for index in bubbles.size():
-		image.set_pixel(index, 0, bubbles[index] / 1000.0)
+		image.set_pixel(index, 0, bubbles[index] / __SIZE.x)
 
 	image.unlock()
 
@@ -49,7 +55,6 @@ func _ready() -> void:
 # Public methods
 
 func fade_in() -> void:
-
 	__tween.interpolate_method(
 		self,
 		"__set_time",
