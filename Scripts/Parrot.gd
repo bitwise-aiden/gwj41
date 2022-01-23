@@ -57,20 +57,18 @@ func destroy_object():
 		queue_free()
 
 func get_hugged():
-	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
 	Globals.shipHuggedCount += 1
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
-	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-
+	Event.emit_signal("emit_audio", {"type": "effect", "name": "parrot_hug"})
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
-	active = true
-	$AnimatedSprite.play()
-	hugZone = Globals.get_hug_zone()
-	if randf() < 0.75:
-		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
+	if not active:
+		active = true
+		$AnimatedSprite.play()
+		hugZone = Globals.get_hug_zone()
+		Event.emit_signal("emit_audio", {"type": "effect", "name": "parrot"})
 
 func _on_RightSail_body_entered(body):
 	if body.is_in_group("ropeEndPiece") and (!(body.get_parent() in tentaclesAttached) and not body.get_parent().get_mast_attached()):

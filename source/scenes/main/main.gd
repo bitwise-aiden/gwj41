@@ -26,8 +26,6 @@ onready var centerText = get_tree().get_root().get_node("main/text")
 var time_start = 0
 var time_now = 0
 
-#var success = Event.connect("emit_audio", self, "play_audio")
-
 func kill_ship(ship):
 	ships.remove(ships.find(ship))
 func kill_parrot(parrot):
