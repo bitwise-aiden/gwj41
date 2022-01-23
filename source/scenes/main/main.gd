@@ -1,4 +1,5 @@
 extends Node2D # Will this break things? \n\r\l """ - TheoremMetal
+# Was a pleasure working with you lads - Orbitoid
 
 var Rope = preload("res://Parts/Rope.tscn")
 var Ship = preload("res://Parts/Ship.tscn")
