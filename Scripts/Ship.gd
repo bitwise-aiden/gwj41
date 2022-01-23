@@ -6,7 +6,6 @@ var active = false
 var movement_speed
 var min_movement_speed = 50
 var max_movement_speed = 300
-#var movement_speed_modifier = Globals.ship_speed_modifier
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
 # have to figure out a better way to do this:
@@ -16,10 +15,8 @@ var hugMeterAmount = 20
 var hugHearts = 5
 var hugZone
 var hugSpeed = Globals.hugSpeed * Globals.ship_speed_modifier
-
 var waterline
 var hasSunk = false
-
 var water
 
 onready var __bubbles: CPUParticles2D = $bubbles
@@ -37,7 +34,6 @@ func _ready():
 	hugZone = Globals.get_hug_zone()
 	water = get_parent().get_node("water")
 	reset_collision()
-
 	__timer.one_shot = true
 	add_child(__timer)
 
@@ -81,8 +77,11 @@ func destroy_object():
 
 func get_hugged():
 	Globals.shipHuggedCount += 1
-	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.whaleShipWaitCount) == 0):
-		Globals.whaleEnemy.set_active(true)
+	#Globals.shipsHuggedCountTextField.text = str(Globals.shipHuggedCount)
+	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.parrotShipWaitCount) == 0):
+		# Emit a spawn parrot signal
+		# This shouldn't be done here. The ship should just emit a signal that it was hugged and be done with it.
+		Event.emit_signal("spawn_parrot")
 	if (Globals.shipHuggedCount > 0 ) and (posmod(Globals.shipHuggedCount, Globals.difficultyScoreCount) == 0):
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
@@ -130,12 +129,10 @@ func _on_LeftSail_body_entered(body):
 			yield(__timer, "timeout")
 			__bubbles.restart()
 
-
 func _on_BreakFreeTimer_timeout():
 	if len(tentaclesAttached) == 1:
 		tentaclesAttached[0].detatch_from_ship_mast(tentaclesAttached[0].get_mast_attached())
 		tentaclesAttached = []
-		#tentacle.detatch_from_ship_mast(tentacle.get_mast_attached())
 		reset_collision()
 
 func check_waterline() -> void:

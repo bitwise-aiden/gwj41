@@ -22,7 +22,7 @@ func _ready():
 	else:
 		global_position = initPosition
 	#$OffscreenTimer.start()
-	Globals.whaleEnemy = self
+	#Globals.whaleEnemy = self
 	$OffscreenTimer.stop()
 	$TeaseTimer.stop()
 	active = false
@@ -53,8 +53,8 @@ func attach_tentacle(tentacle):
 func get_hugged():
 	print("something is calling get hugged on: ", self)
 	set_being_hugged(true)
-	Globals.hugMiniGamePromptText.visible = true
-	Globals.whaleHugText.visible = true
+	#Globals.hugMiniGamePromptText.visible = true
+	#Globals.whaleHugText.visible = true
 	$BreakFreeTimer.start()
 	Globals.hug_zone.stop_hug_decay_timer()
 
@@ -100,8 +100,8 @@ func destroy_object():
 	if is_instance_valid(self):
 		brokeFree = true
 		beingHugged = false
-		Globals.hugMiniGamePromptText.visible = false
-		Globals.whaleHugText.visible = false
+		#Globals.hugMiniGamePromptText.visible = false
+		#Globals.whaleHugText.visible = false
 		Globals.hug_zone.start_hug_decay_timer()
 		
 		for child in self.get_children():
@@ -120,8 +120,8 @@ func _on_BreakFreeTimer_timeout():
 		#Keep swimming off screen but avoid being hugged again
 		brokeFree = true
 		beingHugged = false
-		Globals.hugMiniGamePromptText.visible = false
-		Globals.whaleHugText.visible = false
+		#Globals.hugMiniGamePromptText.visible = false
+		#Globals.whaleHugText.visible = false
 		Globals.hug_zone.start_hug_decay_timer()
 		#reset_state()
 		#_ready()
