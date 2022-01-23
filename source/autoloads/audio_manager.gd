@@ -76,7 +76,7 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
 					2:
 						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
-						new_player.volume_db = -20
+						new_player.volume_db = -10
 
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
@@ -101,6 +101,14 @@ func play_audio(incoming : Dictionary) -> void:
 		var music = incoming["name"]
 		match music:
 			"background":
-				new_player.audio_path = "res://assets/audio/music/drunken_sailor.ogg"
+				var rand_music = randi() % 2
+				match rand_music:
+					0:
+						new_player.drunken = true
+						new_player.audio_path = "res://assets/audio/music/drunken_sailor.ogg"
+					1:
+						new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
+			"main_menu":
+				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
 		active_music_players.push_back(new_player)
 		self.add_child(new_player)
