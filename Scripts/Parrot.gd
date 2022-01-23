@@ -4,7 +4,7 @@ var max_wait_time = 10
 var active = false
 var movement_speed
 var min_movement_speed = 50
-var max_movement_speed = 300
+var max_movement_speed = 100
 var rng = RandomNumberGenerator.new()
 var tentaclesAttached = []
 var leftSailEnabled = true

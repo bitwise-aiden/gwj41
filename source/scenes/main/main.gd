@@ -24,7 +24,7 @@ func kill_parrot(parrot):
 
 func _ready():
 	randomize()
-	Globals.hugMiniGamePromptText = $hugMiniGamePromptText
+	#Globals.hugMiniGamePromptText = $hugMiniGamePromptText
 	Event.connect("emit_ship_death", self, "kill_ship")
 	Event.connect("emit_parrot_death", self, "kill_parrot")
 	Event.connect("spawn_parrot", self, "spawn_parrot")

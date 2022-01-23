@@ -24,14 +24,17 @@ var hugScore = 150.0 setget __hug_score_set, __hug_score_get
 var hugScoreMax = 250.0
 var hugScoreInitial = 200.0
 
-var difficultyLevel = 1 # This is used on the ships speed modifier
-var difficultyLevelIncrement = 0.3
+#Difficulty settings:
+var difficultyLevel = 1 # The overall difficulty level - this influences other difficulty variables
+var difficultyLevelIncrement = 1 # every time we "go up a difficulty level" this is how much it increases by
 var difficultyScoreCount = 5 # Every 5 ships, the difficulty goes up
-var ship_speed_modifier = 2 * difficultyLevel
-var hugScoreDecayTickDelay = 0.3
-var hugScoreDecayTickAmount = 1
-var hugScoreDecayTickAmountInitial = 1
-var hugMiniGamePromptText
+var ship_speed_modifier = 1 # The ships' speed is multiplied by this
+var ship_speed_modifier_increment = 1.2 # How much the ship speed modifier goes up every difficulty level
+var hugScoreDecayTickDelay = 0.5 # How long it takes for the score to tick down
+var hugScoreDecayTickAmount = 2 # How much it ticks down each time. 
+var hugScoreDecayTickAmountIncrement = 0.5 # How much we incement the decay (amount) every time the difficulty goes up
+
+#var hugMiniGamePromptText
 var max_number_of_parrots_on_screen = 1
 # Every 5 ships that are hugged, triggers a parrot. 
 var parrotShipWaitCount = 5
@@ -50,9 +53,17 @@ func get_hug_zone():
 	return(hug_zone)
 
 func increase_difficulty_level():
-	difficultyLevel += difficultyLevelIncrement # This is used on the ships speed modifier
-	ship_speed_modifier = 1 * difficultyLevel
+	difficultyLevel = difficultyLevel + difficultyLevelIncrement
+	ship_speed_modifier = ship_speed_modifier + ship_speed_modifier_increment
+	hugScoreDecayTickAmount = hugScoreDecayTickAmount + hugScoreDecayTickAmountIncrement
 
+func reset_difficulty_level():
+	ship_speed_modifier = 1
+	difficultyLevel = 1
+	hugScoreDecayTickAmount = 2
+	__ship_hugged_count_set(0)
+	
+	
 func set_tentacle_start_positions(start_left_pos:Vector2, end_left_pos:Vector2, start_right_pos:Vector2, end_right_pos:Vector2):
 	initial_start_left_tentacle_position = start_left_pos
 	initial_end_left_tentacle_position = end_left_pos
