@@ -24,11 +24,9 @@ func _ready() -> void:
 
 	var success = Event.connect("emit_audio", self, "play_audio")
 
-
 # Public methods
 func get_volume(name: String) -> float:
 	return SettingsManager.get_setting("volume/%s" % name, 1.0)
-
 
 func get_volume_db(name: String) -> float:
 	var volume: float = self.get_volume(name)
@@ -75,9 +73,20 @@ func play_audio(incoming : Dictionary) -> void:
 					1:
 						new_player.audio_path = "res://assets/audio/sfx/ship_bell.ogg"
 					2:
-						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg"
+						new_player.audio_path = "res://assets/audio/sfx/whistle.ogg
 						new_player.volume_db = -10
 
+			"parrot":
+				var rand_sound = randi() % 2
+				match rand_sound:
+					0:
+						new_player.audio_path = "res://assets/audio/sfx/parrot_whistle_1.ogg"
+					1:
+						new_player.audio_path = "res://assets/audio/sfx/parrot_squarwk_1.ogg"
+			
+			"parrot_hug":
+				new_player.audio_path = "res://assets/audio/sfx/parrot_squawk_2.ogg"
+				
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
 

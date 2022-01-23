@@ -1,5 +1,6 @@
 extends Node2D
 export var shipSpawnXPositionOffset = 200
+
 var min_wait_time = 1
 var max_wait_time = 10
 var active = false
@@ -65,7 +66,6 @@ func _physics_process(delta):
 	if !hasSunk:
 		check_waterline()
 
-
 func destroy_object():
 	if is_instance_valid(self):
 		Event.emit_signal("emit_ship_death", self)
@@ -86,11 +86,12 @@ func get_hugged():
 		Globals.increase_difficulty_level(Globals.difficultyLevel + Globals.difficultyLevelIncrement)
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "wood_break"})
 	Event.emit_signal("emit_audio", {"type": "effect", "name": "hug"})
-
+	Event.emit_signal("spawn_new_broken_ship", self)
 	destroy_object()
 
 func _on_OffScreenTimer_timeout():
 	active = true
+	hasSunk = false
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
 	Event.emit_signal("water_splash", clamp(position.x, 0, 1280), 5, "ship")
