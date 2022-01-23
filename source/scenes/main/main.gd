@@ -15,7 +15,6 @@ var tentacle_move_speed = Globals.tentacle_player_move_speed
 var tentacle_correction_move_speed = Globals.tentacle_correction_move_speed
 var left_tentacle
 var right_tentacle
-
 var time_start = 0
 var time_now = 0
 	# Spawn two broken halves of the ship
@@ -71,7 +70,7 @@ func spawn_parrot():
 	var parrot = Parrot.instance()
 	parrots.append(parrot)
 	parrot.global_position = parrotSpawnPos
-	add_child(parrot)
+	self.call_deferred("add_child", parrot)
 
 func _physics_process(delta):
 	if Globals.hugScore <= 0:

@@ -14,7 +14,7 @@ var initial_start_position = Vector2.ZERO
 var initial_end_position = Vector2.ZERO
 var shipMastAttachedTo
 var dirty: bool = true
-var hasSplashed : bool = false
+var hasSplashed : bool = true
 
 onready var rope_start_piece = $RopeStartPiece
 onready var rope_end_piece = $RopeEndPiece
@@ -28,10 +28,10 @@ func _ready() -> void:
 func _physics_process(_delta):
 	get_rope_points()
 	if rope_points[-1].y > Globals.water_height and !hasSplashed:
-		Event.emit_signal("water_splash", rope_end_piece.position.x, 30.0)
+		Event.emit_signal("water_splash", rope_end_piece.position.x, 30.0, "tentacle")
 		hasSplashed = !hasSplashed
 	if  rope_points[-1].y < Globals.water_height and hasSplashed:
-		Event.emit_signal("water_splash", rope_end_piece.position.x, -30.0)
+		Event.emit_signal("water_splash", rope_end_piece.position.x, -30.0, "tentacle")
 		hasSplashed = !hasSplashed
 #	if rope_points.size() > 2:
 #		update()
