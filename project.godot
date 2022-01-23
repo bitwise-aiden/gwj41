@@ -148,6 +148,8 @@ frame=false
 2d_physics/layer_1="Tentacles"
 2d_physics/layer_2="Ships"
 2d_physics/layer_3="HugZone"
+2d_physics/layer_4="BrokenShip"
+2d_physics/layer_5="Ground"
 
 [rendering]
 

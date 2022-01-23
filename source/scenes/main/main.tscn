@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://source/components/tentacle_renderer.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/land.png" type="Texture" id=2]
@@ -14,7 +14,6 @@
 [ext_resource path="res://assets/sprites/kraken_head.png" type="Texture" id=12]
 [ext_resource path="res://assets/sprites/hud.png" type="Texture" id=13]
 [ext_resource path="res://Parts/HugZone.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Parts/Whale.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Parts/water.tscn" type="PackedScene" id=16]
 [ext_resource path="res://assets/sprites/hud_arm.png" type="Texture" id=17]
 [ext_resource path="res://source/scenes/main/hud.gd" type="Script" id=18]
@@ -85,9 +84,6 @@ initial_velocity = 10.0
 script = ExtResource( 8 )
 textures = [ ExtResource( 9 ), ExtResource( 11 ), ExtResource( 10 ) ]
 
-[node name="Whale" parent="." groups=["whale"] instance=ExtResource( 15 )]
-position = Vector2( 1376, 438 )
-
 [node name="hugWhaleText" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -128,7 +124,6 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
-frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]
@@ -195,12 +190,8 @@ __meta__ = {
 }
 
 [node name="HugZone" parent="." groups=["hugZone"] instance=ExtResource( 14 )]
-position = Vector2( 640, 606 )
-
-[node name="WhaleHugZone" parent="." groups=["whaleHugZone"] instance=ExtResource( 14 )]
-position = Vector2( 636, 466 )
-scale = Vector2( 3, 1 )
-whaleZone = true
+position = Vector2( 644, 576 )
+scale = Vector2( 1.4622, 1.29115 )
 
 [node name="pause" type="Node2D" parent="."]
 pause_mode = 2
@@ -337,3 +328,11 @@ rect_min_size = Vector2( 200, 40 )
 rect_pivot_offset = Vector2( 100, 20 )
 text = "Menu"
 script = ExtResource( 25 )
+
+[node name="Ground" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ground"]
+position = Vector2( 10, 703 )
+polygon = PoolVector2Array( -9, -7, 5, -28, 40, -48, 58, -42, 71, -32, 89, -33, 92, -49, 85, -49, 88, -65, 93, -65, 94, -88, 107, -91, 118, -87, 120, -72, 125, -63, 128, -51, 122, -49, 127, -32, 139, -29, 149, -12, 173, -7, 177, -27, 186, -29, 196, -25, 208, -25, 215, -19, 233, -24, 250, -25, 253, -33, 261, -39, 305, -42, 352, -39, 359, -42, 400, -103, 425, -109, 467, -110, 508, -101, 519, -112, 521, -134, 527, -134, 532, -152, 533, -161, 548, -166, 561, -184, 574, -184, 586, -196, 612, -206, 647, -205, 675, -195, 700, -183, 727, -158, 753, -99, 751, -82, 785, -80, 921, -35, 968, -37, 996, -48, 1026, -53, 1049, -87, 1061, -91, 1074, -85, 1076, -66, 1073, -49, 1090, -48, 1096, -42, 1097, -38, 1115, -35, 1116, -30, 1138, -31, 1182, -29, 1218, -23, 1248, -15, 1270, -15, 1270, 23, -10, 20 )
