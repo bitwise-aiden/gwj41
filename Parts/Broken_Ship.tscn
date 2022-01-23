@@ -11,6 +11,8 @@ extents = Vector2( 9.5, 39 )
 extents = Vector2( 13.3333, 130 )
 
 [node name="BrokenShip" type="Node2D"]
+z_index = -1
+z_as_relative = false
 script = ExtResource( 3 )
 
 [node name="LeftHalfBody" type="RigidBody2D" parent="."]
