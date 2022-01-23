@@ -18,11 +18,11 @@ func _ready() -> void:
 	__button_back.grab_focus()
 	__button_back.connect("pressed", self, "__change_scene", ["start"])
 
-	var left_tentacle = __spawn_tentacle(
+	var _left_tentacle = __spawn_tentacle(
 		Globals.initial_start_left_tentacle_position,
 		Globals.initial_end_left_tentacle_position
 	)
-	var right_tentacle = __spawn_tentacle(
+	var _right_tentacle = __spawn_tentacle(
 		Globals.initial_start_right_tentacle_position,
 		Globals.initial_end_right_tentacle_position
 	)

@@ -18,7 +18,7 @@ export(float, 0, 1, 0.01) var dampening : float = 0.05
 onready var k_on_m : float = hookes / mass
 
 # Water splash
-var splash = preload("res://Parts/splashes.tscn")
+var splasher = preload("res://Parts/splashes.tscn")
 
 
 export(float, 0.0, 720.0) var target_height : float = 220.0
@@ -36,7 +36,7 @@ func _ready() -> void:
 	# Create the points along the surface
 	__create_surface_points()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	__update_horizontals()
 	__update_verticals()
 	__pass_to_shader(point_dict)
@@ -47,7 +47,7 @@ func __create_surface_points() -> void:
 		# Rounding on the x here to avoid triangulation errors
 		var xpos = round((top_right_point.x - top_left_point.x) / num_points * i)
 		var ypos = target_height
-		var temp_dict : Dictionary
+		var temp_dict : Dictionary = {}
 		
 		# Overwrite collision polygon points
 		temp_dict["position"] = Vector2(xpos, ypos)
@@ -104,7 +104,7 @@ func splash(pixel_x_location : int, velocity_change : float, origin : String) ->
 	abs(point_dict[str(index)]["velocity"].y) <= abs(velocity_change)/2:
 		point_dict[str(index)]["velocity"].y = velocity_change
 	if origin != "ship":
-		var splashes = splash.instance()
+		var splashes = splasher.instance()
 		match origin:
 			"tentacle":
 				splashes.lifetime = 1.5

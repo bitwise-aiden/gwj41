@@ -8,9 +8,9 @@ const SETTINGS_PATH = "settings.json"
 var __settings: Dictionary = {}
 var __settings_default: Dictionary = {
 	"volume": {
-		"Master": 1.0,
-		"Music": 0.7,
-		"Sound Effects": 0.5
+		"Master": 0.7,
+		"Music": 1.0,
+		"Sound Effects": 1.0
 	},
 	"input": {}
 }

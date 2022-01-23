@@ -15,7 +15,7 @@ func _ready() -> void:
 	__image.create(400, 10, false, Image.FORMAT_RGBAH)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	var tentacles_raw: Array = get_tree().get_nodes_in_group("tentacle")
 	var tentacles: Array = []
 

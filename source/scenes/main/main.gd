@@ -51,20 +51,20 @@ func spawn_broken_ship_and_set_position(brs):
 	brs.leftHalf.global_position = ropes[0].getRopeEndPoint()
 	brs.rightHalf.global_position = ropes[1].getRopeEndPoint()
 
-func spawn_tentacle(start_pos, end_pos):
+func spawn_tentacle(start_Pos, end_Pos):
 	if len(ropes) <= max_tentacles:
 			var rope = Rope.instance()
 			add_child(rope)
-			rope.spawn_rope(start_pos, end_pos)
+			rope.spawn_rope(start_Pos, end_Pos)
 			start_pos = Vector2.ZERO
 			end_pos = Vector2.ZERO
 			ropes.append(rope)
 			return(rope)
 
-func spawn_ship(start_pos):
+func spawn_ship(start_Pos):
 	var ship = Ship.instance()
 	ships.append(ship)
-	ship.global_position = start_pos
+	ship.global_position = start_Pos
 	add_child(ship)
 
 func spawn_parrot():
@@ -73,7 +73,7 @@ func spawn_parrot():
 	parrot.global_position = parrotSpawnPos
 	self.call_deferred("add_child", parrot)
 
-func _physics_process(delta):
+func _physics_process(_delta):
 #	if Globals.hugScore <= 0:
 #		print("Game Over. Score: ", Globals.shipHuggedCount)
 

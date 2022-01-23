@@ -22,7 +22,7 @@ func _ready() -> void:
 		var value: float = lerp(self.__volume_min, self.__volume_max[key], levels[key])
 		AudioServer.set_bus_volume_db(index, value)
 
-	var success = Event.connect("emit_audio", self, "play_audio")
+	Event.connect("emit_audio", self, "play_audio")
 
 # Public methods
 func get_volume(name: String) -> float:
