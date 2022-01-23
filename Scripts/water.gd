@@ -1,7 +1,6 @@
-extends TextureRect
+extends Node2D
 
 # Helper variables
-var collision_polygon : CollisionPolygon2D
 var top_left_point : Vector2
 var top_right_point : Vector2
 
@@ -101,7 +100,8 @@ func __update_horizontals() -> void:
 
 func splash(pixel_x_location : int, velocity_change : float, origin : String) -> void:
 	var index = floor(pixel_x_location / (num_points + 1) * 2)
-	if index > 0 and index <= num_points + 1 and point_dict[str(index)]["velocity"].y <= velocity_change/2:
+	if index > 0 and index <= num_points + 1 and \
+	abs(point_dict[str(index)]["velocity"].y) <= abs(velocity_change)/2:
 		point_dict[str(index)]["velocity"].y = velocity_change
 	if origin != "ship":
 		var splashes = splash.instance()
@@ -158,4 +158,5 @@ func __pass_to_shader(points : Dictionary) -> void:
 	
 	var position_texture = ImageTexture.new()
 	position_texture.create_from_image(position_image)
-	material.set_shader_param("y_positions", position_texture)
+	$water_texture.material.set_shader_param("y_positions", position_texture)
+	$sky/sky_texture.material.set_shader_param("y_positions", position_texture)

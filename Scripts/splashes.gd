@@ -6,7 +6,7 @@ func _ready() -> void:
 
 func _enter_tree() -> void:
 	emitting = true
-	$free_timer.start()
+	$free_timer.autostart = true
 
 func _on_free_timer_timeout() -> void:
 	self.queue_free()

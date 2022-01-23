@@ -14,7 +14,7 @@ var initial_start_position = Vector2.ZERO
 var initial_end_position = Vector2.ZERO
 var shipMastAttachedTo
 var dirty: bool = true
-var hasSplashed : bool = false
+var hasSplashed : bool = true
 
 onready var rope_start_piece = $RopeStartPiece
 onready var rope_end_piece = $RopeEndPiece
