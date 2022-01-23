@@ -28,7 +28,8 @@ func __pressed() -> void:
 	var previous_highscore: int = SettingsManager.get_setting('highscore', 0)
 	if Globals.shipHuggedCount > previous_highscore:
 		SettingsManager.set_setting('highscore', Globals.shipHuggedCount, true)
-		__new.visible = true
+	else:
+		__new.text = "High score: %d" % previous_highscore
 
 	__high_score.text = "Score: %d" % Globals.shipHuggedCount
 
