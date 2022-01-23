@@ -126,7 +126,6 @@ __meta__ = {
 position = Vector2( 270, 101 )
 frames = SubResource( 3 )
 animation = "PressSpacebar"
-frame = 1
 playing = true
 
 [node name="kracken_head" type="Sprite" parent="."]
@@ -203,6 +202,7 @@ script = ExtResource( 26 )
 
 [node name="pause_menu" type="Control" parent="pause"]
 pause_mode = 2
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1280.0

@@ -32,9 +32,9 @@ func _ready() -> void:
 
 	yield(Transition.fade_in(), "completed")
 	__text.show()
-	
+
 	Event.emit_signal("emit_audio", {"type": "music", "name": "main_menu"})
-	
+
 	var tween: Tween = Tween.new()
 	add_child(tween)
 
