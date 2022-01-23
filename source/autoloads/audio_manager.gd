@@ -85,7 +85,21 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/sfx/parrot_squawk_1.ogg"
 			
 			"parrot_hug":
-				new_player.audio_path = "res://assets/audio/sfx/parrot_squawk_2.ogg"
+				var rand_sound = randi() % 6
+				match rand_sound:
+					0:
+						new_player.audio_path = "res://assets/audio/sfx/parrot_squawk_2.ogg"
+					1:
+						new_player.audio_path = "res://assets/audio/sfx/pun-01.ogg"
+					2:
+						new_player.audio_path = "res://assets/audio/sfx/pun-02.ogg"
+					3:
+						new_player.audio_path = "res://assets/audio/sfx/pun-03.ogg"
+					4:
+						new_player.audio_path = "res://assets/audio/sfx/pun-04.ogg"
+					5:
+						new_player.audio_path = "res://assets/audio/sfx/pun-05.ogg"
+				
 				
 			"sunk":
 				new_player.audio_path = "res://assets/audio/sfx/dragged_under_splash.ogg"
@@ -94,12 +108,16 @@ func play_audio(incoming : Dictionary) -> void:
 				new_player.audio_path = "res://assets/audio/sfx/wood_break.ogg"
 
 			"hug":
-				var rand_sound = randi() % 2
-				match rand_sound:
-					0:
-						new_player.audio_path = "res://assets/audio/sfx/hug.ogg"
-					1:
-						new_player.audio_path = "res://assets/audio/sfx/hug2.ogg"
+				var eat = randf()
+				if eat > 0.01:
+					new_player.audio_path = "res://assets/audio/sfx/nomnomnom.ogg"
+				else:
+					var rand_sound = randi() % 2
+					match rand_sound:
+						0:
+							new_player.audio_path = "res://assets/audio/sfx/hug.ogg"
+						1:
+							new_player.audio_path = "res://assets/audio/sfx/hug2.ogg"
 
 			"transition":
 				new_player.audio_path = "res://assets/audio/sfx/bubble_transition.ogg"
@@ -119,5 +137,11 @@ func play_audio(incoming : Dictionary) -> void:
 						new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
 			"main_menu":
 				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
+			"end_game":
+				active_music_players[0].playing = false
+				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
+				new_player.endGame = true
+				new_player.paused = false
+				
 		active_music_players.push_back(new_player)
 		self.add_child(new_player)

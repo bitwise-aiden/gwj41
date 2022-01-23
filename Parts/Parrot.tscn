@@ -67,7 +67,6 @@ script = ExtResource( 2 )
 scale = Vector2( 0.69863, 0.69863 )
 frames = SubResource( 17 )
 animation = "fly"
-frame = 1
 playing = true
 centered = false
 

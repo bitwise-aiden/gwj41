@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pun-01.ogg-eb0d3a47a454bc9998cea53dbc4f1fa9.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/pun-01.ogg"
+dest_files=[ "res://.import/pun-01.ogg-eb0d3a47a454bc9998cea53dbc4f1fa9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
