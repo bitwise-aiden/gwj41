@@ -15,6 +15,9 @@ func _ready() -> void:
 
 # Public methods
 func load_scene(name: String) -> void:
+	for music in AudioManager.active_music_players:
+		music.queue_free()
+		AudioManager.active_music_players.remove(0)
 	if name in self.__scenes_by_name:
 		self.get_tree().change_scene_to(self.__scenes_by_name[name])
 	else:

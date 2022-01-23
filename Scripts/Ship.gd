@@ -47,7 +47,7 @@ func reset_collision():
 func _physics_process(delta):
 	if active:
 		# Set the splash!
-		water.splash(clamp(position.x, 0, 1280) + 40, (movement_speed) / (100))
+		Event.emit_signal("water_splash", clamp(position.x, 0, 1280), (movement_speed) / (100), "ship")
 		if len(tentaclesAttached) > 1:
 			if (global_position.x < hugZone.global_position.x):
 				global_position.x += hugSpeed.x
@@ -93,7 +93,7 @@ func _on_OffScreenTimer_timeout():
 	active = true
 	$AnimatedSprite.play()
 	hugZone = Globals.get_hug_zone()
-	water.splash(clamp(position.x, 0, 1280), 5)
+	Event.emit_signal("water_splash", clamp(position.x, 0, 1280), 5, "ship")
 	if randf() < 0.75:
 		Event.emit_signal("emit_audio", {"type": "effect", "name": "ship"})
 
@@ -109,6 +109,7 @@ func _on_RightSail_body_entered(body):
 
 		if tentaclesAttached.size() > 1:
 			Event.emit_signal("hugging_update", true)
+			Event.emit_signal("water_splash", clamp(position.x, 0, 1280) + 40, 50, "ship_hug")
 			__timer.start(0.1)
 			yield(__timer, "timeout")
 			__bubbles.restart()
@@ -125,6 +126,7 @@ func _on_LeftSail_body_entered(body):
 
 		if tentaclesAttached.size() > 1:
 			Event.emit_signal("hugging_update", true)
+			Event.emit_signal("water_splash", clamp(position.x, 0, 1280) + 40, 50, "ship_hug")
 			__timer.start(0.1)
 			yield(__timer, "timeout")
 			__bubbles.restart()

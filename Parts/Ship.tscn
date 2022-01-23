@@ -5,18 +5,22 @@
 [ext_resource path="res://assets/sprites/bubble.png" type="Texture" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
+flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 0, 263, 262 )
 
 [sub_resource type="AtlasTexture" id=2]
+flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 263, 0, 263, 262 )
 
 [sub_resource type="AtlasTexture" id=3]
+flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 526, 0, 263, 262 )
 
 [sub_resource type="AtlasTexture" id=4]
+flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 789, 0, 263, 262 )
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/drunken_sailor.ogg-3d496bbb20c65d766ea611131cfd7181.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/sfx/drunken_sailor.ogg"
+dest_files=[ "res://.import/drunken_sailor.ogg-3d496bbb20c65d766ea611131cfd7181.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

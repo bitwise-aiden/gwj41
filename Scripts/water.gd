@@ -18,6 +18,10 @@ export(float, 0, 10.0, 0.1) var mass : float = 1.0
 export(float, 0, 1, 0.01) var dampening : float = 0.05
 onready var k_on_m : float = hookes / mass
 
+# Water splash
+var splash = preload("res://Parts/splashes.tscn")
+
+
 export(float, 0.0, 720.0) var target_height : float = 220.0
 
 func _ready() -> void:
@@ -95,10 +99,23 @@ func __update_horizontals() -> void:
 				point_dict[str(i + 1)]["position"].y += right_deltas[i]
 
 
-func splash(pixel_x_location : int, velocity_change : float) -> void:
+func splash(pixel_x_location : int, velocity_change : float, origin : String) -> void:
 	var index = floor(pixel_x_location / (num_points + 1) * 2)
-	if index > 0 and index <= num_points + 1:
-		 point_dict[str(index)]["velocity"].y = velocity_change
+	if index > 0 and index <= num_points + 1 and point_dict[str(index)]["velocity"].y <= velocity_change/2:
+		point_dict[str(index)]["velocity"].y = velocity_change
+	if origin != "ship":
+		var splashes = splash.instance()
+		match origin:
+			"tentacle":
+				splashes.lifetime = 1.5
+				splashes.amount = 16
+				splashes.initial_velocity = 40
+			"ship_hugged":
+				splashes.lifetime = 2.0
+				splashes.amount = 32
+				splashes.initial_velocity = 60
+		splashes.position = Vector2(pixel_x_location, point_dict[str(index)]["position"].y)
+		self.call_deferred("add_child", splashes)
 
 
 func __pass_to_shader(points : Dictionary) -> void:
