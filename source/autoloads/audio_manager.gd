@@ -125,6 +125,7 @@ func play_audio(incoming : Dictionary) -> void:
 		self.add_child(new_player)
 	if incoming["type"] == "music":
 		var new_player = music_player.instance()
+		new_player.pause_mode = Node.PAUSE_MODE_PROCESS
 		var music = incoming["name"]
 		match music:
 			"background":
@@ -138,10 +139,10 @@ func play_audio(incoming : Dictionary) -> void:
 			"main_menu":
 				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
 			"end_game":
-				active_music_players[0].playing = false
-				new_player.audio_path = "res://assets/audio/music/tale_of_the_kraken.ogg"
-				new_player.endGame = true
-				new_player.paused = false
+				active_music_players[0].queue_free()
+				active_music_players.remove(0)
+				new_player.audio_path = "res://assets/audio/music/end_screen.ogg"
 				
 		active_music_players.push_back(new_player)
 		self.add_child(new_player)
+		new_player.playing = true

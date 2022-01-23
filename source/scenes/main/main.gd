@@ -74,8 +74,8 @@ func spawn_parrot():
 	self.call_deferred("add_child", parrot)
 
 func _physics_process(delta):
-	if Globals.hugScore <= 0:
-		print("Game Over. Score: ", Globals.shipHuggedCount)
+#	if Globals.hugScore <= 0:
+#		print("Game Over. Score: ", Globals.shipHuggedCount)
 
 	if Globals.hugScore <= 0:
 		time_now = OS.get_unix_time()

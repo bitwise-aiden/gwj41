@@ -3,12 +3,12 @@ export var whaleZone = false
 var whaleInHugZone = false
 
 func _enter_tree():
-	print("Entered tree in the hug zone")
+#	print("Entered tree in the hug zone")
 	Globals.set_hug_zone(self)
 	$Timer.wait_time = Globals.hugScoreDecayTickDelay
 
 func start_hug_decay_timer():
-	print("Start timer: ", $Timer)
+#	print("Start timer: ", $Timer)
 	$Timer.start()
 
 func stop_hug_decay_timer():
@@ -16,12 +16,12 @@ func stop_hug_decay_timer():
 
 func _on_Area2D_area_entered(area):
 	if whaleZone:
-		print("whaleHugZone: ", area)
+#		print("whaleHugZone: ", area)
 		if area.get_parent().is_in_group("whale"):
 			#area.get_parent().get_hugged()
 			#if Globals.whaleHugText.percent_visible < 1:
 			Globals.whaleHugText.percent_visible = 1
-			print(self, " reporting Globals.whaleEnemy.inHugZone = ", Globals.whaleEnemy.inHugZone)
+#			print(self, " reporting Globals.whaleEnemy.inHugZone = ", Globals.whaleEnemy.inHugZone)
 			if not Globals.whaleEnemy.inHugZone:
 				Globals.whaleEnemy.inHugZone = true
 	else:
@@ -37,7 +37,7 @@ func _on_Area2D_area_entered(area):
 
 func _on_Area2D_area_exited(area):
 	if whaleZone:
-		print("Something exited the whale zone", area)
+#		print("Something exited the whale zone", area)
 		if area.get_parent().is_in_group("whale"):
 			Globals.whaleHugText.percent_visible = 0
 			Globals.whaleEnemy.inHugZone = false
@@ -48,4 +48,5 @@ func _on_Timer_timeout():
 	#print("Hug score decay! New Hug Score: ", Globals.hugScore)
 
 
-
+func _on_difficultyTimer_timeout() -> void:
+	$Timer.wait_time *= 0.8
